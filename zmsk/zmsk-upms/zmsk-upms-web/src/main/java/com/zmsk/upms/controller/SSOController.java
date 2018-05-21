@@ -20,8 +20,12 @@ public class SSOController {
 	@ResponseBody
 	public String login(@RequestParam(value = "username") String username, @RequestParam(value = "password") String password) {
 
-		
 		return "";
+	}
+
+	@RequestMapping(value = "tologin", method = RequestMethod.GET)
+	public String loginUI() {
+		return "login";
 	}
 
 }
