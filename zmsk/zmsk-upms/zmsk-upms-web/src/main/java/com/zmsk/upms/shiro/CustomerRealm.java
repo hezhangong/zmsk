@@ -1,16 +1,23 @@
 package com.zmsk.upms.shiro;
 
+import java.util.List;
+
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.authz.SimpleAuthorizationInfo;
+import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.zmsk.upms.dto.ActiveUserDTO;
+import com.zmsk.upms.pojo.UpmsPermission;
 import com.zmsk.upms.pojo.UpmsUser;
+import com.zmsk.upms.service.permission.PermissionService;
 import com.zmsk.upms.service.user.UserService;
 
 /****
@@ -24,11 +31,20 @@ public class CustomerRealm extends AuthorizingRealm {
 	@Autowired
 	private UserService userService;
 
+	@Autowired
+	private PermissionService permissionService;
+
+	@Override
+	public String getName() {
+
+		return "CustomerRealm";
+	}
+
 	// 授权
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-		// TODO Auto-generated method stub
-		return null;
+
+		return new SimpleAuthorizationInfo();
 	}
 
 	// 认证
@@ -36,19 +52,38 @@ public class CustomerRealm extends AuthorizingRealm {
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
 
 		// 从token中 获取用户身份信息
-		String username = (String) token.getPrincipal();
+		String userAccount = (String) token.getPrincipal();
 
 		// 从DB中获取username对应的用户信息
-		UpmsUser user = userService.queryUserByName(username);
+		UpmsUser user = userService.queryUserByName(userAccount);
 
 		if (user == null) {
 			return null;
 		}
 
-		// 交给AuthenticatingRealm使用CredentialsMatcher进行密码匹配，如果觉得人家的不好可以自定义实现
-		SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(user.getUsername(), user.getPassword(), ByteSource.Util.bytes(user.getSalt()), getName());
+		String salt = user.getSalt();
 
-		return authenticationInfo;
+		String username = user.getRealname();
+
+		int userId = user.getUserId();
+
+		ActiveUserDTO activeUser = new ActiveUserDTO(userId, userAccount, username);
+
+		List<UpmsPermission> menus = permissionService.queryMenuListByUserId(userId);
+
+		activeUser.setMenus(menus);
+
+		SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo(activeUser, user.getPassword(), ByteSource.Util.bytes(salt), this.getName());
+
+		return simpleAuthenticationInfo;
 	}
 
+	public static void main(String[] args) {
+		String hashAlgorithmName = "MD5";
+		String credentials = "123456";
+		int hashIterations = 1;
+		ByteSource credentialsSalt = ByteSource.Util.bytes("qwerty");
+		Object obj = new SimpleHash(hashAlgorithmName, credentials, credentialsSalt, hashIterations);
+		System.out.println(obj);
+	}
 }

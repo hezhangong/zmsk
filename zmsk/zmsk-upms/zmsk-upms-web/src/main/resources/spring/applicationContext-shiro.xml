@@ -25,6 +25,8 @@
 		<!-- 过虑器链定义，从上向下顺序执行，一般将/**放在最下边 -->
 		<property name="filterChainDefinitions">
 			<value>
+				<!-- 登入操作 -->
+				/rest/sso/login = anon
 				<!-- 退出拦截，请求logout.action执行退出操作 -->
 				/logout.action = logout
 				<!-- 无权访问页面 -->
@@ -47,7 +49,20 @@
 		class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
 		<property name="realm" ref="userRealm" />
 	</bean>
+
 	<!-- 自定义 realm -->
-	<bean id="userRealm" class="com.zmsk.upms.shiro.CustomerRealm"></bean>
+	<bean id="userRealm" class="com.zmsk.upms.shiro.CustomerRealm">
+		<!-- 将凭证匹配器设置到realm中，realm按照凭证匹配器的要求进行散列 -->
+		<property name="credentialsMatcher" ref="credentialsMatcher" />
+	</bean>
+
+
+<!-- 凭证匹配器 -->
+<bean id="credentialsMatcher"
+	class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+	<property name="hashAlgorithmName" value="md5" />
+	<property name="hashIterations" value="1" />
+</bean>
+
 
 </beans>
