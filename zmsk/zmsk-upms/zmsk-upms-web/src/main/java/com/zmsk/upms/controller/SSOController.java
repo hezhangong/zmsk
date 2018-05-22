@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,6 +33,12 @@ public class SSOController {
 
 		Subject subject = SecurityUtils.getSubject();
 
+		Session session = subject.getSession();
+
+		String sessionId = session.getId().toString();
+
+		// TODO 判断redis中是否存在sessionId对应的session
+
 		// 创建token令牌，记录用的身份和凭证
 		UsernamePasswordToken token = new UsernamePasswordToken(username, password);
 
@@ -40,10 +47,10 @@ public class SSOController {
 		} catch (AuthenticationException e) {
 			throw new UnauthorizedAccessException(e.getMessage(), e);
 		}
+		
+		//ActiveUserDTO actuceUser = (ActiveUserDTO) subject.getPrincipal();
 
-		ActiveUserDTO actuceUser = (ActiveUserDTO) subject.getPrincipal();
-
-		return ServiceResultDTO.success(actuceUser);
+		return ServiceResultDTO.success(sessionId);
 	}
 
 	@RequestMapping(value = "tologin", method = RequestMethod.GET)
