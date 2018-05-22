@@ -44,7 +44,23 @@ public class CustomerRealm extends AuthorizingRealm {
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
 
-		return new SimpleAuthorizationInfo();
+		// 获取身份信息
+		ActiveUserDTO activeUser = (ActiveUserDTO) principals.getPrimaryPrincipal();
+
+		// 获取用户Id
+		int userId = activeUser.getUserId();
+
+		// 获取用户权限信息
+		List<UpmsPermission> permissions = permissionService.queryPermissionListByUserId(userId);
+
+		// 构建shiro授权信息
+		SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
+
+		for (UpmsPermission permission : permissions) {
+			simpleAuthorizationInfo.addStringPermission(permission.getPermissionValue());
+		}
+
+		return simpleAuthorizationInfo;
 	}
 
 	// 认证

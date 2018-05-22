@@ -28,7 +28,7 @@
 				<!-- 登入操作 -->
 				/rest/sso/login = anon
 				<!-- 退出拦截，请求logout.action执行退出操作 -->
-				/logout.action = logout
+				/rest/sso/logout= logout
 				<!-- 无权访问页面 -->
 				/refuse.jsp = anon
 				<!-- roles[XX]表示有XX角色才可访问 -->
@@ -57,12 +57,12 @@
 	</bean>
 
 
-<!-- 凭证匹配器 -->
-<bean id="credentialsMatcher"
-	class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
-	<property name="hashAlgorithmName" value="md5" />
-	<property name="hashIterations" value="1" />
-</bean>
+	<!-- 凭证匹配器 -->
+	<bean id="credentialsMatcher"
+		class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+		<property name="hashAlgorithmName" value="md5" />
+		<property name="hashIterations" value="1" />
+	</bean>
 
 
 </beans>

@@ -1,5 +1,7 @@
 package com.zmsk.upms.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.zmsk.common.dto.ServiceResultDTO;
 import com.zmsk.common.exception.UnauthorizedAccessException;
+import com.zmsk.upms.dto.ActiveUserDTO;
 
 /****
  * 当点登入Controller
@@ -38,12 +41,30 @@ public class SSOController {
 			throw new UnauthorizedAccessException(e.getMessage(), e);
 		}
 
-		return ServiceResultDTO.success();
+		ActiveUserDTO actuceUser = (ActiveUserDTO) subject.getPrincipal();
+
+		return ServiceResultDTO.success(actuceUser);
 	}
 
 	@RequestMapping(value = "tologin", method = RequestMethod.GET)
 	public String loginUI() {
 		return "login";
+	}
+
+	@RequestMapping(value = "logout", method = RequestMethod.GET)
+	public String logout(HttpServletRequest request) {
+
+		// shiro退出登入
+		SecurityUtils.getSubject().logout();
+
+		// 回跳原地址
+		String redirectUrl = request.getHeader("Referer");
+
+		if (redirectUrl == null) {
+			redirectUrl = "/";
+		}
+
+		return "redirect:" + redirectUrl;
 	}
 
 }
