@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.zmsk.common.utils.IDMaker;
+import com.zmsk.common.utils.StringDigestUtils;
 import com.zmsk.upms.mapper.UpmsUserMapper;
 import com.zmsk.upms.pojo.UpmsUser;
 import com.zmsk.upms.pojo.UpmsUserExample;
@@ -41,6 +43,48 @@ public class UserServiceImpl implements UserService {
 		}
 
 		return list.get(0);
+	}
+
+	@Override
+	public boolean createUser(String username, String password, String realName, String avatar, String phone, String email, int sex) {
+
+		UpmsUserExample example = new UpmsUserExample();
+
+		Criteria criteria = example.createCriteria();
+
+		criteria.andUsernameEqualTo(username);
+
+		long count = userMapper.countByExample(example);
+
+		if (count > 0) {
+			return false;
+		}
+
+		UpmsUser user = new UpmsUser();
+
+		user.setUsername(username);
+
+		String salt = IDMaker.makeId();
+
+		user.setSalt(salt);
+
+		user.setPassword(StringDigestUtils.md5(password + salt));
+
+		user.setRealname(realName);
+
+		user.setAvatar(avatar);
+
+		user.setPhone(phone);
+
+		user.setEmail(email);
+
+		user.setSex(sex);
+
+		user.setLocked(0);
+
+		user.setCtime(System.currentTimeMillis() / 1000);
+
+		return userMapper.insert(user) > 0;
 	}
 
 }

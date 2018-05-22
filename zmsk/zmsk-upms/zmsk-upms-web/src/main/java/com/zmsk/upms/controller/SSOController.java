@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.zmsk.common.dto.ServiceResultDTO;
 import com.zmsk.common.exception.UnauthorizedAccessException;
-import com.zmsk.upms.dto.ActiveUserDTO;
 
 /****
  * 当点登入Controller
@@ -47,8 +46,8 @@ public class SSOController {
 		} catch (AuthenticationException e) {
 			throw new UnauthorizedAccessException(e.getMessage(), e);
 		}
-		
-		//ActiveUserDTO actuceUser = (ActiveUserDTO) subject.getPrincipal();
+
+		// ActiveUserDTO actuceUser = (ActiveUserDTO) subject.getPrincipal();
 
 		return ServiceResultDTO.success(sessionId);
 	}

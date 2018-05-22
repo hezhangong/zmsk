@@ -17,9 +17,9 @@ public class UpmsUser {
 
     private String email;
 
-    private Byte sex;
+    private Integer sex;
 
-    private Byte locked;
+    private Integer locked;
 
     private Long ctime;
 
@@ -87,19 +87,19 @@ public class UpmsUser {
         this.email = email == null ? null : email.trim();
     }
 
-    public Byte getSex() {
+    public Integer getSex() {
         return sex;
     }
 
-    public void setSex(Byte sex) {
+    public void setSex(Integer sex) {
         this.sex = sex;
     }
 
-    public Byte getLocked() {
+    public Integer getLocked() {
         return locked;
     }
 
-    public void setLocked(Byte locked) {
+    public void setLocked(Integer locked) {
         this.locked = locked;
     }
 

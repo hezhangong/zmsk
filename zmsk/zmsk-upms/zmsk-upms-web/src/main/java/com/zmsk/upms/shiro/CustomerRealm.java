@@ -98,7 +98,7 @@ public class CustomerRealm extends AuthorizingRealm {
 		String hashAlgorithmName = "MD5";
 		String credentials = "123456";
 		int hashIterations = 1;
-		ByteSource credentialsSalt = ByteSource.Util.bytes("qwerty");
+		ByteSource credentialsSalt = ByteSource.Util.bytes("4p7lrs7m9vsts8o3b2og");
 		Object obj = new SimpleHash(hashAlgorithmName, credentials, credentialsSalt, hashIterations);
 		System.out.println(obj);
 	}
