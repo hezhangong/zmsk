@@ -1,6 +1,8 @@
 package com.zmsk.upms.shiro;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -13,11 +15,14 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 
 import com.zmsk.upms.dto.ActiveUserDTO;
 import com.zmsk.upms.pojo.UpmsPermission;
+import com.zmsk.upms.pojo.UpmsRole;
 import com.zmsk.upms.pojo.UpmsUser;
 import com.zmsk.upms.service.permission.PermissionService;
+import com.zmsk.upms.service.role.RoleService;
 import com.zmsk.upms.service.user.UserService;
 
 /****
@@ -34,9 +39,11 @@ public class CustomerRealm extends AuthorizingRealm {
 	@Autowired
 	private PermissionService permissionService;
 
+	@Autowired
+	private RoleService roleService;
+
 	@Override
 	public String getName() {
-
 		return "CustomerRealm";
 	}
 
@@ -53,12 +60,29 @@ public class CustomerRealm extends AuthorizingRealm {
 		// 获取用户权限信息
 		List<UpmsPermission> permissions = permissionService.queryPermissionListByUserId(userId);
 
+		// 获取用户角色信息
+		List<UpmsRole> upmsRoles = roleService.queryRoleListByUserId(userId);
+
+		Set<String> roles = new HashSet<>();
+
+		for (UpmsRole role : upmsRoles) {
+			String name = role.getName();
+
+			if (StringUtils.isEmpty(name)) {
+				continue;
+			}
+			roles.add(name);
+		}
+
 		// 构建shiro授权信息
 		SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
 
 		for (UpmsPermission permission : permissions) {
 			simpleAuthorizationInfo.addStringPermission(permission.getPermissionValue());
 		}
+
+		// 新增角色信息
+		simpleAuthorizationInfo.addRoles(roles);
 
 		return simpleAuthorizationInfo;
 	}

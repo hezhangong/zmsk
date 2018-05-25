@@ -1,4 +1,4 @@
-package com.zmsk.upms.service.permission.impl;
+package com.zmsk.upms.service.role.impl;
 
 import java.util.Collections;
 import java.util.List;
@@ -9,33 +9,33 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.zmsk.upms.mapper.UpmsPermissionMapper;
+import com.zmsk.upms.mapper.UpmsRoleMapper;
 import com.zmsk.upms.mapper.UpmsUserMapper;
-import com.zmsk.upms.pojo.UpmsPermission;
+import com.zmsk.upms.pojo.UpmsRole;
 import com.zmsk.upms.pojo.UpmsUser;
-import com.zmsk.upms.service.permission.PermissionService;
+import com.zmsk.upms.service.role.RoleService;
 import com.zmsk.upms.service.user.constants.UserLockStatusConstants;
 
 /****
- * 权限操作接口实现
+ * 角色操作服务接口实现
  * 
  * @author warrior
  *
  */
 @Service
 @Transactional
-public class PermissionServiceImpl implements PermissionService {
+public class RoleServiceImpl implements RoleService {
 
-	private static final Logger logger = LoggerFactory.getLogger(PermissionServiceImpl.class);
+	private static final Logger logger = LoggerFactory.getLogger(RoleServiceImpl.class);
 
 	@Autowired
-	private UpmsPermissionMapper permissionMapper;
+	private UpmsRoleMapper roleMapper;
 
 	@Autowired
 	private UpmsUserMapper userMapper;
 
 	@Override
-	public List<UpmsPermission> queryPermissionListByUserId(int userId) {
+	public List<UpmsRole> queryRoleListByUserId(int userId) {
 
 		UpmsUser user = userMapper.selectByPrimaryKey(userId);
 
@@ -43,12 +43,8 @@ public class PermissionServiceImpl implements PermissionService {
 			logger.warn(" user can not find or locked when query permission list by user id {} ", userId);
 			return Collections.emptyList();
 		}
-		return permissionMapper.queryPermissionListByUserId(userId);
-	}
 
-	@Override
-	public List<UpmsPermission> queryMenuListByUserId(int userId) {
-		return permissionMapper.queryMenuListByUserId(userId);
+		return roleMapper.queryRoleListByUserId(userId);
 	}
 
 }

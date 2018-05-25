@@ -6,25 +6,27 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 public interface UpmsRoleMapper {
-    int countByExample(UpmsRoleExample example);
+	int countByExample(UpmsRoleExample example);
 
-    int deleteByExample(UpmsRoleExample example);
+	int deleteByExample(UpmsRoleExample example);
 
-    int deleteByPrimaryKey(Integer roleId);
+	int deleteByPrimaryKey(Integer roleId);
 
-    int insert(UpmsRole record);
+	int insert(UpmsRole record);
 
-    int insertSelective(UpmsRole record);
+	int insertSelective(UpmsRole record);
 
-    List<UpmsRole> selectByExample(UpmsRoleExample example);
+	List<UpmsRole> selectByExample(UpmsRoleExample example);
 
-    UpmsRole selectByPrimaryKey(Integer roleId);
+	UpmsRole selectByPrimaryKey(Integer roleId);
 
-    int updateByExampleSelective(@Param("record") UpmsRole record, @Param("example") UpmsRoleExample example);
+	int updateByExampleSelective(@Param("record") UpmsRole record, @Param("example") UpmsRoleExample example);
 
-    int updateByExample(@Param("record") UpmsRole record, @Param("example") UpmsRoleExample example);
+	int updateByExample(@Param("record") UpmsRole record, @Param("example") UpmsRoleExample example);
 
-    int updateByPrimaryKeySelective(UpmsRole record);
+	int updateByPrimaryKeySelective(UpmsRole record);
 
-    int updateByPrimaryKey(UpmsRole record);
+	int updateByPrimaryKey(UpmsRole record);
+
+	List<UpmsRole> queryRoleListByUserId(@Param("userId") int userId);
 }

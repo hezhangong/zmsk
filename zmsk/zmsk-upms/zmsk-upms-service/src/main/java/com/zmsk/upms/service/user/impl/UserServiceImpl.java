@@ -2,9 +2,12 @@ package com.zmsk.upms.service.user.impl;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import com.zmsk.common.utils.IDMaker;
 import com.zmsk.common.utils.StringDigestUtils;
@@ -23,6 +26,8 @@ import com.zmsk.upms.service.user.UserService;
 @Service
 @Transactional
 public class UserServiceImpl implements UserService {
+
+	private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
 	@Autowired
 	private UpmsUserMapper userMapper;
@@ -57,6 +62,7 @@ public class UserServiceImpl implements UserService {
 		long count = userMapper.countByExample(example);
 
 		if (count > 0) {
+			logger.warn(" username {} exists when create user ", username);
 			return false;
 		}
 
@@ -85,6 +91,64 @@ public class UserServiceImpl implements UserService {
 		user.setCtime(System.currentTimeMillis() / 1000);
 
 		return userMapper.insert(user) > 0;
+	}
+
+	@Override
+	public List<UpmsUser> queryUserList(String search) {
+
+		UpmsUserExample example = new UpmsUserExample();
+
+		if (!StringUtils.isEmpty(search)) {
+			example.or().andUsernameLike("%" + search + "%");
+			example.or().andRealnameLike("%" + search + "%");
+		}
+
+		return userMapper.selectByExample(example);
+	}
+
+	@Override
+	public boolean deleteUser(List<Integer> ids) {
+
+		UpmsUserExample example = new UpmsUserExample();
+
+		Criteria criteria = example.createCriteria();
+
+		criteria.andUserIdIn(ids);
+
+		return userMapper.deleteByExample(example) > 0;
+	}
+
+	@Override
+	public boolean updateUser(int id, String realName, String phone, int sex, String avatar, String email) {
+
+		UpmsUser user = userMapper.selectByPrimaryKey(id);
+
+		if (user == null) {
+			logger.warn("Invalid userId {} can not fund user when update user info ", id);
+			return false;
+		}
+
+		if (!StringUtils.isEmpty(realName) && !realName.equals(user.getRealname())) {
+			user.setRealname(realName);
+		}
+
+		if (!StringUtils.isEmpty(phone) && !phone.equals(user.getPhone())) {
+			user.setPhone(phone);
+		}
+
+		if (sex > 0 && sex != user.getSex()) {
+			user.setSex(sex);
+		}
+
+		if (!StringUtils.isEmpty(avatar) && !avatar.equals(user.getAvatar())) {
+			user.setAvatar(avatar);
+		}
+
+		if (!StringUtils.isEmpty(email) && !email.equals(user.getEmail())) {
+			user.setEmail(email);
+		}
+
+		return userMapper.updateByPrimaryKey(user) > 0;
 	}
 
 }
