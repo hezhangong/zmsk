@@ -14,6 +14,7 @@ import com.zmsk.upms.mapper.UpmsUserMapper;
 import com.zmsk.upms.pojo.UpmsPermission;
 import com.zmsk.upms.pojo.UpmsUser;
 import com.zmsk.upms.service.permission.PermissionService;
+import com.zmsk.upms.service.permission.constants.PermissionStatusConstants;
 import com.zmsk.upms.service.user.constants.UserLockStatusConstants;
 
 /****
@@ -49,6 +50,34 @@ public class PermissionServiceImpl implements PermissionService {
 	@Override
 	public List<UpmsPermission> queryMenuListByUserId(int userId) {
 		return permissionMapper.queryMenuListByUserId(userId);
+	}
+
+	@Override
+	public boolean createPermission(int systemId, int pid, String name, int type, String permissionValue, String uri, String icon, long orders) {
+
+		UpmsPermission permission = new UpmsPermission();
+
+		permission.setSystemId(systemId);
+
+		permission.setPid(pid);
+
+		permission.setName(name);
+
+		permission.setType(type);
+
+		permission.setPermissionValue(permissionValue);
+
+		permission.setUri(uri);
+
+		permission.setIcon(icon);
+
+		permission.setOrders(orders);
+
+		permission.setStatus(PermissionStatusConstants.enable);
+
+		permission.setCtime(System.currentTimeMillis() / 1000);
+
+		return permissionMapper.insert(permission) > 0;
 	}
 
 }

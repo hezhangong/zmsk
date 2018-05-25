@@ -9,7 +9,7 @@ public class UpmsPermission {
 
     private String name;
 
-    private Byte type;
+    private Integer type;
 
     private String permissionValue;
 
@@ -17,7 +17,7 @@ public class UpmsPermission {
 
     private String icon;
 
-    private Byte status;
+    private Integer status;
 
     private Long ctime;
 
@@ -55,11 +55,11 @@ public class UpmsPermission {
         this.name = name == null ? null : name.trim();
     }
 
-    public Byte getType() {
+    public Integer getType() {
         return type;
     }
 
-    public void setType(Byte type) {
+    public void setType(Integer type) {
         this.type = type;
     }
 
@@ -87,11 +87,11 @@ public class UpmsPermission {
         this.icon = icon == null ? null : icon.trim();
     }
 
-    public Byte getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(Byte status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 
