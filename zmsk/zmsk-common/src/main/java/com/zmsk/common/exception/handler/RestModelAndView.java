@@ -1,4 +1,4 @@
-package com.zmsk.upms.exception.handler;
+package com.zmsk.common.exception.handler;
 
 import java.util.Map;
 

@@ -6,12 +6,12 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>com.zmsk</groupId>
-		<artifactId>zmsk-upms</artifactId>
+		<artifactId>zmsk-face</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>zmsk-upms-mapper</artifactId>
-	<name>zmsk-upms-mapper</name>
+	<artifactId>zmsk-face-mapper</artifactId>
+	<name>zmsk-face-mapper</name>
 	<url>http://maven.apache.org</url>
 
 	<properties>
@@ -22,7 +22,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>com.zmsk</groupId>
-			<artifactId>zmsk-upms-pojo</artifactId>
+			<artifactId>zmsk-face-pojo</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 
@@ -74,4 +74,5 @@
 			</resource>
 		</resources>
 	</build>
+
 </project>

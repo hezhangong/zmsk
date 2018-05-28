@@ -6,20 +6,20 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>com.zmsk</groupId>
-		<artifactId>zmsk-upms</artifactId>
+		<artifactId>zmsk-face</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>zmsk-upms-web</artifactId>
+	<artifactId>zmsk-face-web</artifactId>
 	<packaging>war</packaging>
-	<name>zmsk-upms-web Maven Webapp</name>
+	<name>zmsk-face-web Maven Webapp</name>
 	<url>http://maven.apache.org</url>
 
 	<dependencies>
 
 		<dependency>
 			<groupId>com.zmsk</groupId>
-			<artifactId>zmsk-upms-service</artifactId>
+			<artifactId>zmsk-face-service</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 
@@ -27,6 +27,12 @@
 		<dependency>
 			<groupId>jstl</groupId>
 			<artifactId>jstl</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
@@ -47,8 +53,7 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-
 	<build>
-		<finalName>zmsk-upms-web</finalName>
+		<finalName>zmsk-face-web</finalName>
 	</build>
 </project>

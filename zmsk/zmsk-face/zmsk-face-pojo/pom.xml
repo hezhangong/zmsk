@@ -6,31 +6,18 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>com.zmsk</groupId>
-		<artifactId>zmsk-upms</artifactId>
+		<artifactId>zmsk-face</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>zmsk-upms-service</artifactId>
-	<name>zmsk-upms-service</name>
+	<artifactId>zmsk-face-pojo</artifactId>
+	<name>zmsk-face-pojo</name>
 	<url>http://maven.apache.org</url>
-
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
 	<dependencies>
-
-		<dependency>
-			<groupId>com.zmsk</groupId>
-			<artifactId>zmsk-upms-mapper</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.zmsk</groupId>
-			<artifactId>zmsk-common</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
 
 		<dependency>
 			<groupId>junit</groupId>

@@ -11,6 +11,7 @@
 		<module>zmsk-upms</module>
 		<module>zmsk-common</module>
 		<module>zmsk-cache</module>
+		<module>zmsk-face</module>
 	</modules>
 
 	<!-- 集中定义依赖版本号 -->
