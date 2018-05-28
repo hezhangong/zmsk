@@ -1,4 +1,4 @@
- package com.zmsk.upms.controller.manager;
+package com.zmsk.face.controller.manager;
 
 import java.util.List;
 
@@ -11,12 +11,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.zmsk.common.dto.ServiceResultDTO;
-import com.zmsk.upms.dto.ActiveUserDTO;
-import com.zmsk.upms.pojo.UpmsPermission;
-import com.zmsk.upms.service.permission.PermissionService;
+import com.zmsk.face.pojo.FacePermission;
+import com.zmsk.face.pojo.FaceUser;
+import com.zmsk.face.service.permission.PermissionService;
 
-/****
- * 后台管理入口
+/***
+ * 后台首页controller
  * 
  * @author warrior
  *
@@ -24,7 +24,6 @@ import com.zmsk.upms.service.permission.PermissionService;
 @Controller
 @RequestMapping("manager/")
 public class ManagerController {
-
 	@Autowired
 	private PermissionService permissionService;
 
@@ -35,9 +34,9 @@ public class ManagerController {
 		// 获取当前登入用户
 		Subject subject = SecurityUtils.getSubject();
 
-		ActiveUserDTO activeUser = (ActiveUserDTO) subject.getPrincipal();
+		FaceUser activeUser = (FaceUser) subject.getPrincipal();
 
-		List<UpmsPermission> permissions = permissionService.queryPermissionListByUserId(activeUser.getUserId());
+		List<FacePermission> permissions = permissionService.queryPermissionListByUserId(activeUser.getUserId());
 
 		return ServiceResultDTO.success(permissions);
 	}

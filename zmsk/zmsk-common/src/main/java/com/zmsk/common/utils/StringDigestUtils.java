@@ -3,6 +3,7 @@ package com.zmsk.common.utils;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import org.apache.shiro.crypto.hash.SimpleHash;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,4 +37,10 @@ public class StringDigestUtils {
 		}
 		return new String(str);
 	}
+
+	public static String md5(String source, String salt) {
+		SimpleHash simpleHash = new SimpleHash("md5", source, salt, 1);
+		return simpleHash.toString();
+	}
+
 }
