@@ -20,15 +20,15 @@
 		class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
 		<property name="securityManager" ref="securityManager" />
 		<!-- loginUrl认证提交地址，如果没有认证将会请求此地址进行认证，请求此地址将由formAuthenticationFilter进行表单认证 -->
-		<property name="loginUrl" value="/rest/sso/tologin" />
+		<property name="loginUrl" value="/rest/manager/sso/tologin" />
 		<property name="unauthorizedUrl" value="/refuse.jsp" />
 		<!-- 过虑器链定义，从上向下顺序执行，一般将/**放在最下边 -->
 		<property name="filterChainDefinitions">
 			<value>
 				<!-- 登入操作 -->
-				/rest/sso/login = anon
+				/rest/manager/sso/login = anon
 				<!-- 退出拦截，请求logout.action执行退出操作 -->
-				/rest/sso/logout= logout
+				/rest/manager/sso/logout= logout
 				<!-- 无权访问页面 -->
 				/refuse.jsp = anon
 				<!-- roles[XX]表示有XX角色才可访问 -->
@@ -51,7 +51,7 @@
 	</bean>
 
 	<!-- 自定义 realm -->
-	<bean id="userRealm" class="com.zmsk.upms.shiro.CustomerRealm">
+	<bean id="userRealm" class="com.zmsk.face.realm.CustomerRealm">
 		<!-- 将凭证匹配器设置到realm中，realm按照凭证匹配器的要求进行散列 -->
 		<property name="credentialsMatcher" ref="credentialsMatcher" />
 	</bean>

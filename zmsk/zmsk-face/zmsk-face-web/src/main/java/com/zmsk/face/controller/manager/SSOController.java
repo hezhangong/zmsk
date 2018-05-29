@@ -1,4 +1,4 @@
-package com.zmsk.face.controller;
+package com.zmsk.face.controller.manager;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -23,7 +23,7 @@ import com.zmsk.common.exception.UnauthorizedAccessException;
  *
  */
 @Controller
-@RequestMapping("sso/")
+@RequestMapping("/manager/sso/")
 public class SSOController {
 
 	@RequestMapping(value = "login", method = RequestMethod.POST)

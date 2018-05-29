@@ -31,11 +31,6 @@ import com.zmsk.face.service.user.UserService;
  */
 public class CustomerRealm extends AuthorizingRealm {
 
-	@Override
-	public String getName() {
-		return "CustomerRealm";
-	}
-
 	@Autowired
 	private UserService userService;
 
@@ -44,6 +39,11 @@ public class CustomerRealm extends AuthorizingRealm {
 
 	@Autowired
 	private RoleService roleService;
+
+	@Override
+	public String getName() {
+		return "CustomerRealm";
+	}
 
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
