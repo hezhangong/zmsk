@@ -48,6 +48,7 @@
 	<bean id="securityManager"
 		class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
 		<property name="realm" ref="userRealm" />
+		<property name="sessionManager" ref="customerSessionManager" />
 	</bean>
 
 	<!-- 自定义 realm -->
@@ -62,6 +63,15 @@
 		class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
 		<property name="hashAlgorithmName" value="md5" />
 		<property name="hashIterations" value="1" />
+	</bean>
+
+	<!-- 会话管理器 -->
+	<bean id="customerSessionManager"
+		class="com.zmsk.face.session.CustomerSessionManager">
+		<!-- session的失效时长，单位毫秒 -->
+		<property name="globalSessionTimeout" value="600000" />
+		<!-- 删除失效的session -->
+		<property name="deleteInvalidSessions" value="true" />
 	</bean>
 
 

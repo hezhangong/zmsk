@@ -12,7 +12,10 @@ public class BaseResultCode {
 
 	/** 角色操作错误code **/
 	public static final int ROLE_OPERATION_ERROR = 50002;
-	
-	/**权限操作错误code**/
+
+	/** 权限操作错误code **/
 	public static final int PERMISSION_OPERATION_ERROR = 50003;
+
+	/** 组织操作错误code **/
+	public static final int ORGANIZATION_OPERATION_ERROR = 50004;
 }

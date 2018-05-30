@@ -9,7 +9,7 @@ public class FaceOrganization {
 
     private String description;
 
-    private Integer ctime;
+    private Long ctime;
 
     public Integer getOrganizationId() {
         return organizationId;
@@ -43,11 +43,11 @@ public class FaceOrganization {
         this.description = description == null ? null : description.trim();
     }
 
-    public Integer getCtime() {
+    public Long getCtime() {
         return ctime;
     }
 
-    public void setCtime(Integer ctime) {
+    public void setCtime(Long ctime) {
         this.ctime = ctime;
     }
 }
