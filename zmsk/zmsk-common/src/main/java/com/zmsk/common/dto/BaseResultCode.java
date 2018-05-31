@@ -18,4 +18,10 @@ public class BaseResultCode {
 
 	/** 组织操作错误code **/
 	public static final int ORGANIZATION_OPERATION_ERROR = 50004;
+
+	/** 设备操作错误code **/
+	public static final int EQUIPMENT_OPERATION_ERROR = 50005;
+
+	/** 设备操作错误code **/
+	public static final int EQUIPMENT_TAG_OPERATION_ERROR = 50006;
 }

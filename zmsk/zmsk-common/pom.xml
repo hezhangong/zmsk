@@ -20,6 +20,11 @@
 
 	<dependencies>
 
+		<dependency>
+			<groupId>joda-time</groupId>
+			<artifactId>joda-time</artifactId>
+		</dependency>
+
 		<!-- shiro -->
 		<dependency>
 			<groupId>org.apache.shiro</groupId>
