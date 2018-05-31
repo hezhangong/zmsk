@@ -58,4 +58,13 @@ public interface OrganizationService {
 	 * @return
 	 */
 	List<FaceOrganization> queryOrganizationList(String search);
+
+	/***
+	 * 根据用户名获取组织Id
+	 * 
+	 * @param userName
+	 *            用户名
+	 * @return
+	 */
+	int queryOrganizationIdByUsername(String userName);
 }

@@ -17,6 +17,7 @@ import com.zmsk.common.dto.BaseResultCode;
 import com.zmsk.common.dto.ServiceResultDTO;
 import com.zmsk.face.pojo.FaceUser;
 import com.zmsk.face.service.user.UserService;
+import com.zmsk.face.service.user.constants.UserConstants;
 
 /****
  * 会员操作controller
@@ -141,7 +142,7 @@ public class UserManagerController {
 	@ResponseBody
 	public ServiceResultDTO updateUser(@RequestParam(value = "id") int id, @RequestParam(value = "realName") String realName, @RequestParam(value = "phone") String phone, @RequestParam(value = "sex") int sex, @RequestParam(value = "avatar") String avatar, @RequestParam(value = "email") String email) {
 
-		if (id == 0) {
+		if (id <= 0) {
 			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid user id");
 		}
 
@@ -153,4 +154,46 @@ public class UserManagerController {
 
 		return ServiceResultDTO.success();
 	}
+
+	/****
+	 * 修改用户密码
+	 * 
+	 * @param userId
+	 *            用户Id
+	 * @param oldPassword
+	 *            旧密码
+	 * @param newPassword
+	 *            新密码
+	 * @return
+	 */
+	@RequestMapping(value = "update/password", method = RequestMethod.POST)
+	@ResponseBody
+	public ServiceResultDTO updatePassword(@RequestParam(value = "userId") int userId, @RequestParam(value = "oldPassword") String oldPassword, @RequestParam(value = "newPassword") String newPassword) {
+
+		if (userId <= 0) {
+			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid user id");
+		}
+
+		if (StringUtils.isEmpty(oldPassword)) {
+			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid oldPassword");
+		}
+
+		if (StringUtils.isEmpty(newPassword)) {
+			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid newPassword");
+		}
+
+		int result = userService.updatePassword(userId, newPassword, oldPassword);
+
+		// 原始密码错误
+		if (result == UserConstants.OLD_PASSWORD_ERROR) {
+			return new ServiceResultDTO(BaseResultCode.INVALID_OLDPASSWORD, "原始密码错误");
+		}
+
+		if (result == UserConstants.FAIL) {
+			return new ServiceResultDTO(BaseResultCode.USER_OPERATION_ERROR, "密码修改操作失败");
+		}
+
+		return ServiceResultDTO.success();
+	}
+
 }

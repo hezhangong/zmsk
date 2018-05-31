@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.zmsk.face.mapper.FaceOrganizationMapper;
+import com.zmsk.face.mapper.custom.organization.CustomerOrganizationMapper;
 import com.zmsk.face.pojo.FaceOrganization;
 import com.zmsk.face.pojo.FaceOrganizationExample;
 import com.zmsk.face.service.organization.OrganizationService;
@@ -27,6 +28,9 @@ public class OrganizationServiceImpl implements OrganizationService {
 
 	@Autowired
 	private FaceOrganizationMapper organizationMapper;
+
+	@Autowired
+	private CustomerOrganizationMapper customerOrganizationMapper;
 
 	@Override
 	public boolean createOrganization(int pid, String name, String description) {
@@ -82,6 +86,11 @@ public class OrganizationServiceImpl implements OrganizationService {
 		example.or().andNameLike("%" + search + "%");
 
 		return organizationMapper.selectByExample(example);
+	}
+
+	@Override
+	public int queryOrganizationIdByUsername(String userName) {
+		return customerOrganizationMapper.queryOrganizationIdByUsername(userName);
 	}
 
 }

@@ -16,9 +16,11 @@ import com.zmsk.face.pojo.FaceUser;
 import com.zmsk.face.pojo.FaceUserExample;
 import com.zmsk.face.pojo.FaceUserExample.Criteria;
 import com.zmsk.face.service.user.UserService;
+import com.zmsk.face.service.user.constants.UserConstants;
 
 /****
  * 用户操作服务接口实现
+ * 
  * @author warrior
  *
  */
@@ -142,6 +144,40 @@ public class UserServiceImpl implements UserService {
 		}
 
 		return userMapper.updateByPrimaryKey(user) > 0;
+	}
+
+	@Override
+	public int updatePassword(int userId, String newPassword, String oldPassword) {
+
+		FaceUser user = userMapper.selectByPrimaryKey(userId);
+
+		if (user == null) {
+			logger.warn("Invalid userId {} can not fund user when update ", userId);
+			return UserConstants.FAIL;
+		}
+
+		String salt = user.getSalt();
+
+		String password = user.getPassword();
+
+		String oldPasswordDigest = StringDigestUtils.md5(oldPassword, salt);
+
+		if (!oldPasswordDigest.equals(password)) {
+			logger.error("invalid old password when update user password userId {}", userId);
+			return UserConstants.OLD_PASSWORD_ERROR;
+		}
+
+		String newPasswordDigest = StringDigestUtils.md5(newPassword, salt);
+
+		user.setPassword(newPasswordDigest);
+
+		boolean success = userMapper.updateByPrimaryKey(user) > 0;
+
+		if (success) {
+			return UserConstants.SUCCESS;
+		}
+
+		return UserConstants.FAIL;
 	}
 
 }

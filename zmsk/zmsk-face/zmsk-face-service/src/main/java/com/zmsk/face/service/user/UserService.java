@@ -79,4 +79,17 @@ public interface UserService {
 	 */
 	boolean updateUser(int id, String realName, String phone, int sex, String avatar, String email);
 
+	/***
+	 * 修改会员密码
+	 * 
+	 * @param userId
+	 *            用户Id
+	 * @param newPassword
+	 *            新密码
+	 * @param oldPassword
+	 *            旧密码
+	 * @return
+	 */
+	int updatePassword(int userId, String newPassword, String oldPassword);
+
 }

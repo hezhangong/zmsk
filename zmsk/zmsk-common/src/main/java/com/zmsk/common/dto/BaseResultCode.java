@@ -6,6 +6,9 @@ public class BaseResultCode {
 
 	/** 无效的参数 **/
 	public static final int INVALID_PARAM = 40000;
+	
+	/**原始面错误**/
+	public static final int INVALID_OLDPASSWORD = 40002;
 
 	/** 会员操作错误code **/
 	public static final int USER_OPERATION_ERROR = 50001;

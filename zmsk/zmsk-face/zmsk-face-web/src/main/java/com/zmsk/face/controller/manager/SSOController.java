@@ -7,14 +7,17 @@ import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.zmsk.common.dto.SSOLoginResultDTO;
 import com.zmsk.common.dto.ServiceResultDTO;
 import com.zmsk.common.exception.UnauthorizedAccessException;
+import com.zmsk.face.service.organization.OrganizationService;
 
 /****
  * 当点登入Controller
@@ -25,6 +28,9 @@ import com.zmsk.common.exception.UnauthorizedAccessException;
 @Controller
 @RequestMapping("/manager/sso/")
 public class SSOController {
+
+	@Autowired
+	private OrganizationService organizationService;
 
 	@RequestMapping(value = "login", method = RequestMethod.POST)
 	@ResponseBody
@@ -43,13 +49,15 @@ public class SSOController {
 
 		try {
 			subject.login(token);
+
+			int organizationId = organizationService.queryOrganizationIdByUsername(username);
+
+			return ServiceResultDTO.success(new SSOLoginResultDTO(sessionId, organizationId));
+
 		} catch (AuthenticationException e) {
 			throw new UnauthorizedAccessException(e.getMessage(), e);
 		}
 
-		// ActiveUserDTO actuceUser = (ActiveUserDTO) subject.getPrincipal();
-
-		return ServiceResultDTO.success(sessionId);
 	}
 
 	@RequestMapping(value = "tologin", method = RequestMethod.GET)
