@@ -65,4 +65,17 @@ public interface equipmentService {
 	 * @return
 	 */
 	boolean unbindEquipmentTag(int equipmentId);
+
+	/***
+	 * 修改设备登入密码
+	 * 
+	 * @param equipmentId
+	 *            设备Id
+	 * @param newPassword
+	 *            新密码
+	 * @param oldPassword
+	 *            旧密码
+	 * @return 0 修改失败，1：修改成功，2：原始密码不正确
+	 */
+	int updateEquipmentPassword(int equipmentId, String newPassword, String oldPassword);
 }

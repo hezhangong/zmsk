@@ -16,6 +16,7 @@ import com.zmsk.face.pojo.FaceEquipmentExample;
 import com.zmsk.face.pojo.FaceEquipmentExample.Criteria;
 import com.zmsk.face.pojo.FaceSerialNumber;
 import com.zmsk.face.service.equipment.equipmentService;
+import com.zmsk.face.service.equipment.constants.EquipmentConstants;
 import com.zmsk.face.service.equipment.constants.EquipmentStatus;
 
 /****
@@ -26,7 +27,7 @@ import com.zmsk.face.service.equipment.constants.EquipmentStatus;
  */
 @Service
 @Transactional
-public class equipmentServiceImpl implements equipmentService {
+public class EquipmentServiceImpl implements equipmentService {
 
 	// 账号前缀
 	private static final String NUMBER_PERFIEX = "zd";
@@ -116,5 +117,39 @@ public class equipmentServiceImpl implements equipmentService {
 	@Override
 	public boolean unbindEquipmentTag(int equipmentId) {
 		return customerEquipmentMapper.unbindEquipmentTag(equipmentId) > 0;
+	}
+
+	@Override
+	public int updateEquipmentPassword(int equipmentId, String newPassword, String oldPassword) {
+
+		FaceEquipmentExample example = new FaceEquipmentExample();
+
+		Criteria criteria = example.createCriteria();
+
+		criteria.andIdEqualTo(equipmentId);
+
+		criteria.andEquipmentPlainPwdEqualTo(oldPassword);
+
+		List<FaceEquipment> list = equipmentMapper.selectByExample(example);
+
+		if (list == null || list.size() == 0) {
+			return EquipmentConstants.OLD_PASSWORD_ERROR;
+		}
+
+		FaceEquipment equipment = list.get(0);
+
+		String newPasswordDigest = StringDigestUtils.md5(newPassword);
+
+		equipment.setEquipmentPlainPwd(newPassword);
+
+		equipment.setEquipmentPwd(newPasswordDigest);
+
+		boolean success = equipmentMapper.updateByPrimaryKey(equipment) > 0;
+
+		if (success) {
+			return EquipmentConstants.SUCCESS;
+		}
+
+		return EquipmentConstants.FAIL;
 	}
 }
