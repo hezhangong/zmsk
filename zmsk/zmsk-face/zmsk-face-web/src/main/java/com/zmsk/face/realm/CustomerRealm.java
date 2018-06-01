@@ -22,6 +22,7 @@ import com.zmsk.face.pojo.FaceUser;
 import com.zmsk.face.service.permission.PermissionService;
 import com.zmsk.face.service.role.RoleService;
 import com.zmsk.face.service.user.UserService;
+import com.zmsk.face.service.user.dto.ActiveUserDTO;
 
 /****
  * 自定义realm
@@ -97,9 +98,16 @@ public class CustomerRealm extends AuthorizingRealm {
 			return null;
 		}
 
+		ActiveUserDTO activeUser = new ActiveUserDTO(user.getUserId(), userAccount, user.getRealname(), user.getAvatar());
+
+		// 获取用户资源菜单
+		List<FacePermission> menus = permissionService.queryPermissionListByUserId(user.getUserId());
+
+		activeUser.setMenus(menus);
+
 		String salt = user.getSalt();
 
-		SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo(user, user.getPassword(), ByteSource.Util.bytes(salt), this.getName());
+		SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo(activeUser, user.getPassword(), ByteSource.Util.bytes(salt), this.getName());
 
 		return simpleAuthenticationInfo;
 	}

@@ -27,7 +27,7 @@ public class FaceEquipment {
 
 	private Long renewalTime;
 
-	private Integer equipmentTagId;
+	private String remark;
 
 	public Integer getId() {
 		return id;
@@ -133,11 +133,11 @@ public class FaceEquipment {
 		this.renewalTime = renewalTime;
 	}
 
-	public Integer getEquipmentTagId() {
-		return equipmentTagId;
+	public String getRemark() {
+		return remark;
 	}
 
-	public void setEquipmentTagId(Integer equipmentTagId) {
-		this.equipmentTagId = equipmentTagId;
+	public void setRemark(String remark) {
+		this.remark = remark == null ? null : remark.trim();
 	}
 }

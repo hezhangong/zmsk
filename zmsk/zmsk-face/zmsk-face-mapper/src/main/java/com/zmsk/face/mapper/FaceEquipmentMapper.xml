@@ -15,7 +15,7 @@
     <result column="activation_time" property="activationTime" jdbcType="INTEGER" />
     <result column="end_time" property="endTime" jdbcType="INTEGER" />
     <result column="renewal_time" property="renewalTime" jdbcType="INTEGER" />
-    <result column="equipment_tag_id" property="equipmentTagId" jdbcType="INTEGER" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -78,7 +78,7 @@
   <sql id="Base_Column_List" >
     id, organization_id, mac_id, equipment_number, equipment_pwd, equipment_plain_pwd, 
     equipment_type, renewal_fee, status, create_time, activation_time, end_time, renewal_time, 
-    equipment_tag_id
+    remark
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zmsk.face.pojo.FaceEquipmentExample" >
     select
@@ -115,12 +115,12 @@
       equipment_number, equipment_pwd, equipment_plain_pwd, 
       equipment_type, renewal_fee, status, 
       create_time, activation_time, end_time, 
-      renewal_time, equipment_tag_id)
+      renewal_time, remark)
     values (#{id,jdbcType=INTEGER}, #{organizationId,jdbcType=INTEGER}, #{macId,jdbcType=VARCHAR}, 
       #{equipmentNumber,jdbcType=VARCHAR}, #{equipmentPwd,jdbcType=VARCHAR}, #{equipmentPlainPwd,jdbcType=VARCHAR}, 
       #{equipmentType,jdbcType=BIT}, #{renewalFee,jdbcType=INTEGER}, #{status,jdbcType=BIT}, 
       #{createTime,jdbcType=INTEGER}, #{activationTime,jdbcType=INTEGER}, #{endTime,jdbcType=INTEGER}, 
-      #{renewalTime,jdbcType=INTEGER}, #{equipmentTagId,jdbcType=INTEGER})
+      #{renewalTime,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.zmsk.face.pojo.FaceEquipment" >
     insert into face_equipment
@@ -164,8 +164,8 @@
       <if test="renewalTime != null" >
         renewal_time,
       </if>
-      <if test="equipmentTagId != null" >
-        equipment_tag_id,
+      <if test="remark != null" >
+        remark,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -208,8 +208,8 @@
       <if test="renewalTime != null" >
         #{renewalTime,jdbcType=INTEGER},
       </if>
-      <if test="equipmentTagId != null" >
-        #{equipmentTagId,jdbcType=INTEGER},
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -261,8 +261,8 @@
       <if test="record.renewalTime != null" >
         renewal_time = #{record.renewalTime,jdbcType=INTEGER},
       </if>
-      <if test="record.equipmentTagId != null" >
-        equipment_tag_id = #{record.equipmentTagId,jdbcType=INTEGER},
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -284,7 +284,7 @@
       activation_time = #{record.activationTime,jdbcType=INTEGER},
       end_time = #{record.endTime,jdbcType=INTEGER},
       renewal_time = #{record.renewalTime,jdbcType=INTEGER},
-      equipment_tag_id = #{record.equipmentTagId,jdbcType=INTEGER}
+      remark = #{record.remark,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -328,8 +328,8 @@
       <if test="renewalTime != null" >
         renewal_time = #{renewalTime,jdbcType=INTEGER},
       </if>
-      <if test="equipmentTagId != null" >
-        equipment_tag_id = #{equipmentTagId,jdbcType=INTEGER},
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -348,7 +348,7 @@
       activation_time = #{activationTime,jdbcType=INTEGER},
       end_time = #{endTime,jdbcType=INTEGER},
       renewal_time = #{renewalTime,jdbcType=INTEGER},
-      equipment_tag_id = #{equipmentTagId,jdbcType=INTEGER}
+      remark = #{remark,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

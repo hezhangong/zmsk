@@ -10,7 +10,6 @@ import com.zmsk.common.utils.DateUtils;
 import com.zmsk.common.utils.StringDigestUtils;
 import com.zmsk.face.mapper.FaceEquipmentMapper;
 import com.zmsk.face.mapper.FaceSerialNumberMapper;
-import com.zmsk.face.mapper.custom.equipment.CustomerEquipmentMapper;
 import com.zmsk.face.pojo.FaceEquipment;
 import com.zmsk.face.pojo.FaceEquipmentExample;
 import com.zmsk.face.pojo.FaceEquipmentExample.Criteria;
@@ -37,9 +36,6 @@ public class EquipmentServiceImpl implements equipmentService {
 
 	@Autowired
 	private FaceSerialNumberMapper serailNumberMapper;
-
-	@Autowired
-	private CustomerEquipmentMapper customerEquipmentMapper;
 
 	@Override
 	public boolean createEquipment(int organizationId, int count, String password, int type, int renewalFee) {
@@ -107,16 +103,6 @@ public class EquipmentServiceImpl implements equipmentService {
 		criteria.andOrganizationIdEqualTo(organizationId);
 
 		return equipmentMapper.selectByExample(example);
-	}
-
-	@Override
-	public boolean bindEquipmentTag(int equipmentId, int equipmentTagId) {
-		return customerEquipmentMapper.bindEquipmentTag(equipmentId, equipmentTagId) > 0;
-	}
-
-	@Override
-	public boolean unbindEquipmentTag(int equipmentId) {
-		return customerEquipmentMapper.unbindEquipmentTag(equipmentId) > 0;
 	}
 
 	@Override

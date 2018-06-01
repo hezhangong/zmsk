@@ -924,63 +924,73 @@ public class FaceEquipmentExample {
             return (Criteria) this;
         }
 
-        public Criteria andEquipmentTagIdIsNull() {
-            addCriterion("equipment_tag_id is null");
+        public Criteria andRemarkIsNull() {
+            addCriterion("remark is null");
             return (Criteria) this;
         }
 
-        public Criteria andEquipmentTagIdIsNotNull() {
-            addCriterion("equipment_tag_id is not null");
+        public Criteria andRemarkIsNotNull() {
+            addCriterion("remark is not null");
             return (Criteria) this;
         }
 
-        public Criteria andEquipmentTagIdEqualTo(Integer value) {
-            addCriterion("equipment_tag_id =", value, "equipmentTagId");
+        public Criteria andRemarkEqualTo(String value) {
+            addCriterion("remark =", value, "remark");
             return (Criteria) this;
         }
 
-        public Criteria andEquipmentTagIdNotEqualTo(Integer value) {
-            addCriterion("equipment_tag_id <>", value, "equipmentTagId");
+        public Criteria andRemarkNotEqualTo(String value) {
+            addCriterion("remark <>", value, "remark");
             return (Criteria) this;
         }
 
-        public Criteria andEquipmentTagIdGreaterThan(Integer value) {
-            addCriterion("equipment_tag_id >", value, "equipmentTagId");
+        public Criteria andRemarkGreaterThan(String value) {
+            addCriterion("remark >", value, "remark");
             return (Criteria) this;
         }
 
-        public Criteria andEquipmentTagIdGreaterThanOrEqualTo(Integer value) {
-            addCriterion("equipment_tag_id >=", value, "equipmentTagId");
+        public Criteria andRemarkGreaterThanOrEqualTo(String value) {
+            addCriterion("remark >=", value, "remark");
             return (Criteria) this;
         }
 
-        public Criteria andEquipmentTagIdLessThan(Integer value) {
-            addCriterion("equipment_tag_id <", value, "equipmentTagId");
+        public Criteria andRemarkLessThan(String value) {
+            addCriterion("remark <", value, "remark");
             return (Criteria) this;
         }
 
-        public Criteria andEquipmentTagIdLessThanOrEqualTo(Integer value) {
-            addCriterion("equipment_tag_id <=", value, "equipmentTagId");
+        public Criteria andRemarkLessThanOrEqualTo(String value) {
+            addCriterion("remark <=", value, "remark");
             return (Criteria) this;
         }
 
-        public Criteria andEquipmentTagIdIn(List<Integer> values) {
-            addCriterion("equipment_tag_id in", values, "equipmentTagId");
+        public Criteria andRemarkLike(String value) {
+            addCriterion("remark like", value, "remark");
             return (Criteria) this;
         }
 
-        public Criteria andEquipmentTagIdNotIn(List<Integer> values) {
-            addCriterion("equipment_tag_id not in", values, "equipmentTagId");
+        public Criteria andRemarkNotLike(String value) {
+            addCriterion("remark not like", value, "remark");
             return (Criteria) this;
         }
 
-        public Criteria andEquipmentTagIdBetween(Integer value1, Integer value2) {
-            addCriterion("equipment_tag_id between", value1, value2, "equipmentTagId");
+        public Criteria andRemarkIn(List<String> values) {
+            addCriterion("remark in", values, "remark");
             return (Criteria) this;
         }
 
-        public Criteria andEquipmentTagIdNotBetween(Integer value1, Integer value2) {
-            addCriterion("equipment_tag_id not between", value1, value2, "equipmentTagId");
+        public Criteria andRemarkNotIn(List<String> values) {
+            addCriterion("remark not in", values, "remark");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemarkBetween(String value1, String value2) {
+            addCriterion("remark between", value1, value2, "remark");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemarkNotBetween(String value1, String value2) {
+            addCriterion("remark not between", value1, value2, "remark");
             return (Criteria) this;
         }
     }

@@ -46,26 +46,6 @@ public interface equipmentService {
 	 */
 	List<FaceEquipment> queryEquipmentByOrganizationId(int organizationId);
 
-	/****
-	 * 绑定设备标签
-	 * 
-	 * @param equipmentId
-	 *            设备Id
-	 * @param equipmentTagId
-	 *            标签Id
-	 * @return
-	 */
-	boolean bindEquipmentTag(int equipmentId, int equipmentTagId);
-
-	/***
-	 * 解绑设备标签
-	 * 
-	 * @param equipmentId
-	 *            设备Id
-	 * @return
-	 */
-	boolean unbindEquipmentTag(int equipmentId);
-
 	/***
 	 * 修改设备登入密码
 	 * 
