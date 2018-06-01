@@ -15,6 +15,8 @@ import com.zmsk.face.mapper.FaceUserMapper;
 import com.zmsk.face.pojo.FaceUser;
 import com.zmsk.face.pojo.FaceUserExample;
 import com.zmsk.face.pojo.FaceUserExample.Criteria;
+import com.zmsk.face.service.user.UserOrganizationService;
+import com.zmsk.face.service.user.UserRoleService;
 import com.zmsk.face.service.user.UserService;
 import com.zmsk.face.service.user.constants.UserConstants;
 
@@ -29,6 +31,12 @@ import com.zmsk.face.service.user.constants.UserConstants;
 public class UserServiceImpl implements UserService {
 
 	private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
+
+	@Autowired
+	private UserRoleService userRoleService;
+
+	@Autowired
+	private UserOrganizationService userOrganizationService;
 
 	@Autowired
 	private FaceUserMapper userMapper;
@@ -52,7 +60,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public boolean createUser(String username, String password, String realName, String avatar, String phone, String email, int sex) {
+	public boolean createUser(String username, String password, String realName, String avatar, String phone, String email, int sex, int roleId, int organizationId) {
 
 		FaceUser user = queryUserByName(username);
 
@@ -85,7 +93,20 @@ public class UserServiceImpl implements UserService {
 
 		user.setCtime(System.currentTimeMillis() / 1000);
 
-		return userMapper.insert(user) > 0;
+		boolean success = userMapper.insert(user) > 0;
+
+		if (!success) {
+			logger.error("create user error username {}", username);
+			return false;
+		}
+
+		// 关联用户角色
+		userRoleService.createUserRoleReleation(user.getUserId(), roleId);
+
+		// 关联用户组织
+		userOrganizationService.createUserOrganizationReleation(user.getUserId(), organizationId);
+
+		return success;
 	}
 
 	@Override
@@ -114,7 +135,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public boolean updateUser(int id, String realName, String phone, int sex, String avatar, String email) {
+	public boolean updateUser(int id, String realName, String phone, int sex, String avatar, String email, int roleId, int organizationId) {
 
 		FaceUser user = userMapper.selectByPrimaryKey(id);
 
@@ -141,6 +162,16 @@ public class UserServiceImpl implements UserService {
 
 		if (!StringUtils.isEmpty(email) && !email.equals(user.getEmail())) {
 			user.setEmail(email);
+		}
+
+		if (roleId > 0) {
+			// 修改用户角色
+			userRoleService.updateUserRoleReleation(id, roleId);
+		}
+
+		if (organizationId > 0) {
+			// 修改用户组织
+			userOrganizationService.updateUserOrganizationReleation(id, organizationId);
 		}
 
 		return userMapper.updateByPrimaryKey(user) > 0;

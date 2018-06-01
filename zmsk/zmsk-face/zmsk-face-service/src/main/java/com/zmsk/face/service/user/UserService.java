@@ -38,9 +38,13 @@ public interface UserService {
 	 *            邮箱
 	 * @param sex
 	 *            性别
+	 * @param roleId
+	 *            角色Id
+	 * @param organizationId
+	 *            组织id
 	 * @return
 	 */
-	boolean createUser(String username, String password, String realName, String avatar, String phone, String email, int sex);
+	boolean createUser(String username, String password, String realName, String avatar, String phone, String email, int sex, int roleId, int organizationId);
 
 	/****
 	 * 查询用户信息
@@ -75,9 +79,13 @@ public interface UserService {
 	 *            头像地址
 	 * @param email
 	 *            邮箱
+	 * @param roleId
+	 *            角色Id
+	 * @param organizationId
+	 *            组织id
 	 * @return
 	 */
-	boolean updateUser(int id, String realName, String phone, int sex, String avatar, String email);
+	boolean updateUser(int id, String realName, String phone, int sex, String avatar, String email, int roleId, int organizationId);
 
 	/***
 	 * 修改会员密码

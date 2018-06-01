@@ -49,12 +49,16 @@ public class UserManagerController {
 	 *            头像地址
 	 * @param email
 	 *            邮箱
+	 * @param orgainzationId
+	 *            组织Id
+	 * @param roleId
+	 *            角色Id
 	 * @return
 	 */
 	@RequestMapping(value = "create", method = RequestMethod.POST)
 	@RequiresPermissions("upms:user:create")
 	@ResponseBody
-	public ServiceResultDTO createUser(@RequestParam(value = "username") String username, @RequestParam(value = "password") String password, @RequestParam(value = "realName") String realName, @RequestParam(value = "phone") String phone, @RequestParam(value = "sex") int sex, @RequestParam(value = "avatar", required = false, defaultValue = "") String avatar, @RequestParam(value = "email", required = false, defaultValue = "") String email) {
+	public ServiceResultDTO createUser(@RequestParam(value = "username") String username, @RequestParam(value = "password") String password, @RequestParam(value = "realName") String realName, @RequestParam(value = "phone") String phone, @RequestParam(value = "sex") int sex, @RequestParam(value = "avatar", required = false, defaultValue = "") String avatar, @RequestParam(value = "email", required = false, defaultValue = "") String email, @RequestParam(value = "organizationId") int orgainzationId, @RequestParam(value = "roleId") int roleId) {
 
 		if (StringUtils.isEmpty(username)) {
 			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid username ");
@@ -72,11 +76,19 @@ public class UserManagerController {
 			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid phone ");
 		}
 
-		if (sex == 0) {
+		if (sex <= 0) {
 			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid sex ");
 		}
 
-		boolean success = userService.createUser(username, password, realName, avatar, phone, email, sex);
+		if (orgainzationId <= 0) {
+			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid orgainzationId ");
+		}
+
+		if (roleId <= 0) {
+			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid roleId ");
+		}
+
+		boolean success = userService.createUser(username, password, realName, avatar, phone, email, sex, roleId, orgainzationId);
 
 		if (!success) {
 			return new ServiceResultDTO(BaseResultCode.USER_OPERATION_ERROR, "create user fail");
@@ -135,18 +147,22 @@ public class UserManagerController {
 	 *            头像地址
 	 * @param email
 	 *            邮箱
+	 * @param roleId
+	 *            角色Id
+	 * @param organizationId
+	 *            组织Id
 	 * @return
 	 */
 	@RequestMapping(value = "update", method = RequestMethod.PUT)
 	@RequiresPermissions("upms:user:update")
 	@ResponseBody
-	public ServiceResultDTO updateUser(@RequestParam(value = "id") int id, @RequestParam(value = "realName") String realName, @RequestParam(value = "phone") String phone, @RequestParam(value = "sex") int sex, @RequestParam(value = "avatar") String avatar, @RequestParam(value = "email") String email) {
+	public ServiceResultDTO updateUser(@RequestParam(value = "id") int id, @RequestParam(value = "realName") String realName, @RequestParam(value = "phone") String phone, @RequestParam(value = "sex") int sex, @RequestParam(value = "avatar") String avatar, @RequestParam(value = "email") String email, @RequestParam(value = "roleId", required = false, defaultValue = "0") int roleId, @RequestParam(value = "organizationId", required = false, defaultValue = "0") int organizationId) {
 
 		if (id <= 0) {
 			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid user id");
 		}
 
-		boolean success = userService.updateUser(id, realName, phone, sex, avatar, email);
+		boolean success = userService.updateUser(id, realName, phone, sex, avatar, email, roleId, organizationId);
 
 		if (!success) {
 			return new ServiceResultDTO(BaseResultCode.USER_OPERATION_ERROR, "修改用户操作失败");
