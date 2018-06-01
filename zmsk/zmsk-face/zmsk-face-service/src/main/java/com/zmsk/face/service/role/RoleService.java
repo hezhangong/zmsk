@@ -2,6 +2,7 @@ package com.zmsk.face.service.role;
 
 import java.util.List;
 
+import com.alibaba.fastjson.JSONArray;
 import com.zmsk.face.pojo.FaceRole;
 
 /****
@@ -32,9 +33,13 @@ public interface RoleService {
 	 *            描述
 	 * @param orders
 	 *            排序值
+	 * @param organizationId
+	 *            组织Id
+	 * @param permissionIds
+	 *            权限资源列表
 	 * @return
 	 */
-	boolean createRole(String name, String title, String description, int orders);
+	boolean createRole(String name, String title, String description, int orders, int organizationId, List<Integer> permissionIds);
 
 	/***
 	 * 查询角色列表
@@ -58,9 +63,11 @@ public interface RoleService {
 	 *            描述
 	 * @param orders
 	 *            排序值
+	 * @param permissionIds
+	 *            权限资源列表
 	 * @return
 	 */
-	boolean updateRole(int id, String name, String title, String description, int orders);
+	boolean updateRole(int id, String name, String title, String description, int orders, List<Integer> permissionIds);
 
 	/***
 	 * 删除角色信息
@@ -70,5 +77,14 @@ public interface RoleService {
 	 * @return
 	 */
 	boolean deleteRole(List<Integer> ids);
+
+	/****
+	 * 获取树型的角色权限列表
+	 * 
+	 * @param roleId
+	 *            角色id
+	 * @return
+	 */
+	JSONArray queryTreeRolePermissionByRoleId(int roleId);
 
 }

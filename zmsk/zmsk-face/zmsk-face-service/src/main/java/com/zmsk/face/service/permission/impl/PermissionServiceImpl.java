@@ -13,6 +13,7 @@ import com.zmsk.face.mapper.FacePermissionMapper;
 import com.zmsk.face.mapper.FaceUserMapper;
 import com.zmsk.face.mapper.custom.permission.CustomFacePermissionMapper;
 import com.zmsk.face.pojo.FacePermission;
+import com.zmsk.face.pojo.FacePermissionExample;
 import com.zmsk.face.pojo.FaceUser;
 import com.zmsk.face.service.permission.PermissionService;
 import com.zmsk.face.service.user.constants.UserLockStatusConstants;
@@ -86,4 +87,11 @@ public class PermissionServiceImpl implements PermissionService {
 		return permissionMapper.insert(permission) > 0;
 	}
 
+	@Override
+	public List<FacePermission> queryPermissionList() {
+
+		FacePermissionExample example = new FacePermissionExample();
+
+		return permissionMapper.selectByExample(example);
+	}
 }

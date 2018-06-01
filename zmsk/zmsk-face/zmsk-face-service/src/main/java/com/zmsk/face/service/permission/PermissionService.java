@@ -49,4 +49,11 @@ public interface PermissionService {
 	 */
 	boolean createPermission(int pid, String name, int type, String permissionValue, String uri, int orders);
 
+	/***
+	 * 获取所有的权限资源信息
+	 * 
+	 * @return
+	 */
+	List<FacePermission> queryPermissionList();
+
 }

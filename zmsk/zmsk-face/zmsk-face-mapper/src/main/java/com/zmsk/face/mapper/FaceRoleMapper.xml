@@ -3,6 +3,7 @@
 <mapper namespace="com.zmsk.face.mapper.FaceRoleMapper" >
   <resultMap id="BaseResultMap" type="com.zmsk.face.pojo.FaceRole" >
     <id column="role_id" property="roleId" jdbcType="INTEGER" />
+    <result column="organization_id" property="organizationId" jdbcType="INTEGER" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="title" property="title" jdbcType="VARCHAR" />
     <result column="description" property="description" jdbcType="VARCHAR" />
@@ -68,7 +69,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    role_id, name, title, description, ctime, orders
+    role_id, organization_id, name, title, description, ctime, orders
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zmsk.face.pojo.FaceRoleExample" >
     select
@@ -100,19 +101,22 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.zmsk.face.pojo.FaceRole" >
-    insert into face_role (role_id, name, title, 
-      description, ctime, orders
-      )
-    values (#{roleId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
-      #{description,jdbcType=VARCHAR}, #{ctime,jdbcType=INTEGER}, #{orders,jdbcType=INTEGER}
-      )
+  <insert id="insert" parameterType="com.zmsk.face.pojo.FaceRole" useGeneratedKeys="true" keyProperty="roleId" >
+    insert into face_role (role_id, organization_id, name, 
+      title, description, ctime, 
+      orders)
+    values (#{roleId,jdbcType=INTEGER}, #{organizationId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
+      #{title,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{ctime,jdbcType=INTEGER}, 
+      #{orders,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.zmsk.face.pojo.FaceRole" >
     insert into face_role
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="roleId != null" >
         role_id,
+      </if>
+      <if test="organizationId != null" >
+        organization_id,
       </if>
       <if test="name != null" >
         name,
@@ -133,6 +137,9 @@
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="roleId != null" >
         #{roleId,jdbcType=INTEGER},
+      </if>
+      <if test="organizationId != null" >
+        #{organizationId,jdbcType=INTEGER},
       </if>
       <if test="name != null" >
         #{name,jdbcType=VARCHAR},
@@ -163,6 +170,9 @@
       <if test="record.roleId != null" >
         role_id = #{record.roleId,jdbcType=INTEGER},
       </if>
+      <if test="record.organizationId != null" >
+        organization_id = #{record.organizationId,jdbcType=INTEGER},
+      </if>
       <if test="record.name != null" >
         name = #{record.name,jdbcType=VARCHAR},
       </if>
@@ -186,6 +196,7 @@
   <update id="updateByExample" parameterType="map" >
     update face_role
     set role_id = #{record.roleId,jdbcType=INTEGER},
+      organization_id = #{record.organizationId,jdbcType=INTEGER},
       name = #{record.name,jdbcType=VARCHAR},
       title = #{record.title,jdbcType=VARCHAR},
       description = #{record.description,jdbcType=VARCHAR},
@@ -198,6 +209,9 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.zmsk.face.pojo.FaceRole" >
     update face_role
     <set >
+      <if test="organizationId != null" >
+        organization_id = #{organizationId,jdbcType=INTEGER},
+      </if>
       <if test="name != null" >
         name = #{name,jdbcType=VARCHAR},
       </if>
@@ -218,7 +232,8 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.zmsk.face.pojo.FaceRole" >
     update face_role
-    set name = #{name,jdbcType=VARCHAR},
+    set organization_id = #{organizationId,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
       title = #{title,jdbcType=VARCHAR},
       description = #{description,jdbcType=VARCHAR},
       ctime = #{ctime,jdbcType=INTEGER},

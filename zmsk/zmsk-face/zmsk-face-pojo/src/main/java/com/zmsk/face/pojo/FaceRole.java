@@ -1,63 +1,73 @@
 package com.zmsk.face.pojo;
 
 public class FaceRole {
-    private Integer roleId;
+	private Integer roleId;
 
-    private String name;
+	private Integer organizationId;
 
-    private String title;
+	private String name;
 
-    private String description;
+	private String title;
 
-    private Long ctime;
+	private String description;
 
-    private Integer orders;
+	private Long ctime;
 
-    public Integer getRoleId() {
-        return roleId;
-    }
+	private Integer orders;
 
-    public void setRoleId(Integer roleId) {
-        this.roleId = roleId;
-    }
+	public Integer getRoleId() {
+		return roleId;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public void setRoleId(Integer roleId) {
+		this.roleId = roleId;
+	}
 
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
-    }
+	public Integer getOrganizationId() {
+		return organizationId;
+	}
 
-    public String getTitle() {
-        return title;
-    }
+	public void setOrganizationId(Integer organizationId) {
+		this.organizationId = organizationId;
+	}
 
-    public void setTitle(String title) {
-        this.title = title == null ? null : title.trim();
-    }
+	public String getName() {
+		return name;
+	}
 
-    public String getDescription() {
-        return description;
-    }
+	public void setName(String name) {
+		this.name = name == null ? null : name.trim();
+	}
 
-    public void setDescription(String description) {
-        this.description = description == null ? null : description.trim();
-    }
+	public String getTitle() {
+		return title;
+	}
 
-    public Long getCtime() {
-        return ctime;
-    }
+	public void setTitle(String title) {
+		this.title = title == null ? null : title.trim();
+	}
 
-    public void setCtime(Long ctime) {
-        this.ctime = ctime;
-    }
+	public String getDescription() {
+		return description;
+	}
 
-    public Integer getOrders() {
-        return orders;
-    }
+	public void setDescription(String description) {
+		this.description = description == null ? null : description.trim();
+	}
 
-    public void setOrders(Integer orders) {
-        this.orders = orders;
-    }
+	public Long getCtime() {
+		return ctime;
+	}
+
+	public void setCtime(Long ctime) {
+		this.ctime = ctime;
+	}
+
+	public Integer getOrders() {
+		return orders;
+	}
+
+	public void setOrders(Integer orders) {
+		this.orders = orders;
+	}
 }
