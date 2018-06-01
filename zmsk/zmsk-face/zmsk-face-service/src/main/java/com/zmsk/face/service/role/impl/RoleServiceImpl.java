@@ -210,6 +210,8 @@ public class RoleServiceImpl implements RoleService {
 
 			if (rolePermissionIds.contains(permissionId)) {
 				node.put("check", true);
+			} else {
+				node.put("check", false);
 			}
 
 			folders.add(node);
@@ -258,6 +260,8 @@ public class RoleServiceImpl implements RoleService {
 
 				if (rolePermissionIds.contains(permissionId)) {
 					node.put("check", true);
+				} else {
+					node.put("check", false);
 				}
 
 				menus.add(node);
@@ -308,9 +312,11 @@ public class RoleServiceImpl implements RoleService {
 
 				if (rolePermissionIds.contains(permissionId)) {
 					node.put("check", true);
+				} else {
+					node.put("check", false);
 				}
 
-				buttons.add(permission);
+				buttons.add(node);
 			}
 
 			if (buttons.size() > 0) {

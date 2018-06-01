@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.zmsk.common.dto.BaseResultCode;
 import com.zmsk.common.dto.ServiceResultDTO;
 import com.zmsk.face.pojo.FaceRole;
@@ -42,12 +43,17 @@ public class RoleManagerController {
 	 *            描述
 	 * @param orders
 	 *            排序值
+	 * @param organizationId
+	 *            组织Id
+	 * @param permissionIdStr
+	 *            权限Id字符串
+	 * 
 	 * @return
 	 */
 	@RequestMapping(value = "create", method = RequestMethod.POST)
 	@RequiresPermissions("upms:role:create")
 	@ResponseBody
-	public ServiceResultDTO createRole(@RequestParam(value = "name") String name, @RequestParam(value = "title") String title, @RequestParam(value = "description") String description, @RequestParam(value = "orders", required = false, defaultValue = "0") int orders) {
+	public ServiceResultDTO createRole(@RequestParam(value = "name") String name, @RequestParam(value = "title") String title, @RequestParam(value = "description") String description, @RequestParam(value = "orders", required = false, defaultValue = "0") int orders, @RequestParam(value = "organizationId") int organizationId, @RequestParam(value = "permissionIdStr") String permissionIdStr) {
 
 		if (StringUtils.isEmpty(name)) {
 			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "invalid name ");
@@ -61,7 +67,19 @@ public class RoleManagerController {
 			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "invalid description ");
 		}
 
-		boolean success = roleService.createRole(name, title, description, orders);
+		if (organizationId <= 0) {
+			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "invalid organizationId ");
+		}
+
+		if (StringUtils.isEmpty(permissionIdStr)) {
+			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "invalid permissionIdStr ");
+		}
+
+		permissionIdStr = "[" + permissionIdStr + "]";
+
+		List<Integer> permissionIds = JSON.parseArray(permissionIdStr, Integer.class);
+
+		boolean success = roleService.createRole(name, title, description, orders, organizationId, permissionIds);
 
 		if (!success) {
 			return new ServiceResultDTO(BaseResultCode.ROLE_OPERATION_ERROR, "新增角色失败");
@@ -100,18 +118,28 @@ public class RoleManagerController {
 	 *            描述
 	 * @param orders
 	 *            排序值
+	 * @param permissionIdStr
+	 *            权限字符串
 	 * @return
 	 */
 	@RequestMapping(value = "update", method = RequestMethod.PUT)
 	@RequiresPermissions("upms:role:update")
 	@ResponseBody
-	public ServiceResultDTO updateRole(@RequestParam(value = "id") int id, @RequestParam(value = "name") String name, @RequestParam(value = "title") String title, @RequestParam(value = "description") String description, @RequestParam(value = "orders") int orders) {
+	public ServiceResultDTO updateRole(@RequestParam(value = "id") int id, @RequestParam(value = "name") String name, @RequestParam(value = "title") String title, @RequestParam(value = "description") String description, @RequestParam(value = "orders") int orders, @RequestParam(value = "permissionIdStr") String permissionIdStr) {
 
-		if (id == 0) {
+		if (id <= 0) {
 			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid role id");
 		}
 
-		boolean success = roleService.updateRole(id, name, title, description, orders);
+		if (StringUtils.isEmpty(permissionIdStr)) {
+			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "invalid permissionIdStr ");
+		}
+
+		permissionIdStr = "[" + permissionIdStr + "]";
+
+		List<Integer> permissionIds = JSON.parseArray(permissionIdStr, Integer.class);
+
+		boolean success = roleService.updateRole(id, name, title, description, orders, permissionIds);
 
 		if (!success) {
 			return new ServiceResultDTO(BaseResultCode.ROLE_OPERATION_ERROR, "修改角色信息操作失败");
@@ -142,5 +170,18 @@ public class RoleManagerController {
 		}
 
 		return ServiceResultDTO.success();
+	}
+
+	@RequestMapping(value = "permission",method=RequestMethod.GET)
+	@ResponseBody
+	public ServiceResultDTO queryTreeRolePermissionByRoleId(@RequestParam(value = "roleId") int roleId) {
+
+		if (roleId <= 0) {
+			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "invalid roleId ");
+		}
+
+		JSONArray jsonArray = roleService.queryTreeRolePermissionByRoleId(roleId);
+
+		return ServiceResultDTO.success(jsonArray);
 	}
 }
