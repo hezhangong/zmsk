@@ -95,15 +95,20 @@ public class RoleServiceImpl implements RoleService {
 	}
 
 	@Override
-	public List<FaceRole> queryRoleList(String search) {
+	public List<FaceRole> queryOrganizationRoleList(int organizationId) {
 
 		FaceRoleExample example = new FaceRoleExample();
 
-		if (!StringUtils.isEmpty(search)) {
-			example.or().andTitleLike("%" + search + "%");
-		}
+		Criteria criteria = example.createCriteria();
+
+		criteria.andOrganizationIdEqualTo(organizationId);
 
 		return roleMapper.selectByExample(example);
+	}
+
+	@Override
+	public FaceRole queryRoleById(int roleId) {
+		return roleMapper.selectByPrimaryKey(roleId);
 	}
 
 	@Override

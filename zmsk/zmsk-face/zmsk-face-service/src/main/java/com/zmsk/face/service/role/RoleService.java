@@ -44,11 +44,20 @@ public interface RoleService {
 	/***
 	 * 查询角色列表
 	 * 
-	 * @param search
-	 *            查询条件
+	 * @param organizationId
+	 *            组织Id
 	 * @return
 	 */
-	List<FaceRole> queryRoleList(String search);
+	List<FaceRole> queryOrganizationRoleList(int organizationId);
+
+	/****
+	 * 根据Id获取角色信息
+	 * 
+	 * @param roleId
+	 *            角色Id
+	 * @return
+	 */
+	FaceRole queryRoleById(int roleId);
 
 	/****
 	 * 修改角色信息

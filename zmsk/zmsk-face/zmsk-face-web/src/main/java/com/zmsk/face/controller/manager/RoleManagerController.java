@@ -89,26 +89,51 @@ public class RoleManagerController {
 	}
 
 	/****
-	 * 查询角色列表
+	 * 查询组织下角色列表
 	 * 
-	 * @param search
-	 *            查询条件
+	 * @param organizationId
+	 *            组织Id
 	 * @return
 	 */
 	@RequestMapping(value = "list", method = RequestMethod.GET)
 	@RequiresPermissions("upms:role:read")
 	@ResponseBody
-	public ServiceResultDTO queryRoleList(@RequestParam(value = "search", defaultValue = "", required = false) String search) {
+	public ServiceResultDTO queryOrganizationRoleList(@RequestParam(value = "organizationId") int organizationId) {
 
-		List<FaceRole> roleList = roleService.queryRoleList(search);
+		if (organizationId <= 0) {
+			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid organizationId");
+		}
+
+		List<FaceRole> roleList = roleService.queryOrganizationRoleList(organizationId);
 
 		return ServiceResultDTO.success(roleList);
 	}
 
 	/****
+	 * 根据角色Id获取角色信息
+	 * 
+	 * @param roleId
+	 *            角色Id
+	 * @return
+	 */
+	@RequestMapping(value = "{roleId}", method = RequestMethod.GET)
+	@RequiresPermissions("upms:role:read")
+	@ResponseBody
+	public ServiceResultDTO queryRoleById(@PathVariable(value = "roleId") int roleId) {
+
+		if (roleId <= 0) {
+			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid roleId");
+		}
+
+		FaceRole role = roleService.queryRoleById(roleId);
+
+		return ServiceResultDTO.success(role);
+	}
+
+	/****
 	 * 修改角色信息
 	 * 
-	 * @param id
+	 * @param roleId
 	 *            主键Id
 	 * @param name
 	 *            名称
@@ -122,12 +147,12 @@ public class RoleManagerController {
 	 *            权限字符串
 	 * @return
 	 */
-	@RequestMapping(value = "update", method = RequestMethod.PUT)
+	@RequestMapping(value = "update", method = RequestMethod.POST)
 	@RequiresPermissions("upms:role:update")
 	@ResponseBody
-	public ServiceResultDTO updateRole(@RequestParam(value = "id") int id, @RequestParam(value = "name") String name, @RequestParam(value = "title") String title, @RequestParam(value = "description") String description, @RequestParam(value = "orders") int orders, @RequestParam(value = "permissionIdStr") String permissionIdStr) {
+	public ServiceResultDTO updateRole(@RequestParam(value = "roleId") int roleId, @RequestParam(value = "name", required = false, defaultValue = "") String name, @RequestParam(value = "title", required = false, defaultValue = "") String title, @RequestParam(value = "description", required = false, defaultValue = "") String description, @RequestParam(value = "orders", required = false, defaultValue = "0") int orders, @RequestParam(value = "permissionIdStr", required = false, defaultValue = "") String permissionIdStr) {
 
-		if (id <= 0) {
+		if (roleId <= 0) {
 			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid role id");
 		}
 
@@ -139,7 +164,7 @@ public class RoleManagerController {
 
 		List<Integer> permissionIds = JSON.parseArray(permissionIdStr, Integer.class);
 
-		boolean success = roleService.updateRole(id, name, title, description, orders, permissionIds);
+		boolean success = roleService.updateRole(roleId, name, title, description, orders, permissionIds);
 
 		if (!success) {
 			return new ServiceResultDTO(BaseResultCode.ROLE_OPERATION_ERROR, "修改角色信息操作失败");
@@ -172,7 +197,12 @@ public class RoleManagerController {
 		return ServiceResultDTO.success();
 	}
 
-	@RequestMapping(value = "permission",method=RequestMethod.GET)
+	/****
+	 * 查询角色拥有的权限树型列表
+	 * @param roleId
+	 * @return
+	 */
+	@RequestMapping(value = "permission", method = RequestMethod.GET)
 	@ResponseBody
 	public ServiceResultDTO queryTreeRolePermissionByRoleId(@RequestParam(value = "roleId") int roleId) {
 
