@@ -56,6 +56,15 @@ public interface UserService {
 	List<FaceUser> queryUserList(String search);
 
 	/****
+	 * 根据用户Id获取用户信息
+	 * 
+	 * @param userId
+	 *            用户Id
+	 * @return
+	 */
+	FaceUser queryUserById(int userId);
+
+	/****
 	 * 删除用户
 	 * 
 	 * @param ids

@@ -52,10 +52,9 @@ public class CustomerSessionManager extends DefaultWebSessionManager {
 			request.setAttribute(ShiroHttpServletRequest.REFERENCED_SESSION_ID_IS_VALID, Boolean.TRUE);
 
 			return id;
-		} else {
-			// 按默认规则从cookie取sessionId
-			return super.getSessionId(request, response);
 		}
+
+		return null;
 	}
 
 	private String getSessionIdName() {

@@ -48,7 +48,7 @@ public class UserRoleServiceImpl implements UserRoleService {
 
 		criteria.andUserIdEqualTo(userId);
 
-		return userRoleMapper.updateByExample(userRole, example) > 0;
+		return userRoleMapper.updateByExampleSelective(userRole, example) > 0;
 	}
 
 }

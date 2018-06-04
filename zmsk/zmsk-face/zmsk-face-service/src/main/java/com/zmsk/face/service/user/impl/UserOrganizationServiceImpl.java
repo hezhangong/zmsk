@@ -30,7 +30,7 @@ public class UserOrganizationServiceImpl implements UserOrganizationService {
 
 		userOrganization.setUserId(userId);
 
-		userOrganization.setUserOrganizationId(organizationId);
+		userOrganization.setOrganizationId(organizationId);
 
 		return userOrganizationMapper.insert(userOrganization) > 0;
 	}

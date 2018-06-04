@@ -123,6 +123,11 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	public FaceUser queryUserById(int userId) {
+		return userMapper.selectByPrimaryKey(userId);
+	}
+
+	@Override
 	public boolean deleteUser(List<Integer> ids) {
 
 		FaceUserExample example = new FaceUserExample();

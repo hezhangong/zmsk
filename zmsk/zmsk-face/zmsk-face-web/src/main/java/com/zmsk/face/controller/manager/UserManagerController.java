@@ -114,6 +114,33 @@ public class UserManagerController {
 		return ServiceResultDTO.success(userList);
 	}
 
+	/****
+	 * 根据Id获取用户信息
+	 * 
+	 * @param userId
+	 *            用户Id
+	 * @return
+	 */
+	@RequestMapping(value = "{userId}", method = RequestMethod.GET)
+	@RequiresPermissions("upms:user:read")
+	@ResponseBody
+	public ServiceResultDTO queryUserById(@PathVariable(value = "userId") int userId) {
+
+		if (userId <= 0) {
+			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid userId ");
+		}
+
+		FaceUser user = userService.queryUserById(userId);
+
+		return ServiceResultDTO.success(user);
+	}
+
+	/****
+	 * 删除用户信息
+	 * 
+	 * @param ids
+	 * @return
+	 */
 	@RequestMapping(value = "delete/{ids}", method = RequestMethod.DELETE)
 	@RequiresPermissions("upms:user:delete")
 	@ResponseBody
@@ -153,16 +180,17 @@ public class UserManagerController {
 	 *            组织Id
 	 * @return
 	 */
-	@RequestMapping(value = "update", method = RequestMethod.PUT)
+	@RequestMapping(value = "update", method = RequestMethod.POST)
 	@RequiresPermissions("upms:user:update")
 	@ResponseBody
-	public ServiceResultDTO updateUser(@RequestParam(value = "id") int id, @RequestParam(value = "realName") String realName, @RequestParam(value = "phone") String phone, @RequestParam(value = "sex") int sex, @RequestParam(value = "avatar") String avatar, @RequestParam(value = "email") String email, @RequestParam(value = "roleId", required = false, defaultValue = "0") int roleId, @RequestParam(value = "organizationId", required = false, defaultValue = "0") int organizationId) {
+	public ServiceResultDTO updateUser(@RequestParam(value = "userId") int userId, @RequestParam(value = "realName", required = false, defaultValue = "") String realName, @RequestParam(value = "phone", required = false, defaultValue = "") String phone, @RequestParam(value = "sex", required = false, defaultValue = "0") int sex, @RequestParam(value = "avatar", required = false, defaultValue = "") String avatar, @RequestParam(value = "email", required = false, defaultValue = "") String email, @RequestParam(value = "roleId", required = false, defaultValue = "0") int roleId,
+			@RequestParam(value = "organizationId", required = false, defaultValue = "0") int organizationId) {
 
-		if (id <= 0) {
+		if (userId <= 0) {
 			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid user id");
 		}
 
-		boolean success = userService.updateUser(id, realName, phone, sex, avatar, email, roleId, organizationId);
+		boolean success = userService.updateUser(userId, realName, phone, sex, avatar, email, roleId, organizationId);
 
 		if (!success) {
 			return new ServiceResultDTO(BaseResultCode.USER_OPERATION_ERROR, "修改用户操作失败");

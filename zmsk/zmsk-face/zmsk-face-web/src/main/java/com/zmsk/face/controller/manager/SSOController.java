@@ -61,8 +61,9 @@ public class SSOController {
 	}
 
 	@RequestMapping(value = "tologin", method = RequestMethod.GET)
-	public String loginUI() {
-		return "login";
+	@ResponseBody
+	public ServiceResultDTO loginUI() {
+		throw new UnauthorizedAccessException("Unauthorized access exception");
 	}
 
 	@RequestMapping(value = "logout", method = RequestMethod.GET)
