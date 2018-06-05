@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.zmsk.common.dto.BaseResultCode;
 import com.zmsk.common.dto.ServiceResultDTO;
 import com.zmsk.face.pojo.FaceEquipment;
-import com.zmsk.face.service.equipment.equipmentService;
+import com.zmsk.face.service.equipment.EquipmentService;
 import com.zmsk.face.service.user.constants.UserConstants;
 
 /****
@@ -27,7 +27,7 @@ import com.zmsk.face.service.user.constants.UserConstants;
 public class EquipmentManagerController {
 
 	@Autowired
-	private equipmentService equipmentService;
+	private EquipmentService equipmentService;
 
 	/****
 	 * 创建设备

@@ -10,7 +10,7 @@ import com.zmsk.face.pojo.FaceEquipment;
  * @author warrior
  *
  */
-public interface equipmentService {
+public interface EquipmentService {
 
 	/****
 	 * 创建设备
@@ -54,6 +54,15 @@ public interface equipmentService {
 	 * @return
 	 */
 	FaceEquipment queryEquipmentById(int deviceId);
+
+	/***
+	 * 根据账号获取设备信息
+	 * 
+	 * @param deviceNumber
+	 *            设备登入账号
+	 * @return
+	 */
+	FaceEquipment queryEquipmentByNumber(String deviceNumber);
 
 	/***
 	 * 修改设备登入密码

@@ -14,7 +14,7 @@ import com.zmsk.face.pojo.FaceEquipment;
 import com.zmsk.face.pojo.FaceEquipmentExample;
 import com.zmsk.face.pojo.FaceEquipmentExample.Criteria;
 import com.zmsk.face.pojo.FaceSerialNumber;
-import com.zmsk.face.service.equipment.equipmentService;
+import com.zmsk.face.service.equipment.EquipmentService;
 import com.zmsk.face.service.equipment.constants.EquipmentConstants;
 import com.zmsk.face.service.equipment.constants.EquipmentStatus;
 
@@ -26,7 +26,7 @@ import com.zmsk.face.service.equipment.constants.EquipmentStatus;
  */
 @Service
 @Transactional
-public class EquipmentServiceImpl implements equipmentService {
+public class EquipmentServiceImpl implements EquipmentService {
 
 	// 账号前缀
 	private static final String NUMBER_PERFIEX = "zd";
@@ -109,6 +109,24 @@ public class EquipmentServiceImpl implements equipmentService {
 	public FaceEquipment queryEquipmentById(int deviceId) {
 
 		return equipmentMapper.selectByPrimaryKey(deviceId);
+	}
+
+	@Override
+	public FaceEquipment queryEquipmentByNumber(String deviceNumber) {
+
+		FaceEquipmentExample example = new FaceEquipmentExample();
+
+		Criteria criteria = example.createCriteria();
+
+		criteria.andEquipmentNumberEqualTo(deviceNumber);
+
+		List<FaceEquipment> list = equipmentMapper.selectByExample(example);
+
+		if (list == null || list.size() == 0) {
+			return null;
+		}
+
+		return list.get(0);
 	}
 
 	@Override

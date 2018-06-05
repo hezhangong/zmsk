@@ -27,4 +27,7 @@ public class BaseResultCode {
 
 	/** 设备操作错误code **/
 	public static final int EQUIPMENT_TAG_OPERATION_ERROR = 50006;
+	
+	/**设备认证信息操作错误**/
+	public static final int AUTHENTICATION_INFO_OPERATION_ERROR = 50007;
 }
