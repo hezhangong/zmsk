@@ -31,7 +31,7 @@ public class OrganizationManagerController {
 	 * 新增组织
 	 * 
 	 * @param pid
-	 *            产品Id
+	 *            父Id
 	 * @param name
 	 *            名称
 	 * @param description
@@ -73,7 +73,7 @@ public class OrganizationManagerController {
 	 *            描述
 	 * @return
 	 */
-	@RequestMapping(value = "update", method = RequestMethod.PUT)
+	@RequestMapping(value = "update", method = RequestMethod.POST)
 	@ResponseBody
 	@RequiresPermissions("upms:organization:update")
 	public ServiceResultDTO updateOrganization(@RequestParam(value = "organizationId") int organizationId, @RequestParam(value = "pid", required = false, defaultValue = "0") int pid, @RequestParam(value = "name") String name, @RequestParam(value = "description") String description) {

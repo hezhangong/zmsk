@@ -46,6 +46,15 @@ public interface equipmentService {
 	 */
 	List<FaceEquipment> queryEquipmentByOrganizationId(int organizationId);
 
+	/****
+	 * 根据设备Id获取设备信息
+	 * 
+	 * @param deviceId
+	 *            设备Id
+	 * @return
+	 */
+	FaceEquipment queryEquipmentById(int deviceId);
+
 	/***
 	 * 修改设备登入密码
 	 * 
@@ -58,4 +67,15 @@ public interface equipmentService {
 	 * @return 0 修改失败，1：修改成功，2：原始密码不正确
 	 */
 	int updateEquipmentPassword(int equipmentId, String newPassword, String oldPassword);
+
+	/****
+	 * 修改设备的备注信息
+	 * 
+	 * @param deviceId
+	 *            设备Id
+	 * @param remark
+	 *            备注信息
+	 * @return
+	 */
+	boolean updateEquipmentRemarkById(int deviceId, String remark);
 }

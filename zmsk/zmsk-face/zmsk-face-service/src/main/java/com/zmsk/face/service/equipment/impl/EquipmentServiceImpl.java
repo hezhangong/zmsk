@@ -106,6 +106,12 @@ public class EquipmentServiceImpl implements equipmentService {
 	}
 
 	@Override
+	public FaceEquipment queryEquipmentById(int deviceId) {
+
+		return equipmentMapper.selectByPrimaryKey(deviceId);
+	}
+
+	@Override
 	public int updateEquipmentPassword(int equipmentId, String newPassword, String oldPassword) {
 
 		FaceEquipmentExample example = new FaceEquipmentExample();
@@ -137,5 +143,21 @@ public class EquipmentServiceImpl implements equipmentService {
 		}
 
 		return EquipmentConstants.FAIL;
+	}
+
+	@Override
+	public boolean updateEquipmentRemarkById(int deviceId, String remark) {
+
+		FaceEquipmentExample example = new FaceEquipmentExample();
+
+		Criteria criteria = example.createCriteria();
+
+		criteria.andIdEqualTo(deviceId);
+
+		FaceEquipment record = new FaceEquipment();
+
+		record.setRemark(remark);
+
+		return equipmentMapper.updateByExampleSelective(record, example) > 0;
 	}
 }

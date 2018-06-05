@@ -71,7 +71,7 @@ public class PermissionManagerController {
 		boolean success = permissionService.createPermission(pid, name, type, permissionValue, uri, orders);
 
 		if (!success) {
-			return new ServiceResultDTO(BaseResultCode.PERMISSION_OPERATION_ERROR, "创建权失败");
+			return new ServiceResultDTO(BaseResultCode.PERMISSION_OPERATION_ERROR, "创建权限失败");
 		}
 
 		return ServiceResultDTO.success();
