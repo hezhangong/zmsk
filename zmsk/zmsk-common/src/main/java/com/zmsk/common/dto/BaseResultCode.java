@@ -30,4 +30,7 @@ public class BaseResultCode {
 	
 	/**设备认证信息操作错误**/
 	public static final int AUTHENTICATION_INFO_OPERATION_ERROR = 50007;
+	
+	/**人脸库操作失败**/
+	public static final int LIBRARY_OPERATION_ERROR = 50008;
 }

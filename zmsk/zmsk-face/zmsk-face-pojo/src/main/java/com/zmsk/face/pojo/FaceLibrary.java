@@ -1,11 +1,9 @@
 package com.zmsk.face.pojo;
 
-public class FaceAuthenticationInfo {
+public class FaceLibrary {
 	private Integer id;
 
 	private String name;
-
-	private String avatar;
 
 	private Integer sex;
 
@@ -15,17 +13,15 @@ public class FaceAuthenticationInfo {
 
 	private String address;
 
+	private String avatar;
+
 	private String group;
 
-	private Integer type;
+	private String remark;
 
-	private String source;
-
-	private Integer result;
+	private Integer flag;
 
 	private Integer organizationId;
-
-	private Integer equipmentId;
 
 	private Long ctime;
 
@@ -43,14 +39,6 @@ public class FaceAuthenticationInfo {
 
 	public void setName(String name) {
 		this.name = name == null ? null : name.trim();
-	}
-
-	public String getAvatar() {
-		return avatar;
-	}
-
-	public void setAvatar(String avatar) {
-		this.avatar = avatar == null ? null : avatar.trim();
 	}
 
 	public Integer getSex() {
@@ -85,6 +73,14 @@ public class FaceAuthenticationInfo {
 		this.address = address == null ? null : address.trim();
 	}
 
+	public String getAvatar() {
+		return avatar;
+	}
+
+	public void setAvatar(String avatar) {
+		this.avatar = avatar == null ? null : avatar.trim();
+	}
+
 	public String getGroup() {
 		return group;
 	}
@@ -93,28 +89,20 @@ public class FaceAuthenticationInfo {
 		this.group = group == null ? null : group.trim();
 	}
 
-	public Integer getType() {
-		return type;
+	public String getRemark() {
+		return remark;
 	}
 
-	public void setType(Integer type) {
-		this.type = type;
+	public void setRemark(String remark) {
+		this.remark = remark == null ? null : remark.trim();
 	}
 
-	public String getSource() {
-		return source;
+	public Integer getFlag() {
+		return flag;
 	}
 
-	public void setSource(String source) {
-		this.source = source == null ? null : source.trim();
-	}
-
-	public Integer getResult() {
-		return result;
-	}
-
-	public void setResult(Integer result) {
-		this.result = result;
+	public void setFlag(Integer flag) {
+		this.flag = flag;
 	}
 
 	public Integer getOrganizationId() {
@@ -123,14 +111,6 @@ public class FaceAuthenticationInfo {
 
 	public void setOrganizationId(Integer organizationId) {
 		this.organizationId = organizationId;
-	}
-
-	public Integer getEquipmentId() {
-		return equipmentId;
-	}
-
-	public void setEquipmentId(Integer equipmentId) {
-		this.equipmentId = equipmentId;
 	}
 
 	public Long getCtime() {

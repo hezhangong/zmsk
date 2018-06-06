@@ -32,6 +32,10 @@ public class AuthenticationInfoDeviceController {
 	 *            名称
 	 * @param idNumber
 	 *            身份证号
+	 * @param nation
+	 *            民族
+	 * @param address
+	 *            身份证地址
 	 * @param avatar
 	 *            头像
 	 * @param sex
@@ -48,7 +52,8 @@ public class AuthenticationInfoDeviceController {
 	 */
 	@RequestMapping(value = "add", method = RequestMethod.POST)
 	@ResponseBody
-	public ServiceResultDTO addAuthenticationRecord(@RequestParam(value = "name") String name, @RequestParam(value = "idNumber", required = false, defaultValue = "") String idNumber, @RequestParam(value = "avatar", required = false, defaultValue = "") String avatar, @RequestParam(value = "sex") int sex, @RequestParam(value = "group", required = false, defaultValue = "") String group, @RequestParam(value = "type") int type, @RequestParam(value = "result") int result, @RequestParam(value = "deviceNumber") String deviceNumber) {
+	public ServiceResultDTO addAuthenticationRecord(@RequestParam(value = "name") String name, @RequestParam(value = "idNumber", required = false, defaultValue = "") String idNumber, @RequestParam(value = "nation", defaultValue = "", required = false) String nation, @RequestParam(value = "address", required = false, defaultValue = "") String address, @RequestParam(value = "avatar", required = false, defaultValue = "") String avatar, @RequestParam(value = "sex") int sex, @RequestParam(value = "group", required = false, defaultValue = "") String group, @RequestParam(value = "type") int type, @RequestParam(value = "result") int result,
+			@RequestParam(value = "deviceNumber") String deviceNumber) {
 
 		if (StringUtils.isEmpty(name)) {
 			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, " invalid name");
@@ -70,7 +75,7 @@ public class AuthenticationInfoDeviceController {
 			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, " invalid result");
 		}
 
-		boolean success = authenticationServiceInfo.addAuthenticationInfo(name, idNumber, avatar, sex, group, type, result, deviceNumber);
+		boolean success = authenticationServiceInfo.addAuthenticationInfo(name, idNumber, nation, address, avatar, sex, group, type, result, deviceNumber);
 
 		if (!success) {
 			return new ServiceResultDTO(BaseResultCode.AUTHENTICATION_INFO_OPERATION_ERROR, "create authentication record fail");

@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.zmsk.face.mapper.FaceAuthenticationInfoMapper" >
-  <resultMap id="BaseResultMap" type="com.zmsk.face.pojo.FaceAuthenticationInfo" >
+<mapper namespace="com.zmsk.face.mapper.FaceLibraryMapper" >
+  <resultMap id="BaseResultMap" type="com.zmsk.face.pojo.FaceLibrary" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="name" property="name" jdbcType="VARCHAR" />
-    <result column="avatar" property="avatar" jdbcType="VARCHAR" />
     <result column="sex" property="sex" jdbcType="BIT" />
     <result column="id_number" property="idNumber" jdbcType="VARCHAR" />
     <result column="nation" property="nation" jdbcType="VARCHAR" />
     <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="avatar" property="avatar" jdbcType="VARCHAR" />
     <result column="group" property="group" jdbcType="VARCHAR" />
-    <result column="type" property="type" jdbcType="BIT" />
-    <result column="source" property="source" jdbcType="VARCHAR" />
-    <result column="result" property="result" jdbcType="BIT" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="flag" property="flag" jdbcType="BIT" />
     <result column="organization_id" property="organizationId" jdbcType="INTEGER" />
-    <result column="equipment_id" property="equipmentId" jdbcType="INTEGER" />
     <result column="ctime" property="ctime" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -76,16 +74,16 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, name, avatar, sex, id_number, nation, address, group, type, source, result, organization_id, 
-    equipment_id, ctime
+    id, name, sex, id_number, nation, address, avatar, group, remark, flag, organization_id, 
+    ctime
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zmsk.face.pojo.FaceAuthenticationInfoExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zmsk.face.pojo.FaceLibraryExample" >
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from face_authentication_info
+    from face_library
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -96,42 +94,37 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    from face_authentication_info
+    from face_library
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from face_authentication_info
+    delete from face_library
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.zmsk.face.pojo.FaceAuthenticationInfoExample" >
-    delete from face_authentication_info
+  <delete id="deleteByExample" parameterType="com.zmsk.face.pojo.FaceLibraryExample" >
+    delete from face_library
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.zmsk.face.pojo.FaceAuthenticationInfo" >
-    insert into face_authentication_info (id, name, avatar, 
-      sex, id_number, nation, 
-      address, group, type, source, 
-      result, organization_id, equipment_id, 
+  <insert id="insert" parameterType="com.zmsk.face.pojo.FaceLibrary" >
+    insert into face_library (id, name, sex, id_number, 
+      nation, address, avatar, 
+      group, remark, flag, organization_id, 
       ctime)
-    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{avatar,jdbcType=VARCHAR}, 
-      #{sex,jdbcType=BIT}, #{idNumber,jdbcType=VARCHAR}, #{nation,jdbcType=VARCHAR}, 
-      #{address,jdbcType=VARCHAR}, #{group,jdbcType=VARCHAR}, #{type,jdbcType=BIT}, #{source,jdbcType=VARCHAR}, 
-      #{result,jdbcType=BIT}, #{organizationId,jdbcType=INTEGER}, #{equipmentId,jdbcType=INTEGER}, 
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{sex,jdbcType=BIT}, #{idNumber,jdbcType=VARCHAR}, 
+      #{nation,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{avatar,jdbcType=VARCHAR}, 
+      #{group,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{flag,jdbcType=BIT}, #{organizationId,jdbcType=INTEGER}, 
       #{ctime,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.zmsk.face.pojo.FaceAuthenticationInfo" >
-    insert into face_authentication_info
+  <insert id="insertSelective" parameterType="com.zmsk.face.pojo.FaceLibrary" >
+    insert into face_library
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
       </if>
       <if test="name != null" >
         name,
-      </if>
-      <if test="avatar != null" >
-        avatar,
       </if>
       <if test="sex != null" >
         sex,
@@ -145,23 +138,20 @@
       <if test="address != null" >
         address,
       </if>
+      <if test="avatar != null" >
+        avatar,
+      </if>
       <if test="group != null" >
         group,
       </if>
-      <if test="type != null" >
-        type,
+      <if test="remark != null" >
+        remark,
       </if>
-      <if test="source != null" >
-        source,
-      </if>
-      <if test="result != null" >
-        result,
+      <if test="flag != null" >
+        flag,
       </if>
       <if test="organizationId != null" >
         organization_id,
-      </if>
-      <if test="equipmentId != null" >
-        equipment_id,
       </if>
       <if test="ctime != null" >
         ctime,
@@ -173,9 +163,6 @@
       </if>
       <if test="name != null" >
         #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="avatar != null" >
-        #{avatar,jdbcType=VARCHAR},
       </if>
       <if test="sex != null" >
         #{sex,jdbcType=BIT},
@@ -189,46 +176,40 @@
       <if test="address != null" >
         #{address,jdbcType=VARCHAR},
       </if>
+      <if test="avatar != null" >
+        #{avatar,jdbcType=VARCHAR},
+      </if>
       <if test="group != null" >
         #{group,jdbcType=VARCHAR},
       </if>
-      <if test="type != null" >
-        #{type,jdbcType=BIT},
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
       </if>
-      <if test="source != null" >
-        #{source,jdbcType=VARCHAR},
-      </if>
-      <if test="result != null" >
-        #{result,jdbcType=BIT},
+      <if test="flag != null" >
+        #{flag,jdbcType=BIT},
       </if>
       <if test="organizationId != null" >
         #{organizationId,jdbcType=INTEGER},
-      </if>
-      <if test="equipmentId != null" >
-        #{equipmentId,jdbcType=INTEGER},
       </if>
       <if test="ctime != null" >
         #{ctime,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.zmsk.face.pojo.FaceAuthenticationInfoExample" resultType="java.lang.Integer" >
-    select count(*) from face_authentication_info
+  <select id="countByExample" parameterType="com.zmsk.face.pojo.FaceLibraryExample" resultType="java.lang.Integer" >
+    select count(*) from face_library
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update face_authentication_info
+    update face_library
     <set >
       <if test="record.id != null" >
         id = #{record.id,jdbcType=INTEGER},
       </if>
       <if test="record.name != null" >
         name = #{record.name,jdbcType=VARCHAR},
-      </if>
-      <if test="record.avatar != null" >
-        avatar = #{record.avatar,jdbcType=VARCHAR},
       </if>
       <if test="record.sex != null" >
         sex = #{record.sex,jdbcType=BIT},
@@ -242,23 +223,20 @@
       <if test="record.address != null" >
         address = #{record.address,jdbcType=VARCHAR},
       </if>
+      <if test="record.avatar != null" >
+        avatar = #{record.avatar,jdbcType=VARCHAR},
+      </if>
       <if test="record.group != null" >
         group = #{record.group,jdbcType=VARCHAR},
       </if>
-      <if test="record.type != null" >
-        type = #{record.type,jdbcType=BIT},
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
       </if>
-      <if test="record.source != null" >
-        source = #{record.source,jdbcType=VARCHAR},
-      </if>
-      <if test="record.result != null" >
-        result = #{record.result,jdbcType=BIT},
+      <if test="record.flag != null" >
+        flag = #{record.flag,jdbcType=BIT},
       </if>
       <if test="record.organizationId != null" >
         organization_id = #{record.organizationId,jdbcType=INTEGER},
-      </if>
-      <if test="record.equipmentId != null" >
-        equipment_id = #{record.equipmentId,jdbcType=INTEGER},
       </if>
       <if test="record.ctime != null" >
         ctime = #{record.ctime,jdbcType=INTEGER},
@@ -269,33 +247,28 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update face_authentication_info
+    update face_library
     set id = #{record.id,jdbcType=INTEGER},
       name = #{record.name,jdbcType=VARCHAR},
-      avatar = #{record.avatar,jdbcType=VARCHAR},
       sex = #{record.sex,jdbcType=BIT},
       id_number = #{record.idNumber,jdbcType=VARCHAR},
       nation = #{record.nation,jdbcType=VARCHAR},
       address = #{record.address,jdbcType=VARCHAR},
+      avatar = #{record.avatar,jdbcType=VARCHAR},
       group = #{record.group,jdbcType=VARCHAR},
-      type = #{record.type,jdbcType=BIT},
-      source = #{record.source,jdbcType=VARCHAR},
-      result = #{record.result,jdbcType=BIT},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      flag = #{record.flag,jdbcType=BIT},
       organization_id = #{record.organizationId,jdbcType=INTEGER},
-      equipment_id = #{record.equipmentId,jdbcType=INTEGER},
       ctime = #{record.ctime,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.zmsk.face.pojo.FaceAuthenticationInfo" >
-    update face_authentication_info
+  <update id="updateByPrimaryKeySelective" parameterType="com.zmsk.face.pojo.FaceLibrary" >
+    update face_library
     <set >
       <if test="name != null" >
         name = #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="avatar != null" >
-        avatar = #{avatar,jdbcType=VARCHAR},
       </if>
       <if test="sex != null" >
         sex = #{sex,jdbcType=BIT},
@@ -309,23 +282,20 @@
       <if test="address != null" >
         address = #{address,jdbcType=VARCHAR},
       </if>
+      <if test="avatar != null" >
+        avatar = #{avatar,jdbcType=VARCHAR},
+      </if>
       <if test="group != null" >
         group = #{group,jdbcType=VARCHAR},
       </if>
-      <if test="type != null" >
-        type = #{type,jdbcType=BIT},
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
       </if>
-      <if test="source != null" >
-        source = #{source,jdbcType=VARCHAR},
-      </if>
-      <if test="result != null" >
-        result = #{result,jdbcType=BIT},
+      <if test="flag != null" >
+        flag = #{flag,jdbcType=BIT},
       </if>
       <if test="organizationId != null" >
         organization_id = #{organizationId,jdbcType=INTEGER},
-      </if>
-      <if test="equipmentId != null" >
-        equipment_id = #{equipmentId,jdbcType=INTEGER},
       </if>
       <if test="ctime != null" >
         ctime = #{ctime,jdbcType=INTEGER},
@@ -333,20 +303,18 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.zmsk.face.pojo.FaceAuthenticationInfo" >
-    update face_authentication_info
+  <update id="updateByPrimaryKey" parameterType="com.zmsk.face.pojo.FaceLibrary" >
+    update face_library
     set name = #{name,jdbcType=VARCHAR},
-      avatar = #{avatar,jdbcType=VARCHAR},
       sex = #{sex,jdbcType=BIT},
       id_number = #{idNumber,jdbcType=VARCHAR},
       nation = #{nation,jdbcType=VARCHAR},
       address = #{address,jdbcType=VARCHAR},
+      avatar = #{avatar,jdbcType=VARCHAR},
       group = #{group,jdbcType=VARCHAR},
-      type = #{type,jdbcType=BIT},
-      source = #{source,jdbcType=VARCHAR},
-      result = #{result,jdbcType=BIT},
+      remark = #{remark,jdbcType=VARCHAR},
+      flag = #{flag,jdbcType=BIT},
       organization_id = #{organizationId,jdbcType=INTEGER},
-      equipment_id = #{equipmentId,jdbcType=INTEGER},
       ctime = #{ctime,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>

@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zmsk.face.mapper.FaceEquipmentLibraryMapper" >
+  <resultMap id="BaseResultMap" type="com.zmsk.face.pojo.FaceEquipmentLibrary" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="library_id" property="libraryId" jdbcType="INTEGER" />
+    <result column="equipment_id" property="equipmentId" jdbcType="INTEGER" />
+    <result column="sync_status" property="syncStatus" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, library_id, equipment_id, sync_status
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zmsk.face.pojo.FaceEquipmentLibraryExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from face_equipment_library
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from face_equipment_library
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from face_equipment_library
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zmsk.face.pojo.FaceEquipmentLibraryExample" >
+    delete from face_equipment_library
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zmsk.face.pojo.FaceEquipmentLibrary" >
+    insert into face_equipment_library (id, library_id, equipment_id, 
+      sync_status)
+    values (#{id,jdbcType=INTEGER}, #{libraryId,jdbcType=INTEGER}, #{equipmentId,jdbcType=INTEGER}, 
+      #{syncStatus,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zmsk.face.pojo.FaceEquipmentLibrary" >
+    insert into face_equipment_library
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="libraryId != null" >
+        library_id,
+      </if>
+      <if test="equipmentId != null" >
+        equipment_id,
+      </if>
+      <if test="syncStatus != null" >
+        sync_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="libraryId != null" >
+        #{libraryId,jdbcType=INTEGER},
+      </if>
+      <if test="equipmentId != null" >
+        #{equipmentId,jdbcType=INTEGER},
+      </if>
+      <if test="syncStatus != null" >
+        #{syncStatus,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zmsk.face.pojo.FaceEquipmentLibraryExample" resultType="java.lang.Integer" >
+    select count(*) from face_equipment_library
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update face_equipment_library
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.libraryId != null" >
+        library_id = #{record.libraryId,jdbcType=INTEGER},
+      </if>
+      <if test="record.equipmentId != null" >
+        equipment_id = #{record.equipmentId,jdbcType=INTEGER},
+      </if>
+      <if test="record.syncStatus != null" >
+        sync_status = #{record.syncStatus,jdbcType=BIT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update face_equipment_library
+    set id = #{record.id,jdbcType=INTEGER},
+      library_id = #{record.libraryId,jdbcType=INTEGER},
+      equipment_id = #{record.equipmentId,jdbcType=INTEGER},
+      sync_status = #{record.syncStatus,jdbcType=BIT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zmsk.face.pojo.FaceEquipmentLibrary" >
+    update face_equipment_library
+    <set >
+      <if test="libraryId != null" >
+        library_id = #{libraryId,jdbcType=INTEGER},
+      </if>
+      <if test="equipmentId != null" >
+        equipment_id = #{equipmentId,jdbcType=INTEGER},
+      </if>
+      <if test="syncStatus != null" >
+        sync_status = #{syncStatus,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zmsk.face.pojo.FaceEquipmentLibrary" >
+    update face_equipment_library
+    set library_id = #{libraryId,jdbcType=INTEGER},
+      equipment_id = #{equipmentId,jdbcType=INTEGER},
+      sync_status = #{syncStatus,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

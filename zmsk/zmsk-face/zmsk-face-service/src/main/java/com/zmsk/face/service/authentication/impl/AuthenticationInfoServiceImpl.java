@@ -38,7 +38,7 @@ public class AuthenticationInfoServiceImpl implements AuthenticationInfoService 
 	private EquipmentService equipmentService;
 
 	@Override
-	public boolean addAuthenticationInfo(String name, String idNumber, String avatar, int sex, String group, int type, int result, String deviceNumber) {
+	public boolean addAuthenticationInfo(String name, String idNumber, String nation, String address, String avatar, int sex, String group, int type, int result, String deviceNumber) {
 
 		// 获取设备信息
 		FaceEquipment equipment = equipmentService.queryEquipmentByNumber(deviceNumber);
@@ -55,6 +55,10 @@ public class AuthenticationInfoServiceImpl implements AuthenticationInfoService 
 		authenticationInfo.setAvatar(avatar);
 
 		authenticationInfo.setIdNumber(idNumber);
+
+		authenticationInfo.setNation(nation);
+
+		authenticationInfo.setAddress(address);
 
 		authenticationInfo.setOrganizationId(equipment.getOrganizationId());
 
