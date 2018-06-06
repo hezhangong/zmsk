@@ -28,8 +28,6 @@ public interface FaceLibraryService {
 	 *            地址
 	 * @param avatar
 	 *            头像
-	 * @param group
-	 *            所属分组
 	 * @param remark
 	 *            备注
 	 * @param flag
@@ -40,7 +38,7 @@ public interface FaceLibraryService {
 	 *            设备Id列表
 	 * @return
 	 */
-	boolean addFaceLibrary(String name, int sex, String idNumber, String nation, String address, String avatar, String group, String remark, int flag, int organizationId, List<Integer> equipmentIds);
+	boolean addFaceLibrary(String name, int sex, String idNumber, String nation, String address, String avatar, String remark, int flag, int organizationId, List<Integer> equipmentIds);
 
 	/****
 	 * 查看组织下的人脸库列表
@@ -55,7 +53,7 @@ public interface FaceLibraryService {
 	 *            当前页
 	 * @return
 	 */
-	PageInfo<FaceLibrary> queryLibraryList(int organizationId, int flag, int pageSize, int pageNum);
+	List<FaceLibrary> queryLibraryList(int organizationId, int flag, int pageSize, int pageNum);
 
 	/****
 	 * 查看设备下的人脸库列表
@@ -70,5 +68,5 @@ public interface FaceLibraryService {
 	 *            当前页
 	 * @return
 	 */
-	PageInfo<FaceLibrary> queryLibraryListByEquipmentId(int equipmentId, int flag, int pageSize, int pageNum);
+	List<FaceLibrary> queryLibraryListByEquipmentId(int equipmentId, int flag, int pageSize, int pageNum);
 }

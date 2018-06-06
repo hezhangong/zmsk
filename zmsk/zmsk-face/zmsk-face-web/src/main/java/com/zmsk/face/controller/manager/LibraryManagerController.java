@@ -46,8 +46,6 @@ public class LibraryManagerController {
 	 *            地址
 	 * @param avatar
 	 *            头像
-	 * @param group
-	 *            所属分组
 	 * @param remark
 	 *            备注
 	 * @param flag
@@ -60,8 +58,7 @@ public class LibraryManagerController {
 	 */
 	@RequestMapping(value = "add", method = RequestMethod.POST)
 	@ResponseBody
-	public ServiceResultDTO addFaceLibrary(@RequestParam(value = "name") String name, @RequestParam(value = "sex") int sex, @RequestParam(value = "idNumber") String idNumber, @RequestParam(value = "nation", required = false, defaultValue = "") String nation, @RequestParam(value = "address", defaultValue = "", required = false) String address, @RequestParam(value = "avatar") String avatar, @RequestParam(value = "group", defaultValue = "", required = false) String group, @RequestParam(value = "remark", defaultValue = "", required = false) String remark, @RequestParam(value = "flag") int flag, @RequestParam(value = "organizationId") int organizationId,
-			@RequestParam(value = "equipmentIds") String equipmentId) {
+	public ServiceResultDTO addFaceLibrary(@RequestParam(value = "name") String name, @RequestParam(value = "sex") int sex, @RequestParam(value = "idNumber") String idNumber, @RequestParam(value = "nation", required = false, defaultValue = "") String nation, @RequestParam(value = "address", defaultValue = "", required = false) String address, @RequestParam(value = "avatar") String avatar, @RequestParam(value = "remark", defaultValue = "", required = false) String remark, @RequestParam(value = "flag") int flag, @RequestParam(value = "organizationId") int organizationId, @RequestParam(value = "equipmentId") String equipmentId) {
 
 		if (StringUtils.isEmpty(name)) {
 			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid name");
@@ -93,7 +90,7 @@ public class LibraryManagerController {
 
 		List<Integer> equipmentIds = JSON.parseArray("[" + equipmentId + "]", Integer.class);
 
-		boolean success = faceLibraryService.addFaceLibrary(name, sex, idNumber, nation, address, avatar, group, remark, flag, organizationId, equipmentIds);
+		boolean success = faceLibraryService.addFaceLibrary(name, sex, idNumber, nation, address, avatar, remark, flag, organizationId, equipmentIds);
 
 		if (!success) {
 			return new ServiceResultDTO(BaseResultCode.LIBRARY_OPERATION_ERROR, "新增人脸库失败");
@@ -121,7 +118,7 @@ public class LibraryManagerController {
 			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid organization id");
 		}
 
-		PageInfo<FaceLibrary> pageInfo = faceLibraryService.queryLibraryList(organizationId, LibraryFlagConstants.WHITE_FLAG, pageSize, pageNum);
+		List<FaceLibrary> pageInfo = faceLibraryService.queryLibraryList(organizationId, LibraryFlagConstants.WHITE_FLAG, pageSize, pageNum);
 
 		return ServiceResultDTO.success(pageInfo);
 	}
@@ -145,7 +142,7 @@ public class LibraryManagerController {
 			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid organization id");
 		}
 
-		PageInfo<FaceLibrary> pageInfo = faceLibraryService.queryLibraryList(organizationId, LibraryFlagConstants.BLACK_FLAG, pageSize, pageNum);
+		List<FaceLibrary> pageInfo = faceLibraryService.queryLibraryList(organizationId, LibraryFlagConstants.BLACK_FLAG, pageSize, pageNum);
 
 		return ServiceResultDTO.success(pageInfo);
 	}
@@ -169,7 +166,7 @@ public class LibraryManagerController {
 			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid equipment id");
 		}
 
-		PageInfo<FaceLibrary> pageInfo = faceLibraryService.queryLibraryListByEquipmentId(equipmentId, LibraryFlagConstants.WHITE_FLAG, pageSize, pageNum);
+		List<FaceLibrary> pageInfo = faceLibraryService.queryLibraryListByEquipmentId(equipmentId, LibraryFlagConstants.WHITE_FLAG, pageSize, pageNum);
 
 		return ServiceResultDTO.success(pageInfo);
 	}
@@ -193,7 +190,7 @@ public class LibraryManagerController {
 			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid equipment id");
 		}
 
-		PageInfo<FaceLibrary> pageInfo = faceLibraryService.queryLibraryListByEquipmentId(equipmentId, LibraryFlagConstants.BLACK_FLAG, pageSize, pageNum);
+		List<FaceLibrary> pageInfo = faceLibraryService.queryLibraryListByEquipmentId(equipmentId, LibraryFlagConstants.BLACK_FLAG, pageSize, pageNum);
 
 		return ServiceResultDTO.success(pageInfo);
 	}

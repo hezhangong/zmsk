@@ -37,7 +37,7 @@ public class FaceLibraryServiceImpl implements FaceLibraryService {
 	private FaceLibraryEquipmentService libraryEquipmentService;
 
 	@Override
-	public boolean addFaceLibrary(String name, int sex, String idNumber, String nation, String address, String avatar, String group, String remark, int flag, int organizationId, List<Integer> equipmentIds) {
+	public boolean addFaceLibrary(String name, int sex, String idNumber, String nation, String address, String avatar, String remark, int flag, int organizationId, List<Integer> equipmentIds) {
 
 		FaceLibrary library = new FaceLibrary();
 
@@ -52,8 +52,6 @@ public class FaceLibraryServiceImpl implements FaceLibraryService {
 		library.setAddress(address);
 
 		library.setAvatar(avatar);
-
-		library.setGroup(group);
 
 		library.setRemark(remark);
 
@@ -73,7 +71,7 @@ public class FaceLibraryServiceImpl implements FaceLibraryService {
 	}
 
 	@Override
-	public PageInfo<FaceLibrary> queryLibraryList(int organizationId, int flag, int pageSize, int pageNum) {
+	public List<FaceLibrary> queryLibraryList(int organizationId, int flag, int pageSize, int pageNum) {
 
 		FaceLibraryExample example = new FaceLibraryExample();
 
@@ -90,21 +88,21 @@ public class FaceLibraryServiceImpl implements FaceLibraryService {
 
 		List<FaceLibrary> faceLibrarys = faceLibraryMapper.selectByExample(example);
 
-		PageInfo<FaceLibrary> pageInfo = new PageInfo<>(faceLibrarys);
+		//PageInfo<FaceLibrary> pageInfo = new PageInfo<>(faceLibrarys);
 
-		return pageInfo;
+		return faceLibrarys;
 	}
 
 	@Override
-	public PageInfo<FaceLibrary> queryLibraryListByEquipmentId(int equipmentId, int flag, int pageSize, int pageNum) {
+	public List<FaceLibrary> queryLibraryListByEquipmentId(int equipmentId, int flag, int pageSize, int pageNum) {
 
 		int pageStart = PageUtils.getPageStart(pageSize, pageNum);
 
 		List<FaceLibrary> list = customerLibraryMapper.queryLibraryListByEquipmentId(equipmentId, flag, pageSize, pageStart);
 
-		PageInfo<FaceLibrary> pageInfo = new PageInfo<>(list);
+		//PageInfo<FaceLibrary> pageInfo = new PageInfo<>(list);
 
-		return pageInfo;
+		return list;
 	}
 
 }

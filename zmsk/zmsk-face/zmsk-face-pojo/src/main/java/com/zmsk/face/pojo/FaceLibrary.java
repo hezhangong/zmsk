@@ -15,8 +15,6 @@ public class FaceLibrary {
 
 	private String avatar;
 
-	private String group;
-
 	private String remark;
 
 	private Integer flag;
@@ -79,14 +77,6 @@ public class FaceLibrary {
 
 	public void setAvatar(String avatar) {
 		this.avatar = avatar == null ? null : avatar.trim();
-	}
-
-	public String getGroup() {
-		return group;
-	}
-
-	public void setGroup(String group) {
-		this.group = group == null ? null : group.trim();
 	}
 
 	public String getRemark() {
