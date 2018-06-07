@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSON;
 import com.zmsk.common.dto.BaseResultCode;
 import com.zmsk.common.dto.ServiceResultDTO;
-import com.zmsk.common.pagehelper.PageInfo;
 import com.zmsk.face.pojo.FaceLibrary;
 import com.zmsk.face.service.library.FaceLibraryService;
 import com.zmsk.face.service.library.constants.LibraryFlagConstants;

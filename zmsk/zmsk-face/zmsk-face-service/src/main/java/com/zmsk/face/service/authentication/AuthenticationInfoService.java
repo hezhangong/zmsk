@@ -1,5 +1,7 @@
 package com.zmsk.face.service.authentication;
 
+import java.util.List;
+
 import com.zmsk.common.pagehelper.PageInfo;
 import com.zmsk.face.pojo.FaceAuthenticationInfo;
 
@@ -26,8 +28,6 @@ public interface AuthenticationInfoService {
 	 *            头像地址
 	 * @param sex
 	 *            性别
-	 * @param group
-	 *            分组
 	 * @param type
 	 *            类型
 	 * @param result
@@ -36,7 +36,7 @@ public interface AuthenticationInfoService {
 	 *            设备登入账号
 	 * @return
 	 */
-	boolean addAuthenticationInfo(String name, String idNumber, String nation, String address, String avatar, int sex, String group, int type, int result, String deviceNumber);
+	boolean addAuthenticationInfo(String name, String idNumber, String nation, String address, String avatar, int sex, int type, int result, String deviceNumber);
 
 	/****
 	 * 查询认证信息记录
@@ -51,5 +51,5 @@ public interface AuthenticationInfoService {
 	 *            第几页
 	 * @return
 	 */
-	PageInfo<FaceAuthenticationInfo> queryAuthenticationInfo(String search, int organizationId, int pageSize, int pageNum);
+	List<FaceAuthenticationInfo> queryAuthenticationInfo(String search, int organizationId, int pageSize, int pageNum);
 }

@@ -9,7 +9,6 @@
     <result column="id_number" property="idNumber" jdbcType="VARCHAR" />
     <result column="nation" property="nation" jdbcType="VARCHAR" />
     <result column="address" property="address" jdbcType="VARCHAR" />
-    <result column="group" property="group" jdbcType="VARCHAR" />
     <result column="type" property="type" jdbcType="BIT" />
     <result column="source" property="source" jdbcType="VARCHAR" />
     <result column="result" property="result" jdbcType="BIT" />
@@ -76,7 +75,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, name, avatar, sex, id_number, nation, address, group, type, source, result, organization_id, 
+    id, name, avatar, sex, id_number, nation, address, type, source, result, organization_id, 
     equipment_id, ctime
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zmsk.face.pojo.FaceAuthenticationInfoExample" >
@@ -112,12 +111,12 @@
   <insert id="insert" parameterType="com.zmsk.face.pojo.FaceAuthenticationInfo" >
     insert into face_authentication_info (id, name, avatar, 
       sex, id_number, nation, 
-      address, group, type, source, 
+      address, type, source, 
       result, organization_id, equipment_id, 
       ctime)
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{avatar,jdbcType=VARCHAR}, 
       #{sex,jdbcType=BIT}, #{idNumber,jdbcType=VARCHAR}, #{nation,jdbcType=VARCHAR}, 
-      #{address,jdbcType=VARCHAR}, #{group,jdbcType=VARCHAR}, #{type,jdbcType=BIT}, #{source,jdbcType=VARCHAR}, 
+      #{address,jdbcType=VARCHAR}, #{type,jdbcType=BIT}, #{source,jdbcType=VARCHAR}, 
       #{result,jdbcType=BIT}, #{organizationId,jdbcType=INTEGER}, #{equipmentId,jdbcType=INTEGER}, 
       #{ctime,jdbcType=INTEGER})
   </insert>
@@ -144,9 +143,6 @@
       </if>
       <if test="address != null" >
         address,
-      </if>
-      <if test="group != null" >
-        group,
       </if>
       <if test="type != null" >
         type,
@@ -188,9 +184,6 @@
       </if>
       <if test="address != null" >
         #{address,jdbcType=VARCHAR},
-      </if>
-      <if test="group != null" >
-        #{group,jdbcType=VARCHAR},
       </if>
       <if test="type != null" >
         #{type,jdbcType=BIT},
@@ -242,9 +235,6 @@
       <if test="record.address != null" >
         address = #{record.address,jdbcType=VARCHAR},
       </if>
-      <if test="record.group != null" >
-        group = #{record.group,jdbcType=VARCHAR},
-      </if>
       <if test="record.type != null" >
         type = #{record.type,jdbcType=BIT},
       </if>
@@ -277,7 +267,6 @@
       id_number = #{record.idNumber,jdbcType=VARCHAR},
       nation = #{record.nation,jdbcType=VARCHAR},
       address = #{record.address,jdbcType=VARCHAR},
-      group = #{record.group,jdbcType=VARCHAR},
       type = #{record.type,jdbcType=BIT},
       source = #{record.source,jdbcType=VARCHAR},
       result = #{record.result,jdbcType=BIT},
@@ -309,9 +298,6 @@
       <if test="address != null" >
         address = #{address,jdbcType=VARCHAR},
       </if>
-      <if test="group != null" >
-        group = #{group,jdbcType=VARCHAR},
-      </if>
       <if test="type != null" >
         type = #{type,jdbcType=BIT},
       </if>
@@ -341,7 +327,6 @@
       id_number = #{idNumber,jdbcType=VARCHAR},
       nation = #{nation,jdbcType=VARCHAR},
       address = #{address,jdbcType=VARCHAR},
-      group = #{group,jdbcType=VARCHAR},
       type = #{type,jdbcType=BIT},
       source = #{source,jdbcType=VARCHAR},
       result = #{result,jdbcType=BIT},

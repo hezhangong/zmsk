@@ -38,7 +38,7 @@ public class AuthenticationInfoServiceImpl implements AuthenticationInfoService 
 	private EquipmentService equipmentService;
 
 	@Override
-	public boolean addAuthenticationInfo(String name, String idNumber, String nation, String address, String avatar, int sex, String group, int type, int result, String deviceNumber) {
+	public boolean addAuthenticationInfo(String name, String idNumber, String nation, String address, String avatar, int sex, int type, int result, String deviceNumber) {
 
 		// 获取设备信息
 		FaceEquipment equipment = equipmentService.queryEquipmentByNumber(deviceNumber);
@@ -64,11 +64,15 @@ public class AuthenticationInfoServiceImpl implements AuthenticationInfoService 
 
 		authenticationInfo.setEquipmentId(equipment.getId());
 
-		authenticationInfo.setSource(equipment.getRemark());
+		String source = equipment.getRemark();
+
+		if (StringUtils.isEmpty(source)) {
+			source = "";
+		}
+
+		authenticationInfo.setSource(source);
 
 		authenticationInfo.setSex(sex);
-
-		authenticationInfo.setGroup(group);
 
 		authenticationInfo.setType(type);
 
@@ -80,7 +84,7 @@ public class AuthenticationInfoServiceImpl implements AuthenticationInfoService 
 	}
 
 	@Override
-	public PageInfo<FaceAuthenticationInfo> queryAuthenticationInfo(String search, int organizationId, int pageSize, int pageNum) {
+	public List<FaceAuthenticationInfo> queryAuthenticationInfo(String search, int organizationId, int pageSize, int pageNum) {
 
 		FaceAuthenticationInfoExample example = new FaceAuthenticationInfoExample();
 
@@ -100,9 +104,9 @@ public class AuthenticationInfoServiceImpl implements AuthenticationInfoService 
 
 		List<FaceAuthenticationInfo> list = authenticationInfoMapper.selectByExample(example);
 
-		PageInfo<FaceAuthenticationInfo> pageInfo = new PageInfo<>(list);
+		//PageInfo<FaceAuthenticationInfo> pageInfo = new PageInfo<>(list);
 
-		return pageInfo;
+		return list;
 	}
 
 }

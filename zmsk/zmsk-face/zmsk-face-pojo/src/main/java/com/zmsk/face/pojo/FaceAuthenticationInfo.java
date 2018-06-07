@@ -1,143 +1,133 @@
 package com.zmsk.face.pojo;
 
 public class FaceAuthenticationInfo {
-	private Integer id;
+    private Integer id;
 
-	private String name;
+    private String name;
 
-	private String avatar;
+    private String avatar;
 
-	private Integer sex;
+    private Integer sex;
 
-	private String idNumber;
+    private String idNumber;
 
-	private String nation;
+    private String nation;
 
-	private String address;
+    private String address;
 
-	private String group;
+    private Integer type;
 
-	private Integer type;
+    private String source;
 
-	private String source;
+    private Integer result;
 
-	private Integer result;
+    private Integer organizationId;
 
-	private Integer organizationId;
+    private Integer equipmentId;
 
-	private Integer equipmentId;
+    private Long ctime;
 
-	private Long ctime;
+    public Integer getId() {
+        return id;
+    }
 
-	public Integer getId() {
-		return id;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public void setName(String name) {
+        this.name = name == null ? null : name.trim();
+    }
 
-	public void setName(String name) {
-		this.name = name == null ? null : name.trim();
-	}
+    public String getAvatar() {
+        return avatar;
+    }
 
-	public String getAvatar() {
-		return avatar;
-	}
+    public void setAvatar(String avatar) {
+        this.avatar = avatar == null ? null : avatar.trim();
+    }
 
-	public void setAvatar(String avatar) {
-		this.avatar = avatar == null ? null : avatar.trim();
-	}
+    public Integer getSex() {
+        return sex;
+    }
 
-	public Integer getSex() {
-		return sex;
-	}
+    public void setSex(Integer sex) {
+        this.sex = sex;
+    }
 
-	public void setSex(Integer sex) {
-		this.sex = sex;
-	}
+    public String getIdNumber() {
+        return idNumber;
+    }
 
-	public String getIdNumber() {
-		return idNumber;
-	}
+    public void setIdNumber(String idNumber) {
+        this.idNumber = idNumber == null ? null : idNumber.trim();
+    }
 
-	public void setIdNumber(String idNumber) {
-		this.idNumber = idNumber == null ? null : idNumber.trim();
-	}
+    public String getNation() {
+        return nation;
+    }
 
-	public String getNation() {
-		return nation;
-	}
+    public void setNation(String nation) {
+        this.nation = nation == null ? null : nation.trim();
+    }
 
-	public void setNation(String nation) {
-		this.nation = nation == null ? null : nation.trim();
-	}
+    public String getAddress() {
+        return address;
+    }
 
-	public String getAddress() {
-		return address;
-	}
+    public void setAddress(String address) {
+        this.address = address == null ? null : address.trim();
+    }
 
-	public void setAddress(String address) {
-		this.address = address == null ? null : address.trim();
-	}
+    public Integer getType() {
+        return type;
+    }
 
-	public String getGroup() {
-		return group;
-	}
+    public void setType(Integer type) {
+        this.type = type;
+    }
 
-	public void setGroup(String group) {
-		this.group = group == null ? null : group.trim();
-	}
+    public String getSource() {
+        return source;
+    }
 
-	public Integer getType() {
-		return type;
-	}
+    public void setSource(String source) {
+        this.source = source == null ? null : source.trim();
+    }
 
-	public void setType(Integer type) {
-		this.type = type;
-	}
+    public Integer getResult() {
+        return result;
+    }
 
-	public String getSource() {
-		return source;
-	}
+    public void setResult(Integer result) {
+        this.result = result;
+    }
 
-	public void setSource(String source) {
-		this.source = source == null ? null : source.trim();
-	}
+    public Integer getOrganizationId() {
+        return organizationId;
+    }
 
-	public Integer getResult() {
-		return result;
-	}
+    public void setOrganizationId(Integer organizationId) {
+        this.organizationId = organizationId;
+    }
 
-	public void setResult(Integer result) {
-		this.result = result;
-	}
+    public Integer getEquipmentId() {
+        return equipmentId;
+    }
 
-	public Integer getOrganizationId() {
-		return organizationId;
-	}
+    public void setEquipmentId(Integer equipmentId) {
+        this.equipmentId = equipmentId;
+    }
 
-	public void setOrganizationId(Integer organizationId) {
-		this.organizationId = organizationId;
-	}
+    public Long getCtime() {
+        return ctime;
+    }
 
-	public Integer getEquipmentId() {
-		return equipmentId;
-	}
-
-	public void setEquipmentId(Integer equipmentId) {
-		this.equipmentId = equipmentId;
-	}
-
-	public Long getCtime() {
-		return ctime;
-	}
-
-	public void setCtime(Long ctime) {
-		this.ctime = ctime;
-	}
+    public void setCtime(Long ctime) {
+        this.ctime = ctime;
+    }
 }

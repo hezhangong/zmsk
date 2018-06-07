@@ -1,5 +1,7 @@
 package com.zmsk.face.controller.manager;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -47,8 +49,8 @@ public class AuthenticationInfoManagerController {
 			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid organization id");
 		}
 
-		PageInfo<FaceAuthenticationInfo> pageInfo = authenticationInfoService.queryAuthenticationInfo(search, organizationId, pageSize, pageNum);
+		List<FaceAuthenticationInfo> list = authenticationInfoService.queryAuthenticationInfo(search, organizationId, pageSize, pageNum);
 
-		return ServiceResultDTO.success(pageInfo);
+		return ServiceResultDTO.success(list);
 	}
 }
