@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.zmsk.common.dto.BaseResultCode;
 import com.zmsk.common.dto.ServiceResultDTO;
-import com.zmsk.common.pagehelper.PageInfo;
 import com.zmsk.face.pojo.FaceAuthenticationInfo;
 import com.zmsk.face.service.authentication.AuthenticationInfoService;
 
