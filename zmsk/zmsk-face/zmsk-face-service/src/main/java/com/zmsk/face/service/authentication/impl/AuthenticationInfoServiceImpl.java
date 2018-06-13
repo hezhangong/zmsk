@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import com.zmsk.common.pagehelper.PageHelper;
-import com.zmsk.common.pagehelper.PageInfo;
 import com.zmsk.face.mapper.FaceAuthenticationInfoMapper;
 import com.zmsk.face.pojo.FaceAuthenticationInfo;
 import com.zmsk.face.pojo.FaceAuthenticationInfoExample;

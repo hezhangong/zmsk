@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.zmsk.common.pagehelper.PageHelper;
-import com.zmsk.common.pagehelper.PageInfo;
 import com.zmsk.common.utils.PageUtils;
 import com.zmsk.face.mapper.FaceLibraryMapper;
 import com.zmsk.face.mapper.custom.library.CustomerLibraryMapper;

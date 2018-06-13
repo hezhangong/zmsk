@@ -2,7 +2,6 @@ package com.zmsk.face.service.authentication;
 
 import java.util.List;
 
-import com.zmsk.common.pagehelper.PageInfo;
 import com.zmsk.face.pojo.FaceAuthenticationInfo;
 
 /****
