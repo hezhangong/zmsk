@@ -12,6 +12,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.aliyun.oss.OSSClient;
+import com.qiniu.common.QiniuException;
+import com.qiniu.common.Zone;
+import com.qiniu.http.Response;
+import com.qiniu.storage.Configuration;
+import com.qiniu.storage.UploadManager;
+import com.qiniu.util.Auth;
 import com.zmsk.common.utils.IDMaker;
 import com.zmsk.face.service.image.ImageService;
 import com.zmsk.picture.process.compress.CompressPicture;
@@ -40,6 +46,17 @@ public class ImageServiceImpl implements ImageService {
 
 	private static final String bucketName = "doinggo";
 
+	// 七牛accessKey
+	private static final String QINIU_ACCESSKEY = "BBJIQ464q2BkpdHHaSrcZi4V5VAP6VTbNh2JmzFP";
+
+	// 七牛secretKey
+	private static final String QINIU_SECRETKEY = "YtuEF-SnjSR5zo0c7-Xe_cQZtAX6Gi9PhPezUCE9";
+
+	// 七牛bucket
+	private static final String QINIU_BUCKET = "zmsk-face";
+
+	private static final String QINIU_DOMAIN = "http://paag0kq15.bkt.clouddn.com";
+
 	/** 默认压缩宽度 **/
 	private static final int DEFAULTCOMPRESSWITH = 240;
 
@@ -67,9 +84,6 @@ public class ImageServiceImpl implements ImageService {
 			// 压缩图片key
 			String compressKey = buildCompressKey(originalkey);
 
-			// 上传原始图片
-			ossClient.putObject(bucketName, originalkey, new ByteArrayInputStream(originalBytes));
-
 			// 上传压缩图片
 			ossClient.putObject(bucketName, compressKey, new ByteArrayInputStream(compressBytes));
 
@@ -79,6 +93,32 @@ public class ImageServiceImpl implements ImageService {
 		} finally {
 			// 关闭client
 			ossClient.shutdown();
+		}
+		return "";
+	}
+
+	@Override
+	public String uploadImage2Qiniu(InputStream inputStream) {
+
+		// 构造一个带指定Zone对象的配置类
+		Configuration cfg = new Configuration(Zone.zone0());
+
+		UploadManager uploadManager = new UploadManager(cfg);
+
+		Auth auth = Auth.create(QINIU_ACCESSKEY, QINIU_SECRETKEY);
+
+		String upToken = auth.uploadToken(QINIU_BUCKET);
+
+		String key = buildOriginalKey();
+
+		try {
+			Response response = uploadManager.put(inputStream, key, upToken, null, null);
+
+			if (response.statusCode == 200) {
+				return QINIU_DOMAIN + SPLIT + key;
+			}
+		} catch (QiniuException e) {
+			logger.error(e.getMessage(), e);
 		}
 		return "";
 	}

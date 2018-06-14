@@ -17,6 +17,14 @@ public interface ImageService {
 	 *            输入流
 	 * @return
 	 */
-	public String uploadImage2OSS(InputStream inputStream);
+	String uploadImage2OSS(InputStream inputStream);
 
+	/****
+	 * 图片上传到七牛云存储中
+	 * 
+	 * @param inputStream
+	 *            输入流
+	 * @return
+	 */
+	String uploadImage2Qiniu(InputStream inputStream);
 }

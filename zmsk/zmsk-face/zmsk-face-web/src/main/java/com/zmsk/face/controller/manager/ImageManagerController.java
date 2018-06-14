@@ -27,7 +27,7 @@ public class ImageManagerController {
 	private ImageService imageService;
 
 	/***
-	 * 上传图片
+	 * 上传图片到OSS
 	 * 
 	 * @param request
 	 * @return
@@ -35,7 +35,7 @@ public class ImageManagerController {
 	 */
 	@RequestMapping(value = "oss/upload", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
-	public ServiceResultDTO uploadImage(MultipartFile uploadFile) throws IOException {
+	public ServiceResultDTO uploadImage2OSS(MultipartFile uploadFile) throws IOException {
 
 		InputStream inputStream = uploadFile.getInputStream();
 
@@ -43,4 +43,23 @@ public class ImageManagerController {
 
 		return ServiceResultDTO.success(path);
 	}
+
+	/***
+	 * 上传图片到七牛中
+	 * 
+	 * @param request
+	 * @return
+	 * @throws IOException
+	 */
+	@RequestMapping(value = "qiniu/upload", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public ServiceResultDTO uploadImage2Qiniu(MultipartFile uploadFile) throws IOException {
+
+		InputStream inputStream = uploadFile.getInputStream();
+
+		String path = imageService.uploadImage2Qiniu(inputStream);
+
+		return ServiceResultDTO.success(path);
+	}
+
 }
