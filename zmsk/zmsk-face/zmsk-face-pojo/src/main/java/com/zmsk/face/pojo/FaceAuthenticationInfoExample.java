@@ -714,7 +714,7 @@ public class FaceAuthenticationInfoExample {
             return (Criteria) this;
         }
 
-        public Criteria andResultEqualTo(Boolean value) {
+        public Criteria andResultEqualTo(Integer value) {
             addCriterion("result =", value, "result");
             return (Criteria) this;
         }

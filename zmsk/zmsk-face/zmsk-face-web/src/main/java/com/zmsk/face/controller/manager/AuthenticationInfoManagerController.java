@@ -52,4 +52,28 @@ public class AuthenticationInfoManagerController {
 
 		return ServiceResultDTO.success(list);
 	}
+
+	/****
+	 * 获取组织对应警告认证记录
+	 * 
+	 * @param search
+	 *            查询条件
+	 * @param organizationId
+	 *            组织Id
+	 * @param pageSize
+	 *            每页显示条数
+	 * @param pageNum
+	 *            页数
+	 * @return
+	 */
+	public ServiceResultDTO queryWarnAuthenticationInfo(@RequestParam(value = "search", required = false, defaultValue = "") String search, @RequestParam(value = "organizationId") int organizationId, @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize, @RequestParam(value = "pageNum", required = false, defaultValue = "1") int pageNum) {
+
+		if (organizationId <= 0) {
+			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid organization id");
+		}
+
+		List<FaceAuthenticationInfo> list = authenticationInfoService.queryWarnAuthenticationInfo(search, organizationId, pageSize, pageNum);
+
+		return ServiceResultDTO.success(list);
+	}
 }

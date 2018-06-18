@@ -33,4 +33,7 @@ public class BaseResultCode {
 	
 	/**人脸库操作失败**/
 	public static final int LIBRARY_OPERATION_ERROR = 50008;
+	
+	/**组织操作失败**/
+	public static final int GROUP_OPERATION_ERROR = 50009;
 }

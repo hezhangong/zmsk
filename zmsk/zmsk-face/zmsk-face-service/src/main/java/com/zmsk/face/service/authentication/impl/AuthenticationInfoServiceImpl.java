@@ -16,6 +16,7 @@ import com.zmsk.face.pojo.FaceAuthenticationInfoExample;
 import com.zmsk.face.pojo.FaceAuthenticationInfoExample.Criteria;
 import com.zmsk.face.pojo.FaceEquipment;
 import com.zmsk.face.service.authentication.AuthenticationInfoService;
+import com.zmsk.face.service.authentication.constant.AuthenticResultConstant;
 import com.zmsk.face.service.equipment.EquipmentService;
 
 /****
@@ -103,9 +104,33 @@ public class AuthenticationInfoServiceImpl implements AuthenticationInfoService 
 
 		List<FaceAuthenticationInfo> list = authenticationInfoMapper.selectByExample(example);
 
-		//PageInfo<FaceAuthenticationInfo> pageInfo = new PageInfo<>(list);
+		// PageInfo<FaceAuthenticationInfo> pageInfo = new PageInfo<>(list);
 
 		return list;
+	}
+
+	@Override
+	public List<FaceAuthenticationInfo> queryWarnAuthenticationInfo(String search, int organizationId, int pageSize, int pageNum) {
+
+		FaceAuthenticationInfoExample example = new FaceAuthenticationInfoExample();
+
+		Criteria criteria = example.createCriteria();
+
+		criteria.andOrganizationIdEqualTo(organizationId);
+
+		criteria.andResultEqualTo(AuthenticResultConstant.AUTHENTIC_FAIL);
+
+		if (!StringUtils.isEmpty(search)) {
+			example.or().andNameLike("%" + search + "%");
+			example.or().andIdNumberLike("%" + search + "%");
+		}
+
+		example.setOrderByClause(" id DESC ");
+
+		// 分页处理
+		PageHelper.startPage(pageNum, pageSize);
+
+		return authenticationInfoMapper.selectByExample(example);
 	}
 
 }

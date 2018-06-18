@@ -1,0 +1,34 @@
+package com.zmsk.face.service.group;
+
+import java.util.List;
+
+import com.zmsk.face.pojo.FaceGroup;
+
+/****
+ * 所属分组服务操作接口声明
+ * 
+ * @author warrior
+ *
+ */
+public interface GroupService {
+
+	/****
+	 * 创建所属分组
+	 * 
+	 * @param organizationId
+	 *            组织Id
+	 * @param groupName
+	 *            分组名称
+	 * @return
+	 */
+	boolean createGroup(int organizationId, String groupName);
+
+	/****
+	 * 根据组织Id获取所属分组信息
+	 * 
+	 * @param organizationId
+	 *            组织Id
+	 * @return
+	 */
+	List<FaceGroup> queryGroupByorganizationId(int organizationId);
+}

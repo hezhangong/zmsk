@@ -51,4 +51,19 @@ public interface AuthenticationInfoService {
 	 * @return
 	 */
 	List<FaceAuthenticationInfo> queryAuthenticationInfo(String search, int organizationId, int pageSize, int pageNum);
+
+	/****
+	 * 获取组织对应警告认证记录
+	 * 
+	 * @param search
+	 *            查询条件
+	 * @param organizationId
+	 *            组织Id
+	 * @param pageSize
+	 *            每页显示条数
+	 * @param pageNum
+	 *            页数
+	 * @return
+	 */
+	List<FaceAuthenticationInfo> queryWarnAuthenticationInfo(String search, int organizationId, int pageSize, int pageNum);
 }

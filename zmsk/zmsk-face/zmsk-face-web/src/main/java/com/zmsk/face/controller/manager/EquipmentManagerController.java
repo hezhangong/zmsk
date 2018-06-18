@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.zmsk.common.dto.BaseResultCode;
 import com.zmsk.common.dto.ServiceResultDTO;
+import com.zmsk.face.dto.equipment.EquipmentRemarkDTO;
 import com.zmsk.face.pojo.FaceEquipment;
 import com.zmsk.face.service.equipment.EquipmentService;
 import com.zmsk.face.service.user.constants.UserConstants;
@@ -135,6 +136,24 @@ public class EquipmentManagerController {
 		FaceEquipment equipment = equipmentService.queryEquipmentById(deviceId);
 
 		return ServiceResultDTO.success(equipment);
+	}
+
+	/***
+	 * 获取组织下设备备注信息
+	 * 
+	 * @param organizationId
+	 *            组织Id
+	 * @return
+	 */
+	@RequestMapping(value = "remark", method = RequestMethod.GET)
+	@ResponseBody
+	public ServiceResultDTO queryEquipmentRemarkByorganizationId(@RequestParam(value = "organizationId") int organizationId) {
+		if (organizationId <= 0) {
+			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid organization id");
+		}
+		List<EquipmentRemarkDTO> list = equipmentService.queryEquipmentRemarkByorganizationId(organizationId);
+
+		return ServiceResultDTO.success(list);
 	}
 
 	/****

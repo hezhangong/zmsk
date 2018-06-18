@@ -2,6 +2,7 @@ package com.zmsk.face.service.equipment;
 
 import java.util.List;
 
+import com.zmsk.face.dto.equipment.EquipmentRemarkDTO;
 import com.zmsk.face.pojo.FaceEquipment;
 
 /***
@@ -54,6 +55,15 @@ public interface EquipmentService {
 	 * @return
 	 */
 	FaceEquipment queryEquipmentById(int deviceId);
+
+	/****
+	 * 根据组织Id获取组织备注信息
+	 * 
+	 * @param organizationId
+	 *            组织Id
+	 * @return
+	 */
+	List<EquipmentRemarkDTO> queryEquipmentRemarkByorganizationId(int organizationId);
 
 	/***
 	 * 根据账号获取设备信息

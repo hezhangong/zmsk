@@ -8,8 +8,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.zmsk.common.utils.DateUtils;
 import com.zmsk.common.utils.StringDigestUtils;
+import com.zmsk.face.dto.equipment.EquipmentRemarkDTO;
 import com.zmsk.face.mapper.FaceEquipmentMapper;
 import com.zmsk.face.mapper.FaceSerialNumberMapper;
+import com.zmsk.face.mapper.custom.equipment.CustomerEquipmentMapper;
 import com.zmsk.face.pojo.FaceEquipment;
 import com.zmsk.face.pojo.FaceEquipmentExample;
 import com.zmsk.face.pojo.FaceEquipmentExample.Criteria;
@@ -36,6 +38,9 @@ public class EquipmentServiceImpl implements EquipmentService {
 
 	@Autowired
 	private FaceSerialNumberMapper serailNumberMapper;
+
+	@Autowired
+	private CustomerEquipmentMapper customerEquipmetMapper;
 
 	@Override
 	public boolean createEquipment(int organizationId, int count, String password, int type, int renewalFee) {
@@ -109,6 +114,11 @@ public class EquipmentServiceImpl implements EquipmentService {
 	public FaceEquipment queryEquipmentById(int deviceId) {
 
 		return equipmentMapper.selectByPrimaryKey(deviceId);
+	}
+
+	@Override
+	public List<EquipmentRemarkDTO> queryEquipmentRemarkByorganizationId(int organizationId) {
+		return customerEquipmetMapper.queryEquipmentRemarkByorganizationId(organizationId);
 	}
 
 	@Override
