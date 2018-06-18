@@ -42,11 +42,6 @@
 			<artifactId>mybatis-paginator</artifactId>
 		</dependency>
 
-		<dependency>
-			<groupId>com.github.pagehelper</groupId>
-			<artifactId>pagehelper</artifactId>
-		</dependency>
-
 		<!-- MySql -->
 		<dependency>
 			<groupId>mysql</groupId>
