@@ -36,7 +36,7 @@ public class FaceLibraryServiceImpl implements FaceLibraryService {
 	private FaceLibraryEquipmentService libraryEquipmentService;
 
 	@Override
-	public boolean addFaceLibrary(String name, int sex, String idNumber, String nation, String address, String avatar, String remark, int flag, int organizationId, List<Integer> equipmentIds) {
+	public boolean addFaceLibrary(String name, int sex, String idNumber, String nation, String address, String avatar, String remark, int flag, int organizationId, int groupId, List<Integer> equipmentIds) {
 
 		FaceLibrary library = new FaceLibrary();
 
@@ -57,6 +57,8 @@ public class FaceLibraryServiceImpl implements FaceLibraryService {
 		library.setFlag(flag);
 
 		library.setOrganizationId(organizationId);
+
+		library.setGroupId(groupId);
 
 		library.setCtime(System.currentTimeMillis() / 1000);
 
@@ -87,7 +89,7 @@ public class FaceLibraryServiceImpl implements FaceLibraryService {
 
 		List<FaceLibrary> faceLibrarys = faceLibraryMapper.selectByExample(example);
 
-		//PageInfo<FaceLibrary> pageInfo = new PageInfo<>(faceLibrarys);
+		// PageInfo<FaceLibrary> pageInfo = new PageInfo<>(faceLibrarys);
 
 		return faceLibrarys;
 	}
@@ -99,7 +101,7 @@ public class FaceLibraryServiceImpl implements FaceLibraryService {
 
 		List<FaceLibrary> list = customerLibraryMapper.queryLibraryListByEquipmentId(equipmentId, flag, pageSize, pageStart);
 
-		//PageInfo<FaceLibrary> pageInfo = new PageInfo<>(list);
+		// PageInfo<FaceLibrary> pageInfo = new PageInfo<>(list);
 
 		return list;
 	}

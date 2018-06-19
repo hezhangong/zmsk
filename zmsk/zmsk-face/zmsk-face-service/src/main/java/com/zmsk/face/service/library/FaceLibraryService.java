@@ -33,11 +33,13 @@ public interface FaceLibraryService {
 	 *            黑白名单标识
 	 * @param organizationId
 	 *            组织Id
+	 * @param groupId
+	 *            所属分组Id
 	 * @param equipmentIds
 	 *            设备Id列表
 	 * @return
 	 */
-	boolean addFaceLibrary(String name, int sex, String idNumber, String nation, String address, String avatar, String remark, int flag, int organizationId, List<Integer> equipmentIds);
+	boolean addFaceLibrary(String name, int sex, String idNumber, String nation, String address, String avatar, String remark, int flag, int organizationId, int groupId, List<Integer> equipmentIds);
 
 	/****
 	 * 查看组织下的人脸库列表

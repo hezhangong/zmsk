@@ -51,13 +51,16 @@ public class LibraryManagerController {
 	 *            黑白名单标识
 	 * @param organizationId
 	 *            组织Id
+	 * @param groupId
+	 *            所属分组Id
 	 * @param equipmentId
 	 *            设备Id列表
 	 * @return
 	 */
 	@RequestMapping(value = "add", method = RequestMethod.POST)
 	@ResponseBody
-	public ServiceResultDTO addFaceLibrary(@RequestParam(value = "name") String name, @RequestParam(value = "sex") int sex, @RequestParam(value = "idNumber") String idNumber, @RequestParam(value = "nation", required = false, defaultValue = "") String nation, @RequestParam(value = "address", defaultValue = "", required = false) String address, @RequestParam(value = "avatar") String avatar, @RequestParam(value = "remark", defaultValue = "", required = false) String remark, @RequestParam(value = "flag") int flag, @RequestParam(value = "organizationId") int organizationId, @RequestParam(value = "equipmentId") String equipmentId) {
+	public ServiceResultDTO addFaceLibrary(@RequestParam(value = "name") String name, @RequestParam(value = "sex") int sex, @RequestParam(value = "idNumber") String idNumber, @RequestParam(value = "nation", required = false, defaultValue = "") String nation, @RequestParam(value = "address", defaultValue = "", required = false) String address, @RequestParam(value = "avatar") String avatar, @RequestParam(value = "remark", defaultValue = "", required = false) String remark, @RequestParam(value = "flag") int flag, @RequestParam(value = "organizationId") int organizationId,
+			@RequestParam(value = "groupId") int groupId, @RequestParam(value = "equipmentId") String equipmentId) {
 
 		if (StringUtils.isEmpty(name)) {
 			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid name");
@@ -83,13 +86,17 @@ public class LibraryManagerController {
 			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid organizationId");
 		}
 
+		if (groupId <= 0) {
+			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid groupId");
+		}
+
 		if (StringUtils.isEmpty(equipmentId)) {
 			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid equipmentId");
 		}
 
 		List<Integer> equipmentIds = JSON.parseArray("[" + equipmentId + "]", Integer.class);
 
-		boolean success = faceLibraryService.addFaceLibrary(name, sex, idNumber, nation, address, avatar, remark, flag, organizationId, equipmentIds);
+		boolean success = faceLibraryService.addFaceLibrary(name, sex, idNumber, nation, address, avatar, remark, flag, organizationId, groupId, equipmentIds);
 
 		if (!success) {
 			return new ServiceResultDTO(BaseResultCode.LIBRARY_OPERATION_ERROR, "新增人脸库失败");
