@@ -2,7 +2,7 @@ package com.zmsk.face.service.authentication;
 
 import java.util.List;
 
-import com.zmsk.face.pojo.FaceAuthenticationInfo;
+import com.zmsk.face.service.authentication.dto.AuthenticationInfoDTO;
 
 /****
  * 认证信息操作服务接口声明
@@ -52,7 +52,7 @@ public interface AuthenticationInfoService {
 	 *            第几页
 	 * @return
 	 */
-	List<FaceAuthenticationInfo> queryAuthenticationInfo(String search, int organizationId, int pageSize, int pageNum);
+	List<AuthenticationInfoDTO> queryAuthenticationInfo(String search, int organizationId, int pageSize, int pageNum);
 
 	/****
 	 * 获取组织对应警告认证记录
@@ -67,5 +67,5 @@ public interface AuthenticationInfoService {
 	 *            页数
 	 * @return
 	 */
-	List<FaceAuthenticationInfo> queryWarnAuthenticationInfo(String search, int organizationId, int pageSize, int pageNum);
+	List<AuthenticationInfoDTO> queryWarnAuthenticationInfo(String search, int organizationId, int pageSize, int pageNum);
 }

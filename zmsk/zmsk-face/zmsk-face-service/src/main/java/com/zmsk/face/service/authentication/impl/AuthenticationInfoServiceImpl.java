@@ -1,5 +1,7 @@
 package com.zmsk.face.service.authentication.impl;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -10,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import com.zmsk.common.pagehelper.PageHelper;
+import com.zmsk.common.utils.BeanUtils;
 import com.zmsk.face.mapper.FaceAuthenticationInfoMapper;
 import com.zmsk.face.pojo.FaceAuthenticationInfo;
 import com.zmsk.face.pojo.FaceAuthenticationInfoExample;
@@ -17,7 +20,9 @@ import com.zmsk.face.pojo.FaceAuthenticationInfoExample.Criteria;
 import com.zmsk.face.pojo.FaceEquipment;
 import com.zmsk.face.service.authentication.AuthenticationInfoService;
 import com.zmsk.face.service.authentication.constant.AuthenticResultConstant;
+import com.zmsk.face.service.authentication.dto.AuthenticationInfoDTO;
 import com.zmsk.face.service.equipment.EquipmentService;
+import com.zmsk.face.service.group.GroupService;
 
 /****
  * 认证信息操作服务接口实现
@@ -36,6 +41,9 @@ public class AuthenticationInfoServiceImpl implements AuthenticationInfoService 
 
 	@Autowired
 	private EquipmentService equipmentService;
+
+	@Autowired
+	private GroupService groupService;
 
 	@Override
 	public boolean addAuthenticationInfo(String name, String idNumber, String nation, String address, String avatar, int sex, int type, int result, String deviceNumber, int groupId) {
@@ -86,7 +94,7 @@ public class AuthenticationInfoServiceImpl implements AuthenticationInfoService 
 	}
 
 	@Override
-	public List<FaceAuthenticationInfo> queryAuthenticationInfo(String search, int organizationId, int pageSize, int pageNum) {
+	public List<AuthenticationInfoDTO> queryAuthenticationInfo(String search, int organizationId, int pageSize, int pageNum) {
 
 		FaceAuthenticationInfoExample example = new FaceAuthenticationInfoExample();
 
@@ -106,13 +114,11 @@ public class AuthenticationInfoServiceImpl implements AuthenticationInfoService 
 
 		List<FaceAuthenticationInfo> list = authenticationInfoMapper.selectByExample(example);
 
-		// PageInfo<FaceAuthenticationInfo> pageInfo = new PageInfo<>(list);
-
-		return list;
+		return convertAuthenticationInfo2DTO(list);
 	}
 
 	@Override
-	public List<FaceAuthenticationInfo> queryWarnAuthenticationInfo(String search, int organizationId, int pageSize, int pageNum) {
+	public List<AuthenticationInfoDTO> queryWarnAuthenticationInfo(String search, int organizationId, int pageSize, int pageNum) {
 
 		FaceAuthenticationInfoExample example = new FaceAuthenticationInfoExample();
 
@@ -132,7 +138,30 @@ public class AuthenticationInfoServiceImpl implements AuthenticationInfoService 
 		// 分页处理
 		PageHelper.startPage(pageNum, pageSize);
 
-		return authenticationInfoMapper.selectByExample(example);
+		List<FaceAuthenticationInfo> list = authenticationInfoMapper.selectByExample(example);
+
+		return convertAuthenticationInfo2DTO(list);
+	}
+
+	private List<AuthenticationInfoDTO> convertAuthenticationInfo2DTO(List<FaceAuthenticationInfo> list) {
+
+		if (list == null || list.size() == 0) {
+			return Collections.emptyList();
+		}
+
+		List<AuthenticationInfoDTO> result = new ArrayList<>(list.size());
+
+		AuthenticationInfoDTO authenticationInfoDTO = null;
+
+		for (FaceAuthenticationInfo authenticationInfo : list) {
+			authenticationInfoDTO = new AuthenticationInfoDTO();
+			BeanUtils.copyPropertiesNotNull(authenticationInfoDTO, authenticationInfo);
+			String groupName = groupService.queryGroupNameById(authenticationInfo.getGroupId());
+			authenticationInfoDTO.setGroupName(groupName);
+			result.add(authenticationInfoDTO);
+		}
+
+		return result;
 	}
 
 }

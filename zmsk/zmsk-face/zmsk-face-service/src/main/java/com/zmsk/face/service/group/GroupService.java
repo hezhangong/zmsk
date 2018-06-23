@@ -31,4 +31,12 @@ public interface GroupService {
 	 * @return
 	 */
 	List<FaceGroup> queryGroupByorganizationId(int organizationId);
+
+	/****
+	 * 根据Id获取组名
+	 * 
+	 * @param groupId
+	 * @return
+	 */
+	String queryGroupNameById(int groupId);
 }

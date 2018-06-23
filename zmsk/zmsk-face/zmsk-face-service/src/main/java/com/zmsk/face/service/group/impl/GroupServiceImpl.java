@@ -51,4 +51,16 @@ public class GroupServiceImpl implements GroupService {
 		return groupMapper.selectByExample(example);
 	}
 
+	@Override
+	public String queryGroupNameById(int groupId) {
+
+		FaceGroup group = groupMapper.selectByPrimaryKey(groupId);
+
+		if (group == null) {
+			return "暂无分组";
+		}
+
+		return group.getGroupName();
+	}
+
 }

@@ -2,7 +2,7 @@ package com.zmsk.face.service.library;
 
 import java.util.List;
 
-import com.zmsk.face.pojo.FaceLibrary;
+import com.zmsk.face.service.library.dto.FaceLibraryDTO;
 
 /****
  * 人脸库操作服务接口声明
@@ -54,7 +54,7 @@ public interface FaceLibraryService {
 	 *            当前页
 	 * @return
 	 */
-	List<FaceLibrary> queryLibraryList(int organizationId, int flag, int pageSize, int pageNum);
+	List<FaceLibraryDTO> queryLibraryList(int organizationId, int flag, int pageSize, int pageNum);
 
 	/****
 	 * 查看设备下的人脸库列表
@@ -69,5 +69,5 @@ public interface FaceLibraryService {
 	 *            当前页
 	 * @return
 	 */
-	List<FaceLibrary> queryLibraryListByEquipmentId(int equipmentId, int flag, int pageSize, int pageNum);
+	List<FaceLibraryDTO> queryLibraryListByEquipmentId(int equipmentId, int flag, int pageSize, int pageNum);
 }

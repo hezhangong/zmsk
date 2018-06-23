@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSON;
 import com.zmsk.common.dto.BaseResultCode;
 import com.zmsk.common.dto.ServiceResultDTO;
-import com.zmsk.face.pojo.FaceLibrary;
 import com.zmsk.face.service.library.FaceLibraryService;
 import com.zmsk.face.service.library.constants.LibraryFlagConstants;
+import com.zmsk.face.service.library.dto.FaceLibraryDTO;
 
 /***
  * 人脸库操作Controller
@@ -124,7 +124,7 @@ public class LibraryManagerController {
 			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid organization id");
 		}
 
-		List<FaceLibrary> pageInfo = faceLibraryService.queryLibraryList(organizationId, LibraryFlagConstants.WHITE_FLAG, pageSize, pageNum);
+		List<FaceLibraryDTO> pageInfo = faceLibraryService.queryLibraryList(organizationId, LibraryFlagConstants.WHITE_FLAG, pageSize, pageNum);
 
 		return ServiceResultDTO.success(pageInfo);
 	}
@@ -148,7 +148,7 @@ public class LibraryManagerController {
 			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid organization id");
 		}
 
-		List<FaceLibrary> pageInfo = faceLibraryService.queryLibraryList(organizationId, LibraryFlagConstants.BLACK_FLAG, pageSize, pageNum);
+		List<FaceLibraryDTO> pageInfo = faceLibraryService.queryLibraryList(organizationId, LibraryFlagConstants.BLACK_FLAG, pageSize, pageNum);
 
 		return ServiceResultDTO.success(pageInfo);
 	}
@@ -172,7 +172,7 @@ public class LibraryManagerController {
 			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid equipment id");
 		}
 
-		List<FaceLibrary> pageInfo = faceLibraryService.queryLibraryListByEquipmentId(equipmentId, LibraryFlagConstants.WHITE_FLAG, pageSize, pageNum);
+		List<FaceLibraryDTO> pageInfo = faceLibraryService.queryLibraryListByEquipmentId(equipmentId, LibraryFlagConstants.WHITE_FLAG, pageSize, pageNum);
 
 		return ServiceResultDTO.success(pageInfo);
 	}
@@ -196,7 +196,7 @@ public class LibraryManagerController {
 			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid equipment id");
 		}
 
-		List<FaceLibrary> pageInfo = faceLibraryService.queryLibraryListByEquipmentId(equipmentId, LibraryFlagConstants.BLACK_FLAG, pageSize, pageNum);
+		List<FaceLibraryDTO> pageInfo = faceLibraryService.queryLibraryListByEquipmentId(equipmentId, LibraryFlagConstants.BLACK_FLAG, pageSize, pageNum);
 
 		return ServiceResultDTO.success(pageInfo);
 	}

@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.zmsk.common.dto.BaseResultCode;
 import com.zmsk.common.dto.ServiceResultDTO;
-import com.zmsk.face.pojo.FaceAuthenticationInfo;
 import com.zmsk.face.service.authentication.AuthenticationInfoService;
+import com.zmsk.face.service.authentication.dto.AuthenticationInfoDTO;
 
 /****
  * 认证记录后台操作Controller
@@ -48,7 +48,7 @@ public class AuthenticationInfoManagerController {
 			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid organization id");
 		}
 
-		List<FaceAuthenticationInfo> list = authenticationInfoService.queryAuthenticationInfo(search, organizationId, pageSize, pageNum);
+		List<AuthenticationInfoDTO> list = authenticationInfoService.queryAuthenticationInfo(search, organizationId, pageSize, pageNum);
 
 		return ServiceResultDTO.success(list);
 	}
@@ -66,13 +66,15 @@ public class AuthenticationInfoManagerController {
 	 *            页数
 	 * @return
 	 */
+	@RequestMapping(value = "warn/list", method = RequestMethod.GET)
+	@ResponseBody
 	public ServiceResultDTO queryWarnAuthenticationInfo(@RequestParam(value = "search", required = false, defaultValue = "") String search, @RequestParam(value = "organizationId") int organizationId, @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize, @RequestParam(value = "pageNum", required = false, defaultValue = "1") int pageNum) {
 
 		if (organizationId <= 0) {
 			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid organization id");
 		}
 
-		List<FaceAuthenticationInfo> list = authenticationInfoService.queryWarnAuthenticationInfo(search, organizationId, pageSize, pageNum);
+		List<AuthenticationInfoDTO> list = authenticationInfoService.queryWarnAuthenticationInfo(search, organizationId, pageSize, pageNum);
 
 		return ServiceResultDTO.success(list);
 	}

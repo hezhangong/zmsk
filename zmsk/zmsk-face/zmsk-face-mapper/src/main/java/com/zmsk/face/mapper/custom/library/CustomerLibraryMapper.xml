@@ -87,7 +87,8 @@
 		avatar AS avatar,
 		remark AS remark,
 		flag AS flag,
-		organization_id AS organization_id,
+		organization_id AS organizationId,
+		group_id AS groupId,
 		ctime AS ctime
 		FROM face_library AS library ,face_equipment_library AS equipment_library 
 		WHERE library.id=equipment_library.library_id 
