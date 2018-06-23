@@ -125,6 +125,24 @@ public class FaceLibraryServiceImpl implements FaceLibraryService {
 		return convertFaceLibrary2DTO(list);
 	}
 
+	@Override
+	public List<FaceLibrary> queryUnSyncFaceLibrary(int equipmentId) {
+
+		List<Integer> libraryIds = libraryEquipmentService.queryEquipmentUnSyncFaceLibraryIds(equipmentId);
+
+		if (libraryIds == null || libraryIds.size() == 0) {
+			return Collections.emptyList();
+		}
+
+		FaceLibraryExample example = new FaceLibraryExample();
+
+		Criteria criteria = example.createCriteria();
+
+		criteria.andIdIn(libraryIds);
+
+		return faceLibraryMapper.selectByExample(example);
+	}
+
 	private List<FaceLibraryDTO> convertFaceLibrary2DTO(List<FaceLibrary> list) {
 
 		if (list == null || list.size() == 0) {

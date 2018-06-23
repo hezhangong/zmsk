@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.zmsk.face.mapper.FaceEquipmentLibraryMapper;
+import com.zmsk.face.mapper.custom.library.CustomerEquipmentLibraryMapper;
 import com.zmsk.face.pojo.FaceEquipmentLibrary;
 import com.zmsk.face.service.library.FaceLibraryEquipmentService;
 import com.zmsk.face.service.library.constants.EquipmentLibrarySyncStatus;
@@ -23,6 +24,9 @@ public class FaceLibraryEquipmentServiceImpl implements FaceLibraryEquipmentServ
 
 	@Autowired
 	private FaceEquipmentLibraryMapper equipmentLibraryMapper;
+
+	@Autowired
+	private CustomerEquipmentLibraryMapper customerEquiomentLibraryMapper;
 
 	@Override
 	public boolean addLibraryEquipment(int libraryId, List<Integer> equipmentIds) {
@@ -43,6 +47,23 @@ public class FaceLibraryEquipmentServiceImpl implements FaceLibraryEquipmentServ
 		}
 
 		return true;
+	}
+
+	@Override
+	public List<Integer> queryEquipmentUnSyncFaceLibraryIds(int deviceId) {
+		return customerEquiomentLibraryMapper.queryEquipmentUnSyncFaceLibraryIds(deviceId);
+	}
+
+	@Override
+	public boolean flagsyncedFaceLibrary(int id) {
+
+		FaceEquipmentLibrary equipmentLibrary = new FaceEquipmentLibrary();
+
+		equipmentLibrary.setSyncStatus(EquipmentLibrarySyncStatus.SYNCED);
+
+		equipmentLibrary.setId(id);
+
+		return equipmentLibraryMapper.updateByPrimaryKeySelective(equipmentLibrary) > 0;
 	}
 
 }

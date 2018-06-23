@@ -36,4 +36,7 @@ public class BaseResultCode {
 	
 	/**组织操作失败**/
 	public static final int GROUP_OPERATION_ERROR = 50009;
+	
+	/**同步人脸库操作失败**/
+	public static final int SYNC_FACE_LIBRARY_FAIL = 50010;
 }
