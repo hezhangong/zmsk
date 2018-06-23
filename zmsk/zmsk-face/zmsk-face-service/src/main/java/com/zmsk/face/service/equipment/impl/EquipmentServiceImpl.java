@@ -1,6 +1,7 @@
 package com.zmsk.face.service.equipment.impl;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,7 @@ import com.zmsk.face.pojo.FaceSerialNumber;
 import com.zmsk.face.service.equipment.EquipmentService;
 import com.zmsk.face.service.equipment.constants.EquipmentConstants;
 import com.zmsk.face.service.equipment.constants.EquipmentStatus;
+import com.zmsk.face.service.equipment.dto.DeviceLoginResultDTO;
 
 /****
  * 设备管理操作服务接口实现
@@ -187,5 +189,37 @@ public class EquipmentServiceImpl implements EquipmentService {
 		record.setRemark(remark);
 
 		return equipmentMapper.updateByExampleSelective(record, example) > 0;
+	}
+
+	@Override
+	public DeviceLoginResultDTO deviceLogin(String deviceNumber, String devicePassword) {
+
+		FaceEquipmentExample example = new FaceEquipmentExample();
+
+		Criteria criteria = example.createCriteria();
+
+		criteria.andEquipmentNumberEqualTo(deviceNumber);
+
+		criteria.andEquipmentPlainPwdEqualTo(devicePassword);
+
+		criteria.andStatusEqualTo(EquipmentStatus.ENABLE);
+
+		List<FaceEquipment> list = equipmentMapper.selectByExample(example);
+
+		if (list == null || list.size() == 0) {
+			return null;
+		}
+
+		FaceEquipment equipment = list.get(0);
+
+		// 生产物理Id
+		String macId = UUID.randomUUID().toString();
+
+		equipment.setMacId(macId);
+
+		// 更新到物理IdDB
+		equipmentMapper.updateByPrimaryKey(equipment);
+
+		return new DeviceLoginResultDTO(deviceNumber, equipment.getId(), macId);
 	}
 }

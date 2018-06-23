@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.zmsk.face.dto.equipment.EquipmentRemarkDTO;
 import com.zmsk.face.pojo.FaceEquipment;
+import com.zmsk.face.service.equipment.dto.DeviceLoginResultDTO;
 
 /***
  * 设备管理操作服务接口声明
@@ -97,4 +98,15 @@ public interface EquipmentService {
 	 * @return
 	 */
 	boolean updateEquipmentRemarkById(int deviceId, String remark);
+
+	/****
+	 * 设备登入
+	 * 
+	 * @param deviceNumber
+	 *            登入账号
+	 * @param devicePassword
+	 *            登入密码
+	 * @return
+	 */
+	DeviceLoginResultDTO deviceLogin(String deviceNumber, String devicePassword);
 }
