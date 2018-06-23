@@ -153,6 +153,30 @@ public class LibraryManagerController {
 		return ServiceResultDTO.success(pageInfo);
 	}
 
+	/****
+	 * 获取访客名单列表
+	 * 
+	 * @param organizationId
+	 *            组织id
+	 * @param pageSize
+	 *            每页显示条数
+	 * @param pageNum
+	 *            页数
+	 * @return
+	 */
+	@RequestMapping(value = "vistor/list")
+	@ResponseBody
+	public ServiceResultDTO queryLibraryVistorList(@RequestParam(value = "organizationId") int organizationId, @RequestParam(value = "pageSize", required = false, defaultValue = "10") int pageSize, @RequestParam(value = "pageNum", required = false, defaultValue = "1") int pageNum) {
+
+		if (organizationId <= 0) {
+			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid organization id");
+		}
+
+		List<FaceLibraryDTO> pageInfo = faceLibraryService.queryLibraryList(organizationId, LibraryFlagConstants.VISTOR_FLAG, pageSize, pageNum);
+
+		return ServiceResultDTO.success(pageInfo);
+	}
+
 	/***
 	 * 查询设备对应的白名单列表
 	 * 

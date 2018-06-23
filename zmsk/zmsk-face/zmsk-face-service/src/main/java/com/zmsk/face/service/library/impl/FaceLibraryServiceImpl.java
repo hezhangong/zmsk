@@ -22,6 +22,7 @@ import com.zmsk.face.service.group.GroupService;
 import com.zmsk.face.service.library.FaceLibraryEquipmentService;
 import com.zmsk.face.service.library.FaceLibraryService;
 import com.zmsk.face.service.library.constants.EquipmentLibrarySyncStatus;
+import com.zmsk.face.service.library.constants.LibraryFlagConstants;
 import com.zmsk.face.service.library.dto.FaceLibraryDTO;
 
 /***
@@ -78,9 +79,13 @@ public class FaceLibraryServiceImpl implements FaceLibraryService {
 
 		boolean success = faceLibraryMapper.insert(library) > 0;
 
-		if (success) {
-			libraryEquipmentService.addLibraryEquipment(library.getId(), equipmentIds);
+		// 访客标示
+		if (flag == LibraryFlagConstants.VISTOR_FLAG) {
+			return success;
 		}
+
+		// 添加人脸库设备同步数据
+		libraryEquipmentService.addLibraryEquipment(library.getId(), equipmentIds);
 
 		return success;
 	}
