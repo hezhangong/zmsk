@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,6 +37,8 @@ import com.zmsk.face.service.library.dto.FaceLibraryDTO;
 @Service
 @Transactional
 public class FaceLibraryServiceImpl implements FaceLibraryService {
+
+	private static final Logger logger = LoggerFactory.getLogger(FaceLibraryServiceImpl.class);
 
 	@Autowired
 	private FaceLibraryMapper faceLibraryMapper;
@@ -91,6 +96,79 @@ public class FaceLibraryServiceImpl implements FaceLibraryService {
 	}
 
 	@Override
+	public boolean updateFaceLibrary(int id, String name, int sex, String idNumber, String nation, String address, String avatar, String remark, int flag, int groupId, List<Integer> equipmentIds) {
+
+		FaceLibrary library = faceLibraryMapper.selectByPrimaryKey(id);
+
+		if (library == null) {
+			logger.error(" Invalid id {} can not fund face library info when update face library ", id);
+			return false;
+		}
+
+		if (!StringUtils.isEmpty(name) && !name.equals(library.getName())) {
+			library.setName(name);
+		}
+
+		if (!StringUtils.isEmpty(name) && !name.equals(library.getName())) {
+			library.setName(name);
+		}
+
+		if (sex > 0 && sex != library.getSex()) {
+			library.setSex(sex);
+		}
+
+		if (!StringUtils.isEmpty(idNumber) && !idNumber.equals(library.getIdNumber())) {
+			library.setIdNumber(idNumber);
+		}
+
+		if (!StringUtils.isEmpty(nation) && !nation.equals(library.getNation())) {
+			library.setNation(nation);
+		}
+
+		if (!StringUtils.isEmpty(address) && !address.equals(library.getAddress())) {
+			library.setAddress(address);
+		}
+
+		if (!StringUtils.isEmpty(avatar) && !avatar.equals(library.getAvatar())) {
+			library.setAvatar(avatar);
+		}
+
+		if (!StringUtils.isEmpty(remark) && !remark.equals(library.getRemark())) {
+			library.setRemark(remark);
+		}
+
+		if (!StringUtils.isEmpty(address) && !address.equals(library.getAddress())) {
+			library.setAddress(address);
+		}
+
+		if (flag > 0 && flag != library.getFlag()) {
+			library.setFlag(flag);
+		}
+
+		if (groupId > 0 && groupId != library.getGroupId()) {
+			library.setGroupId(groupId);
+		}
+
+		boolean result = faceLibraryMapper.updateByPrimaryKey(library) > 0;
+		
+		//TODO 人脸库操作
+		
+		return result;
+	}
+
+	@Override
+	public FaceLibraryDTO queryLibraryById(int id) {
+
+		FaceLibrary library = faceLibraryMapper.selectByPrimaryKey(id);
+
+		if (library == null) {
+			return null;
+		}
+
+		return convertFaceLibrary2DTO(library);
+	}
+
+	@Override
 	public List<FaceLibraryDTO> queryLibraryList(int organizationId, int flag, int pageSize, int pageNum) {
 
 		FaceLibraryExample example = new FaceLibraryExample();
@@ -110,7 +188,7 @@ public class FaceLibraryServiceImpl implements FaceLibraryService {
 
 		// PageInfo<FaceLibrary> pageInfo = new PageInfo<>(faceLibrarys);
 
-		return convertFaceLibrary2DTO(faceLibrarys);
+		return convertFaceLibraryList2DTO(faceLibrarys);
 	}
 
 	@Override
@@ -122,7 +200,7 @@ public class FaceLibraryServiceImpl implements FaceLibraryService {
 
 		// PageInfo<FaceLibrary> pageInfo = new PageInfo<>(list);
 
-		return convertFaceLibrary2DTO(list);
+		return convertFaceLibraryList2DTO(list);
 	}
 
 	@Override
@@ -143,7 +221,26 @@ public class FaceLibraryServiceImpl implements FaceLibraryService {
 		return faceLibraryMapper.selectByExample(example);
 	}
 
-	private List<FaceLibraryDTO> convertFaceLibrary2DTO(List<FaceLibrary> list) {
+	private FaceLibraryDTO convertFaceLibrary2DTO(FaceLibrary faceLibrary) {
+
+		FaceLibraryDTO libraryDTO = new FaceLibraryDTO();
+
+		BeanUtils.copyPropertiesNotForce(libraryDTO, faceLibrary);
+
+		String groupName = groupService.queryGroupNameById(faceLibrary.getGroupId());
+
+		libraryDTO.setGroupName(groupName);
+
+		List<EquipmetLibraryDTO> equipmentLibraryList = customerEquipmentLibraryMapper.queryEquipmentLibraryByLibraryId(faceLibrary.getId());
+
+		String supportDevice = convertEquipmentLibraryList2SupportDevice(equipmentLibraryList);
+
+		libraryDTO.setSupportDevice(supportDevice);
+
+		return libraryDTO;
+	}
+
+	private List<FaceLibraryDTO> convertFaceLibraryList2DTO(List<FaceLibrary> list) {
 
 		if (list == null || list.size() == 0) {
 			return Collections.emptyList();
@@ -155,19 +252,7 @@ public class FaceLibraryServiceImpl implements FaceLibraryService {
 
 		for (FaceLibrary library : list) {
 
-			libraryDTO = new FaceLibraryDTO();
-
-			BeanUtils.copyPropertiesNotForce(libraryDTO, library);
-
-			String groupName = groupService.queryGroupNameById(library.getGroupId());
-
-			libraryDTO.setGroupName(groupName);
-
-			List<EquipmetLibraryDTO> equipmentLibraryList = customerEquipmentLibraryMapper.queryEquipmentLibraryByLibraryId(library.getId());
-
-			String supportDevice = convertEquipmentLibraryList2SupportDevice(equipmentLibraryList);
-
-			libraryDTO.setSupportDevice(supportDevice);
+			libraryDTO = convertFaceLibrary2DTO(library);
 
 			libraryList.add(libraryDTO);
 		}

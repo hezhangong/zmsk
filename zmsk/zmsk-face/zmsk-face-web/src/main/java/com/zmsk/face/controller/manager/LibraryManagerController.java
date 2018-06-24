@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -103,6 +104,61 @@ public class LibraryManagerController {
 		}
 
 		return ServiceResultDTO.success();
+	}
+
+	/****
+	 * 根据Id获取人脸库信息
+	 * 
+	 * @param id
+	 *            主键
+	 * @return
+	 */
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	@ResponseBody
+	public ServiceResultDTO queryLibraryById(@PathVariable(value = "id") int id) {
+
+		FaceLibraryDTO faceLibrary = faceLibraryService.queryLibraryById(id);
+
+		return ServiceResultDTO.success(faceLibrary);
+	}
+
+	/***
+	 * 新增人脸库
+	 * 
+	 * @param name
+	 *            姓名
+	 * @param sex
+	 *            性别
+	 * @param idNumber
+	 *            身份证号
+	 * @param nation
+	 *            民族
+	 * @param address
+	 *            地址
+	 * @param avatar
+	 *            头像
+	 * @param remark
+	 *            备注
+	 * @param flag
+	 *            黑白名单标识
+	 * @param organizationId
+	 *            组织Id
+	 * @param groupId
+	 *            所属分组Id
+	 * @param equipmentId
+	 *            设备Id列表
+	 * @return
+	 */
+	@RequestMapping(value = "update", method = RequestMethod.POST)
+	@ResponseBody
+	public ServiceResultDTO updateFaceLibrary(@RequestParam(value="id")int id,@RequestParam(value = "name") String name, @RequestParam(value = "sex") int sex, @RequestParam(value = "idNumber") String idNumber, @RequestParam(value = "nation", required = false, defaultValue = "") String nation, @RequestParam(value = "address", defaultValue = "", required = false) String address, @RequestParam(value = "avatar") String avatar, @RequestParam(value = "remark", defaultValue = "", required = false) String remark, @RequestParam(value = "flag") int flag, @RequestParam(value = "organizationId") int organizationId,
+			@RequestParam(value = "groupId") int groupId, @RequestParam(value = "equipmentId") String equipmentId) {
+
+		if(id<=0){
+			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid id");
+		}
+		
+		return null;
 	}
 
 	/****
