@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -76,6 +77,56 @@ public class GroupManagerController {
 		List<FaceGroup> list = groupService.queryGroupByorganizationId(organizationId);
 
 		return ServiceResultDTO.success(list);
+	}
+
+	/****
+	 * 根据Id获取分组信息
+	 * 
+	 * @param id
+	 *            主键Id
+	 * @return
+	 */
+	@RequestMapping(value = "{id}", method = RequestMethod.GET)
+	@ResponseBody
+	public ServiceResultDTO queryGroupById(@PathVariable(value = "id") int id) {
+
+		if (id <= 0) {
+			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid  id");
+		}
+
+		FaceGroup group = groupService.queryGroupById(id);
+
+		return ServiceResultDTO.success(group);
+	}
+
+	/****
+	 * 修改分组名称
+	 * 
+	 * @param id
+	 *            主键Id
+	 * @param name
+	 *            分组名称
+	 * @return
+	 */
+	@RequestMapping(value="update",method=RequestMethod.POST)
+	@ResponseBody
+	public ServiceResultDTO updateGroupName(@RequestParam(value = "id") int id, @RequestParam(value = "name") String name) {
+
+		if (id <= 0) {
+			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid id");
+		}
+
+		if (StringUtils.isEmpty(name)) {
+			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid group name");
+		}
+
+		boolean success = groupService.updateGroupName(id, name);
+
+		if (!success) {
+			return new ServiceResultDTO(BaseResultCode.GROUP_OPERATION_ERROR, "修改分组名称失败");
+		}
+
+		return ServiceResultDTO.success();
 	}
 
 }

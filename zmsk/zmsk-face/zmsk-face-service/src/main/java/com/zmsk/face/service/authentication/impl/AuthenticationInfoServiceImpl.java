@@ -143,6 +143,11 @@ public class AuthenticationInfoServiceImpl implements AuthenticationInfoService 
 		return convertAuthenticationInfo2DTO(list);
 	}
 
+	@Override
+	public FaceAuthenticationInfo queryAuthenticationInfoById(int id) {
+		return authenticationInfoMapper.selectByPrimaryKey(id);
+	}
+
 	private List<AuthenticationInfoDTO> convertAuthenticationInfo2DTO(List<FaceAuthenticationInfo> list) {
 
 		if (list == null || list.size() == 0) {

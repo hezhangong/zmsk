@@ -2,6 +2,7 @@ package com.zmsk.face.service.authentication;
 
 import java.util.List;
 
+import com.zmsk.face.pojo.FaceAuthenticationInfo;
 import com.zmsk.face.service.authentication.dto.AuthenticationInfoDTO;
 
 /****
@@ -70,4 +71,13 @@ public interface AuthenticationInfoService {
 	 * @return
 	 */
 	List<AuthenticationInfoDTO> queryWarnAuthenticationInfo(String search, int organizationId, int pageSize, int pageNum);
+
+	/****
+	 * 根据id获取认证记录信息
+	 * 
+	 * @param id
+	 *            主键Id
+	 * @return
+	 */
+	FaceAuthenticationInfo queryAuthenticationInfoById(int id);
 }
