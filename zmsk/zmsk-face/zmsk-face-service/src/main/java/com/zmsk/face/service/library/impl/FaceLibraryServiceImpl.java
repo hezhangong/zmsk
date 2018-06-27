@@ -25,7 +25,6 @@ import com.zmsk.face.service.group.GroupService;
 import com.zmsk.face.service.library.FaceLibraryEquipmentService;
 import com.zmsk.face.service.library.FaceLibraryService;
 import com.zmsk.face.service.library.constants.EquipmentLibrarySyncStatus;
-import com.zmsk.face.service.library.constants.LibraryFlagConstants;
 import com.zmsk.face.service.library.dto.FaceLibraryDTO;
 
 /***
@@ -83,11 +82,6 @@ public class FaceLibraryServiceImpl implements FaceLibraryService {
 		library.setCtime(System.currentTimeMillis() / 1000);
 
 		boolean success = faceLibraryMapper.insert(library) > 0;
-
-		// 访客标示
-		if (flag == LibraryFlagConstants.VISTOR_FLAG) {
-			return success;
-		}
 
 		// 添加人脸库设备同步数据
 		libraryEquipmentService.addLibraryEquipment(library.getId(), equipmentIds);
@@ -150,9 +144,9 @@ public class FaceLibraryServiceImpl implements FaceLibraryService {
 		}
 
 		boolean result = faceLibraryMapper.updateByPrimaryKey(library) > 0;
-		
-		//TODO 人脸库操作
-		
+
+		// TODO 人脸库操作
+
 		return result;
 	}
 

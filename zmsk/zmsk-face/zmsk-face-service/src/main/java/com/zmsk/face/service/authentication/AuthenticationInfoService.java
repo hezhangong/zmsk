@@ -35,9 +35,11 @@ public interface AuthenticationInfoService {
 	 *            设备登入账号
 	 * @param groupId
 	 *            所属分组Id
+	 * @param authTimeStamp
+	 *            认证时间戳
 	 * @return
 	 */
-	boolean addAuthenticationInfo(String name, String idNumber, String nation, String address, String avatar, int sex, int type, int result, String deviceNumber, int groupId);
+	boolean addAuthenticationInfo(String name, String idNumber, String nation, String address, String avatar, int sex, int type, int result, String deviceNumber, int groupId, long authTimeStamp);
 
 	/****
 	 * 查询认证信息记录
