@@ -1,5 +1,8 @@
 package com.zmsk.face.controller.device;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
@@ -48,12 +51,15 @@ public class AuthenticationInfoDeviceController {
 	 *            设备登入账号
 	 * @param groupId
 	 *            所属分组Id
+	 * @param authTimeStamp
+	 *            认证时间戳
 	 * @return
+	 * @throws UnsupportedEncodingException
 	 */
 	@RequestMapping(value = "add", method = RequestMethod.POST)
 	@ResponseBody
-	public ServiceResultDTO addAuthenticationRecord(@RequestParam(value = "name") String name, @RequestParam(value = "idNumber", required = false, defaultValue = "") String idNumber, @RequestParam(value = "nation", defaultValue = "", required = false) String nation, @RequestParam(value = "address", required = false, defaultValue = "") String address, @RequestParam(value = "avatar", required = false, defaultValue = "") String avatar, @RequestParam(value = "sex") int sex, @RequestParam(value = "type") int type, @RequestParam(value = "result") int result, @RequestParam(value = "deviceNumber") String deviceNumber,
-			@RequestParam(value = "groupId", defaultValue = "0", required = false) int groupId) {
+	public ServiceResultDTO addAuthenticationRecord(@RequestParam(value = "name") String name, @RequestParam(value = "idNumber", required = false, defaultValue = "") String idNumber, @RequestParam(value = "nation", defaultValue = "", required = false) String nation, @RequestParam(value = "address", required = false, defaultValue = "") String address, @RequestParam(value = "avatar", required = false, defaultValue = "") String avatar, @RequestParam(value = "sex") int sex, @RequestParam(value = "type") int type, @RequestParam(value = "result") int result,
+			@RequestParam(value = "deviceNumber") String deviceNumber, @RequestParam(value = "groupId", defaultValue = "0", required = false) int groupId, @RequestParam(value = "authTimeStamp") long authTimeStamp) throws UnsupportedEncodingException {
 
 		if (StringUtils.isEmpty(name)) {
 			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, " invalid name");
@@ -75,7 +81,15 @@ public class AuthenticationInfoDeviceController {
 			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, " invalid result");
 		}
 
-		boolean success = authenticationServiceInfo.addAuthenticationInfo(name, idNumber, nation, address, avatar, sex, type, result, deviceNumber, groupId);
+		if (groupId < 0) {
+			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, " invalid groupId");
+		}
+
+		if (StringUtils.isEmpty(avatar)) {
+			avatar = URLDecoder.decode(avatar, "UTF-8");
+		}
+
+		boolean success = authenticationServiceInfo.addAuthenticationInfo(name, idNumber, nation, address, avatar, sex, type, result, deviceNumber, groupId, authTimeStamp);
 
 		if (!success) {
 			return new ServiceResultDTO(BaseResultCode.AUTHENTICATION_INFO_OPERATION_ERROR, "create authentication record fail");

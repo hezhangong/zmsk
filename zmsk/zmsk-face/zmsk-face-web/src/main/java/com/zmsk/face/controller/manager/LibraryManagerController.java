@@ -25,7 +25,7 @@ import com.zmsk.face.service.library.dto.FaceLibraryDTO;
  *
  */
 @Controller
-@RequestMapping(value = "manager/library/")
+@RequestMapping("manager/library/")
 public class LibraryManagerController {
 
 	@Autowired
@@ -151,13 +151,13 @@ public class LibraryManagerController {
 	 */
 	@RequestMapping(value = "update", method = RequestMethod.POST)
 	@ResponseBody
-	public ServiceResultDTO updateFaceLibrary(@RequestParam(value="id")int id,@RequestParam(value = "name") String name, @RequestParam(value = "sex") int sex, @RequestParam(value = "idNumber") String idNumber, @RequestParam(value = "nation", required = false, defaultValue = "") String nation, @RequestParam(value = "address", defaultValue = "", required = false) String address, @RequestParam(value = "avatar") String avatar, @RequestParam(value = "remark", defaultValue = "", required = false) String remark, @RequestParam(value = "flag") int flag, @RequestParam(value = "organizationId") int organizationId,
-			@RequestParam(value = "groupId") int groupId, @RequestParam(value = "equipmentId") String equipmentId) {
+	public ServiceResultDTO updateFaceLibrary(@RequestParam(value = "id") int id, @RequestParam(value = "name") String name, @RequestParam(value = "sex") int sex, @RequestParam(value = "idNumber") String idNumber, @RequestParam(value = "nation", required = false, defaultValue = "") String nation, @RequestParam(value = "address", defaultValue = "", required = false) String address, @RequestParam(value = "avatar") String avatar, @RequestParam(value = "remark", defaultValue = "", required = false) String remark, @RequestParam(value = "flag") int flag,
+			@RequestParam(value = "organizationId") int organizationId, @RequestParam(value = "groupId") int groupId, @RequestParam(value = "equipmentId") String equipmentId) {
 
-		if(id<=0){
+		if (id <= 0) {
 			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid id");
 		}
-		
+
 		return null;
 	}
 

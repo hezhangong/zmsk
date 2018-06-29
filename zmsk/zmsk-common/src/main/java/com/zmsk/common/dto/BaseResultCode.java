@@ -27,16 +27,19 @@ public class BaseResultCode {
 
 	/** 设备操作错误code **/
 	public static final int EQUIPMENT_TAG_OPERATION_ERROR = 50006;
-	
-	/**设备认证信息操作错误**/
+
+	/** 设备认证信息操作错误 **/
 	public static final int AUTHENTICATION_INFO_OPERATION_ERROR = 50007;
-	
-	/**人脸库操作失败**/
+
+	/** 人脸库操作失败 **/
 	public static final int LIBRARY_OPERATION_ERROR = 50008;
-	
-	/**组织操作失败**/
+
+	/** 组织操作失败 **/
 	public static final int GROUP_OPERATION_ERROR = 50009;
-	
-	/**同步人脸库操作失败**/
+
+	/** 同步人脸库操作失败 **/
 	public static final int SYNC_FACE_LIBRARY_FAIL = 50010;
+
+	/** 访客人脸库操作失败 **/
+	public static final int VISITOR_LIBRARY_OPERATION_ERROR = 50011;
 }

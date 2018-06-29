@@ -80,6 +80,7 @@
 	<select id="queryLibraryListByEquipmentId" resultType="com.zmsk.face.pojo.FaceLibrary">
 		select
 		library.id AS id,
+		name AS name,
 		sex AS sex,
 		id_number AS idNumber,
 		nation AS nation,

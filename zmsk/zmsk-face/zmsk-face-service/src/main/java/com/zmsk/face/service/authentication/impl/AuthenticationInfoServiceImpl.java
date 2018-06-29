@@ -46,7 +46,7 @@ public class AuthenticationInfoServiceImpl implements AuthenticationInfoService 
 	private GroupService groupService;
 
 	@Override
-	public boolean addAuthenticationInfo(String name, String idNumber, String nation, String address, String avatar, int sex, int type, int result, String deviceNumber, int groupId) {
+	public boolean addAuthenticationInfo(String name, String idNumber, String nation, String address, String avatar, int sex, int type, int result, String deviceNumber, int groupId, long authTimeStamp) {
 
 		// 获取设备信息
 		FaceEquipment equipment = equipmentService.queryEquipmentByNumber(deviceNumber);
@@ -88,7 +88,7 @@ public class AuthenticationInfoServiceImpl implements AuthenticationInfoService 
 
 		authenticationInfo.setGroupId(groupId);
 
-		authenticationInfo.setCtime(System.currentTimeMillis() / 1000);
+		authenticationInfo.setCtime(authTimeStamp);
 
 		return authenticationInfoMapper.insert(authenticationInfo) > 0;
 	}
@@ -141,6 +141,11 @@ public class AuthenticationInfoServiceImpl implements AuthenticationInfoService 
 		List<FaceAuthenticationInfo> list = authenticationInfoMapper.selectByExample(example);
 
 		return convertAuthenticationInfo2DTO(list);
+	}
+
+	@Override
+	public FaceAuthenticationInfo queryAuthenticationInfoById(int id) {
+		return authenticationInfoMapper.selectByPrimaryKey(id);
 	}
 
 	private List<AuthenticationInfoDTO> convertAuthenticationInfo2DTO(List<FaceAuthenticationInfo> list) {

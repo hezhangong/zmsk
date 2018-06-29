@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.zmsk.common.dto.BaseResultCode;
 import com.zmsk.common.dto.ServiceResultDTO;
+import com.zmsk.face.pojo.FaceAuthenticationInfo;
 import com.zmsk.face.service.authentication.AuthenticationInfoService;
 import com.zmsk.face.service.authentication.dto.AuthenticationInfoDTO;
 
@@ -77,5 +79,25 @@ public class AuthenticationInfoManagerController {
 		List<AuthenticationInfoDTO> list = authenticationInfoService.queryWarnAuthenticationInfo(search, organizationId, pageSize, pageNum);
 
 		return ServiceResultDTO.success(list);
+	}
+
+	/****
+	 * 根据Id获取认证信息
+	 * 
+	 * @param id
+	 *            主键Id
+	 * @return
+	 */
+	@RequestMapping(value = "{id}", method = RequestMethod.GET)
+	@ResponseBody
+	public ServiceResultDTO queryAuthenticationInfoById(@PathVariable(value = "id") int id) {
+
+		if (id <= 0) {
+			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid  id");
+		}
+
+		FaceAuthenticationInfo authenticationInfo = authenticationInfoService.queryAuthenticationInfoById(id);
+
+		return ServiceResultDTO.success(authenticationInfo);
 	}
 }

@@ -63,4 +63,21 @@ public class GroupServiceImpl implements GroupService {
 		return group.getGroupName();
 	}
 
+	@Override
+	public FaceGroup queryGroupById(int id) {
+		return groupMapper.selectByPrimaryKey(id);
+	}
+
+	@Override
+	public boolean updateGroupName(int id, String name) {
+
+		FaceGroup group = new FaceGroup();
+
+		group.setId(id);
+
+		group.setGroupName(name);
+
+		return groupMapper.updateByPrimaryKeySelective(group) > 0;
+	}
+
 }

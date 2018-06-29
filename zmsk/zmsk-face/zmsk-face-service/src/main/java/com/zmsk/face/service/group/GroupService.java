@@ -39,4 +39,24 @@ public interface GroupService {
 	 * @return
 	 */
 	String queryGroupNameById(int groupId);
+
+	/****
+	 * 根据Id获取分组信息
+	 * 
+	 * @param id
+	 *            主键
+	 * @return
+	 */
+	FaceGroup queryGroupById(int id);
+
+	/****
+	 * 更改分组名称
+	 * 
+	 * @param id
+	 *            主键Id
+	 * @param name
+	 *            分组名称
+	 * @return
+	 */
+	boolean updateGroupName(int id, String name);
 }
