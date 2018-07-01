@@ -53,13 +53,17 @@ public class AuthenticationInfoDeviceController {
 	 *            所属分组Id
 	 * @param authTimeStamp
 	 *            认证时间戳
+	 * @param idcardImage
+	 *            身份证图片
+	 * @param idcardInfo
+	 *            身份证基本信息
 	 * @return
 	 * @throws UnsupportedEncodingException
 	 */
 	@RequestMapping(value = "add", method = RequestMethod.POST)
 	@ResponseBody
 	public ServiceResultDTO addAuthenticationRecord(@RequestParam(value = "name") String name, @RequestParam(value = "idNumber", required = false, defaultValue = "") String idNumber, @RequestParam(value = "nation", defaultValue = "", required = false) String nation, @RequestParam(value = "address", required = false, defaultValue = "") String address, @RequestParam(value = "avatar", required = false, defaultValue = "") String avatar, @RequestParam(value = "sex") int sex, @RequestParam(value = "type") int type, @RequestParam(value = "result") int result,
-			@RequestParam(value = "deviceNumber") String deviceNumber, @RequestParam(value = "groupId", defaultValue = "0", required = false) int groupId, @RequestParam(value = "authTimeStamp") long authTimeStamp) throws UnsupportedEncodingException {
+			@RequestParam(value = "deviceNumber") String deviceNumber, @RequestParam(value = "groupId", defaultValue = "0", required = false) int groupId, @RequestParam(value = "authTimeStamp") long authTimeStamp, @RequestParam(value = "idcardImage", defaultValue = "", required = false) String idcardImage, @RequestParam(value = "idcardInfo", required = false, defaultValue = "") String idcardInfo) throws UnsupportedEncodingException {
 
 		if (StringUtils.isEmpty(name)) {
 			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, " invalid name");
@@ -89,7 +93,7 @@ public class AuthenticationInfoDeviceController {
 			avatar = URLDecoder.decode(avatar, "UTF-8");
 		}
 
-		boolean success = authenticationServiceInfo.addAuthenticationInfo(name, idNumber, nation, address, avatar, sex, type, result, deviceNumber, groupId, authTimeStamp);
+		boolean success = authenticationServiceInfo.addAuthenticationInfo(name, idNumber, nation, address, avatar, sex, type, result, deviceNumber, groupId, authTimeStamp, idcardImage, idcardInfo);
 
 		if (!success) {
 			return new ServiceResultDTO(BaseResultCode.AUTHENTICATION_INFO_OPERATION_ERROR, "create authentication record fail");
