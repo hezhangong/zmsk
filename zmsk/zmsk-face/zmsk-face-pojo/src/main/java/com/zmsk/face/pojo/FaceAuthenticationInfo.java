@@ -1,17 +1,6 @@
-package com.zmsk.face.service.authentication.dto;
+package com.zmsk.face.pojo;
 
-import java.io.Serializable;
-
-/****
- * 认证记录返回值封装
- * 
- * @author warrior
- *
- */
-public class AuthenticationInfoDTO implements Serializable {
-
-	private static final long serialVersionUID = 8295750438057613859L;
-	
+public class FaceAuthenticationInfo {
 	private Integer id;
 
 	private String name;
@@ -36,14 +25,14 @@ public class AuthenticationInfoDTO implements Serializable {
 
 	private Integer equipmentId;
 
-	private String  groupName;
+	private Integer groupId;
 
 	private String idcardImage;
 
 	private String idcardInfo;
-	
+
 	private String similarDegree;
-	
+
 	private Long ctime;
 
 	public Integer getId() {
@@ -59,7 +48,7 @@ public class AuthenticationInfoDTO implements Serializable {
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		this.name = name == null ? null : name.trim();
 	}
 
 	public String getAvatar() {
@@ -67,7 +56,7 @@ public class AuthenticationInfoDTO implements Serializable {
 	}
 
 	public void setAvatar(String avatar) {
-		this.avatar = avatar;
+		this.avatar = avatar == null ? null : avatar.trim();
 	}
 
 	public Integer getSex() {
@@ -83,7 +72,7 @@ public class AuthenticationInfoDTO implements Serializable {
 	}
 
 	public void setIdNumber(String idNumber) {
-		this.idNumber = idNumber;
+		this.idNumber = idNumber == null ? null : idNumber.trim();
 	}
 
 	public String getNation() {
@@ -91,7 +80,7 @@ public class AuthenticationInfoDTO implements Serializable {
 	}
 
 	public void setNation(String nation) {
-		this.nation = nation;
+		this.nation = nation == null ? null : nation.trim();
 	}
 
 	public String getAddress() {
@@ -99,7 +88,7 @@ public class AuthenticationInfoDTO implements Serializable {
 	}
 
 	public void setAddress(String address) {
-		this.address = address;
+		this.address = address == null ? null : address.trim();
 	}
 
 	public Integer getType() {
@@ -115,7 +104,7 @@ public class AuthenticationInfoDTO implements Serializable {
 	}
 
 	public void setSource(String source) {
-		this.source = source;
+		this.source = source == null ? null : source.trim();
 	}
 
 	public Integer getResult() {
@@ -142,12 +131,36 @@ public class AuthenticationInfoDTO implements Serializable {
 		this.equipmentId = equipmentId;
 	}
 
-	public String getGroupName() {
-		return groupName;
+	public Integer getGroupId() {
+		return groupId;
 	}
 
-	public void setGroupName(String groupName) {
-		this.groupName = groupName;
+	public void setGroupId(Integer groupId) {
+		this.groupId = groupId;
+	}
+
+	public String getIdcardImage() {
+		return idcardImage;
+	}
+
+	public void setIdcardImage(String idcardImage) {
+		this.idcardImage = idcardImage == null ? null : idcardImage.trim();
+	}
+
+	public String getIdcardInfo() {
+		return idcardInfo;
+	}
+
+	public void setIdcardInfo(String idcardInfo) {
+		this.idcardInfo = idcardInfo == null ? null : idcardInfo.trim();
+	}
+
+	public String getSimilarDegree() {
+		return similarDegree;
+	}
+
+	public void setSimilarDegree(String similarDegree) {
+		this.similarDegree = similarDegree == null ? null : similarDegree.trim();
 	}
 
 	public Long getCtime() {
@@ -156,34 +169,5 @@ public class AuthenticationInfoDTO implements Serializable {
 
 	public void setCtime(Long ctime) {
 		this.ctime = ctime;
-	}
-	
-	public String getIdcardImage() {
-		return idcardImage;
-	}
-
-	public void setIdcardImage(String idcardImage) {
-		this.idcardImage = idcardImage;
-	}
-
-	public String getIdcardInfo() {
-		return idcardInfo;
-	}
-
-	public void setIdcardInfo(String idcardInfo) {
-		this.idcardInfo = idcardInfo;
-	}
-	
-	public String getSimilarDegree() {
-		return similarDegree;
-	}
-
-	public void setSimilarDegree(String similarDegree) {
-		this.similarDegree = similarDegree;
-	}
-
-	@Override
-	public String toString() {
-		return "AuthenticationInfoDTO [id=" + id + ", name=" + name + ", avatar=" + avatar + ", sex=" + sex + ", idNumber=" + idNumber + ", nation=" + nation + ", address=" + address + ", type=" + type + ", source=" + source + ", result=" + result + ", organizationId=" + organizationId + ", equipmentId=" + equipmentId + ", groupName=" + groupName + ", idcardImage=" + idcardImage + ", idcardInfo=" + idcardInfo + ", similarDegree=" + similarDegree + ", ctime=" + ctime + "]";
 	}
 }
