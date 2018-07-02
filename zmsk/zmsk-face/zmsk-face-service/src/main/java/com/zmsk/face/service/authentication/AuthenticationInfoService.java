@@ -38,9 +38,13 @@ public interface AuthenticationInfoService {
 	 *            所属分组Id
 	 * @param authTimeStamp
 	 *            认证时间戳
+	 * @param idcardImage
+	 *            身份证图片
+	 * @param idcardInfo
+	 *            身份证基本信息
 	 * @return
 	 */
-	boolean addAuthenticationInfo(String name, String idNumber, String nation, String address, String avatar, int sex, int type, int result, String deviceNumber, int groupId, long authTimeStamp);
+	boolean addAuthenticationInfo(String name, String idNumber, String nation, String address, String avatar, int sex, int type, int result, String deviceNumber, int groupId, long authTimeStamp, String idcardImage, String idcardInfo);
 
 	/****
 	 * 查询认证信息记录

@@ -38,6 +38,10 @@ public class AuthenticationInfoDTO implements Serializable {
 
 	private String  groupName;
 
+	private String idcardImage;
+
+	private String idcardInfo;
+	
 	private Long ctime;
 
 	public Integer getId() {
@@ -151,9 +155,25 @@ public class AuthenticationInfoDTO implements Serializable {
 	public void setCtime(Long ctime) {
 		this.ctime = ctime;
 	}
+	
+	public String getIdcardImage() {
+		return idcardImage;
+	}
+
+	public void setIdcardImage(String idcardImage) {
+		this.idcardImage = idcardImage;
+	}
+
+	public String getIdcardInfo() {
+		return idcardInfo;
+	}
+
+	public void setIdcardInfo(String idcardInfo) {
+		this.idcardInfo = idcardInfo;
+	}
 
 	@Override
 	public String toString() {
-		return "AuthenticationInfoDTO [id=" + id + ", name=" + name + ", avatar=" + avatar + ", sex=" + sex + ", idNumber=" + idNumber + ", nation=" + nation + ", address=" + address + ", type=" + type + ", source=" + source + ", result=" + result + ", organizationId=" + organizationId + ", equipmentId=" + equipmentId + ", groupName=" + groupName + ", ctime=" + ctime + "]";
+		return "AuthenticationInfoDTO [id=" + id + ", name=" + name + ", avatar=" + avatar + ", sex=" + sex + ", idNumber=" + idNumber + ", nation=" + nation + ", address=" + address + ", type=" + type + ", source=" + source + ", result=" + result + ", organizationId=" + organizationId + ", equipmentId=" + equipmentId + ", groupName=" + groupName + ", idcardImage=" + idcardImage + ", idcardInfo=" + idcardInfo + ", ctime=" + ctime + "]";
 	}
 }
