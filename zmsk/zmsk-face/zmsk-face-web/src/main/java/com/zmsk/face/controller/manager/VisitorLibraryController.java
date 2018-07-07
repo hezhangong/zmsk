@@ -17,13 +17,14 @@ import com.zmsk.face.service.library.VisistorLibraryService;
 import com.zmsk.face.service.library.dto.FaceVisitorLibraryDTO;
 
 /****
- * 访客人脸库操作controller
+ * 访客人脸库操作controller,不需要访客人脸库操作
  * 
  * @author warrior
  *
  */
 @Controller
 @RequestMapping("manager/visistor/library/")
+@Deprecated
 public class VisitorLibraryController {
 
 	@Autowired
@@ -54,6 +55,7 @@ public class VisitorLibraryController {
 	 */
 	@RequestMapping(value = "add", method = RequestMethod.POST)
 	@ResponseBody
+	@Deprecated
 	public ServiceResultDTO addVisitorFaceLibrary(@RequestParam(value = "name") String name, @RequestParam(value = "sex") int sex, @RequestParam(value = "idNumber") String idNumber, @RequestParam(value = "nation", required = false, defaultValue = "") String nation, @RequestParam(value = "address", defaultValue = "", required = false) String address, @RequestParam(value = "avatar") String avatar, @RequestParam(value = "remark", defaultValue = "", required = false) String remark, @RequestParam(value = "organizationId") int organizationId, @RequestParam(value = "groupId") int groupId) {
 
 		if (StringUtils.isEmpty(name)) {
@@ -118,6 +120,7 @@ public class VisitorLibraryController {
 	 */
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
 	@ResponseBody
+	@Deprecated
 	public ServiceResultDTO queryVisitorLibrary(@PathVariable(value = "id") int id) {
 
 		if (id <= 0) {

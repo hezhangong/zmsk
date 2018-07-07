@@ -21,6 +21,7 @@ import com.zmsk.face.pojo.FaceEquipment;
 import com.zmsk.face.service.authentication.AuthenticationInfoService;
 import com.zmsk.face.service.authentication.constant.AuthenticResultConstant;
 import com.zmsk.face.service.authentication.dto.AuthenticationInfoDTO;
+import com.zmsk.face.service.authentication.dto.VisistorInfoDTO;
 import com.zmsk.face.service.equipment.EquipmentService;
 import com.zmsk.face.service.group.GroupService;
 
@@ -154,6 +155,40 @@ public class AuthenticationInfoServiceImpl implements AuthenticationInfoService 
 		return authenticationInfoMapper.selectByPrimaryKey(id);
 	}
 
+	@Override
+	public boolean registerVisitor(int id, String remark) {
+
+		FaceAuthenticationInfo authenticationInfo = new FaceAuthenticationInfo();
+
+		authenticationInfo.setId(id);
+
+		authenticationInfo.setRemark(remark);
+
+		authenticationInfo.setRegisterTime(System.currentTimeMillis() / 1000);
+
+		return authenticationInfoMapper.updateByPrimaryKeySelective(authenticationInfo) > 0;
+	}
+
+	@Override
+	public List<VisistorInfoDTO> queryVisitorByOrganizationId(int organizationId) {
+
+		FaceAuthenticationInfoExample example = new FaceAuthenticationInfoExample();
+
+		Criteria criteria = example.createCriteria();
+
+		criteria.andOrganizationIdEqualTo(organizationId);
+
+		criteria.andRemarkIsNotNull();
+
+		List<FaceAuthenticationInfo> authenticationList = authenticationInfoMapper.selectByExample(example);
+
+		if (authenticationList == null || authenticationList.size() == 0) {
+			return Collections.emptyList();
+		}
+
+		return convertAuthenticationInfo2VisistorDTO(authenticationList);
+	}
+
 	private List<AuthenticationInfoDTO> convertAuthenticationInfo2DTO(List<FaceAuthenticationInfo> list) {
 
 		if (list == null || list.size() == 0) {
@@ -170,6 +205,23 @@ public class AuthenticationInfoServiceImpl implements AuthenticationInfoService 
 			String groupName = groupService.queryGroupNameById(authenticationInfo.getGroupId());
 			authenticationInfoDTO.setGroupName(groupName);
 			result.add(authenticationInfoDTO);
+		}
+
+		return result;
+	}
+
+	private List<VisistorInfoDTO> convertAuthenticationInfo2VisistorDTO(List<FaceAuthenticationInfo> list) {
+
+		List<VisistorInfoDTO> result = new ArrayList<>(list.size());
+
+		VisistorInfoDTO visistorInfo = null;
+
+		for (FaceAuthenticationInfo authenticationInfo : list) {
+			visistorInfo = new VisistorInfoDTO();
+			BeanUtils.copyPropertiesNotNull(visistorInfo, authenticationInfo);
+			String groupName = groupService.queryGroupNameById(authenticationInfo.getGroupId());
+			visistorInfo.setGroupName(groupName);
+			result.add(visistorInfo);
 		}
 
 		return result;

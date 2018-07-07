@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.zmsk.face.pojo.FaceAuthenticationInfo;
 import com.zmsk.face.service.authentication.dto.AuthenticationInfoDTO;
+import com.zmsk.face.service.authentication.dto.VisistorInfoDTO;
 
 /****
  * 认证信息操作服务接口声明
@@ -86,4 +87,24 @@ public interface AuthenticationInfoService {
 	 * @return
 	 */
 	FaceAuthenticationInfo queryAuthenticationInfoById(int id);
+
+	/****
+	 * 登记成访客
+	 * 
+	 * @param id
+	 *            主键Id
+	 * @param remark
+	 *            备注信息
+	 * @return
+	 */
+	boolean registerVisitor(int id, String remark);
+
+	/****
+	 * 获取访客列表
+	 * 
+	 * @param organizationId
+	 *            组织Id
+	 * @return
+	 */
+	List<VisistorInfoDTO> queryVisitorByOrganizationId(int organizationId);
 }
