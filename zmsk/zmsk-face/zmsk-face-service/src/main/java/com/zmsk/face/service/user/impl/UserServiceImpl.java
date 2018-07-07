@@ -19,6 +19,7 @@ import com.zmsk.face.service.user.UserOrganizationService;
 import com.zmsk.face.service.user.UserRoleService;
 import com.zmsk.face.service.user.UserService;
 import com.zmsk.face.service.user.constants.UserConstants;
+import com.zmsk.face.service.user.dto.AdminUserDTO;
 
 /****
  * 用户操作服务接口实现
@@ -214,6 +215,12 @@ public class UserServiceImpl implements UserService {
 		}
 
 		return UserConstants.FAIL;
+	}
+	
+	@Override
+	public List<AdminUserDTO> queryAdminUserList() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

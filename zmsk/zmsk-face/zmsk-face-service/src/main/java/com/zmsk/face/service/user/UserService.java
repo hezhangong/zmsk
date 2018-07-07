@@ -3,6 +3,7 @@ package com.zmsk.face.service.user;
 import java.util.List;
 
 import com.zmsk.face.pojo.FaceUser;
+import com.zmsk.face.service.user.dto.AdminUserDTO;
 
 /****
  * 用户操作服务接口声明
@@ -109,4 +110,10 @@ public interface UserService {
 	 */
 	int updatePassword(int userId, String newPassword, String oldPassword);
 
+	/****
+	 * 获取商户列表信息
+	 * 
+	 * @return
+	 */
+	List<AdminUserDTO> queryAdminUserList();
 }
