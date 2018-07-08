@@ -2,6 +2,8 @@ package com.zmsk.face.service.authentication;
 
 import java.util.List;
 
+import org.apache.poi.ss.usermodel.Workbook;
+
 import com.zmsk.face.pojo.FaceAuthenticationInfo;
 import com.zmsk.face.service.authentication.dto.AuthenticationInfoDTO;
 import com.zmsk.face.service.authentication.dto.VisistorInfoDTO;
@@ -95,9 +97,11 @@ public interface AuthenticationInfoService {
 	 *            主键Id
 	 * @param remark
 	 *            备注信息
+	 * @param groupId
+	 *            分组Id
 	 * @return
 	 */
-	boolean registerVisitor(int id, String remark);
+	boolean registerVisitor(int id, String remark, int groupId);
 
 	/****
 	 * 获取访客列表
@@ -107,4 +111,15 @@ public interface AuthenticationInfoService {
 	 * @return
 	 */
 	List<VisistorInfoDTO> queryVisitorByOrganizationId(int organizationId);
+
+	/****
+	 * 导出认证记录
+	 * 
+	 * @param organizationId
+	 *            组织Id
+	 * @param dateStr
+	 *            日期字符串
+	 * @return
+	 */
+	Workbook exportAuthenticationInfo(int organizationId, String dateStr);
 }

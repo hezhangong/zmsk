@@ -2,8 +2,10 @@ package com.zmsk.face.service.authentication.impl;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
+import org.apache.poi.ss.usermodel.Workbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import org.springframework.util.StringUtils;
 
 import com.zmsk.common.pagehelper.PageHelper;
 import com.zmsk.common.utils.BeanUtils;
+import com.zmsk.common.utils.DateUtils;
 import com.zmsk.face.mapper.FaceAuthenticationInfoMapper;
 import com.zmsk.face.pojo.FaceAuthenticationInfo;
 import com.zmsk.face.pojo.FaceAuthenticationInfoExample;
@@ -21,9 +24,13 @@ import com.zmsk.face.pojo.FaceEquipment;
 import com.zmsk.face.service.authentication.AuthenticationInfoService;
 import com.zmsk.face.service.authentication.constant.AuthenticResultConstant;
 import com.zmsk.face.service.authentication.dto.AuthenticationInfoDTO;
+import com.zmsk.face.service.authentication.dto.ExportAuthenticationInfoDTO;
 import com.zmsk.face.service.authentication.dto.VisistorInfoDTO;
 import com.zmsk.face.service.equipment.EquipmentService;
 import com.zmsk.face.service.group.GroupService;
+
+import cn.afterturn.easypoi.excel.ExcelExportUtil;
+import cn.afterturn.easypoi.excel.entity.ExportParams;
 
 /****
  * 认证信息操作服务接口实现
@@ -156,13 +163,15 @@ public class AuthenticationInfoServiceImpl implements AuthenticationInfoService 
 	}
 
 	@Override
-	public boolean registerVisitor(int id, String remark) {
+	public boolean registerVisitor(int id, String remark, int groupId) {
 
 		FaceAuthenticationInfo authenticationInfo = new FaceAuthenticationInfo();
 
 		authenticationInfo.setId(id);
 
 		authenticationInfo.setRemark(remark);
+
+		authenticationInfo.setGroupId(groupId);
 
 		authenticationInfo.setRegisterTime(System.currentTimeMillis() / 1000);
 
@@ -187,6 +196,36 @@ public class AuthenticationInfoServiceImpl implements AuthenticationInfoService 
 		}
 
 		return convertAuthenticationInfo2VisistorDTO(authenticationList);
+	}
+
+	@Override
+	public Workbook exportAuthenticationInfo(int organizationId, String dateStr) {
+
+		Date date = DateUtils.convertStr2Date(dateStr);
+
+		FaceAuthenticationInfoExample example = new FaceAuthenticationInfoExample();
+
+		Criteria criteria = example.createCriteria();
+
+		criteria.andOrganizationIdEqualTo(organizationId);
+
+		long startTime = DateUtils.getDateTime(date);
+
+		long endTime = DateUtils.getDateTime(DateUtils.plusDay(date));
+
+		criteria.andCtimeBetween(startTime, endTime);
+
+		List<FaceAuthenticationInfo> list = authenticationInfoMapper.selectByExample(example);
+
+		if (list == null || list.size() == 0) {
+			return null;
+		}
+
+		List<ExportAuthenticationInfoDTO> reslt = convertAuthenticationInfo2ImportDTO(list);
+
+		ExportParams params = new ExportParams(dateStr + "-认证记录", "认证记录");
+
+		return ExcelExportUtil.exportExcel(params, ExportAuthenticationInfoDTO.class, reslt);
 	}
 
 	private List<AuthenticationInfoDTO> convertAuthenticationInfo2DTO(List<FaceAuthenticationInfo> list) {
@@ -222,6 +261,30 @@ public class AuthenticationInfoServiceImpl implements AuthenticationInfoService 
 			String groupName = groupService.queryGroupNameById(authenticationInfo.getGroupId());
 			visistorInfo.setGroupName(groupName);
 			result.add(visistorInfo);
+		}
+
+		return result;
+	}
+
+	private List<ExportAuthenticationInfoDTO> convertAuthenticationInfo2ImportDTO(List<FaceAuthenticationInfo> list) {
+
+		List<ExportAuthenticationInfoDTO> result = new ArrayList<>(list.size());
+
+		ExportAuthenticationInfoDTO importAuthentication = null;
+
+		for (FaceAuthenticationInfo authenticationInfo : list) {
+
+			importAuthentication = new ExportAuthenticationInfoDTO();
+
+			BeanUtils.copyPropertiesNotNull(importAuthentication, authenticationInfo);
+
+			String groupName = groupService.queryGroupNameById(authenticationInfo.getGroupId());
+
+			importAuthentication.setGroupName(groupName);
+
+			importAuthentication.setCtime(new Date(authenticationInfo.getCtime() * 1000));
+
+			result.add(importAuthentication);
 		}
 
 		return result;

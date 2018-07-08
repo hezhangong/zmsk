@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.zmsk</groupId>
@@ -44,6 +43,7 @@
 		<shiro.version>1.2.3</shiro.version>
 		<jedis.version>2.7.3</jedis.version>
 		<commons-pool2.version>2.4.2</commons-pool2.version>
+		<easypoi.versin>3.0.3</easypoi.versin>
 	</properties>
 
 	<dependencyManagement>
@@ -291,6 +291,22 @@
 				<groupId>com.qiniu</groupId>
 				<artifactId>qiniu-java-sdk</artifactId>
 				<version>[7.2.0, 7.2.99]</version>
+			</dependency>
+
+			<dependency>
+				<groupId>cn.afterturn</groupId>
+				<artifactId>easypoi-base</artifactId>
+				<version>${easypoi.versin}</version>
+			</dependency>
+			<dependency>
+				<groupId>cn.afterturn</groupId>
+				<artifactId>easypoi-web</artifactId>
+				<version>${easypoi.versin}</version>
+			</dependency>
+			<dependency>
+				<groupId>cn.afterturn</groupId>
+				<artifactId>easypoi-annotation</artifactId>
+				<version>${easypoi.versin}</version>
 			</dependency>
 
 		</dependencies>

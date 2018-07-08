@@ -1,7 +1,14 @@
 package com.zmsk.face.controller.manager;
 
+import java.io.BufferedOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.lang.StringUtils;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.zmsk.common.dto.BaseResultCode;
 import com.zmsk.common.dto.ServiceResultDTO;
+import com.zmsk.common.exception.ExprotExcelException;
 import com.zmsk.face.pojo.FaceAuthenticationInfo;
 import com.zmsk.face.service.authentication.AuthenticationInfoService;
 import com.zmsk.face.service.authentication.dto.AuthenticationInfoDTO;
@@ -99,5 +107,56 @@ public class AuthenticationInfoManagerController {
 		FaceAuthenticationInfo authenticationInfo = authenticationInfoService.queryAuthenticationInfoById(id);
 
 		return ServiceResultDTO.success(authenticationInfo);
+	}
+
+	/****
+	 * 导出认证记录
+	 * 
+	 * @param organizationId
+	 *            组织Id
+	 * @param dateStr
+	 *            日期字符串
+	 * @return
+	 */
+	@RequestMapping(value = "export", method = RequestMethod.GET)
+	@ResponseBody
+	private ServiceResultDTO exportAuthenticationInfo(@RequestParam(value = "organizationId") int organizationId, @RequestParam(value = "dateStr") String dateStr, HttpServletResponse response) {
+
+		if (organizationId <= 0) {
+			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid organization id");
+		}
+
+		if (StringUtils.isEmpty(dateStr)) {
+			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid date str");
+		}
+
+		Workbook workbook = authenticationInfoService.exportAuthenticationInfo(organizationId, dateStr);
+
+		if (workbook == null) {
+			throw new ExprotExcelException("未查询到导出数据");
+		}
+
+		String filename = dateStr + "认证记录";
+
+		// 指定下载的文件名--设置响应头
+		response.setHeader("Content-Disposition", "attachment;filename=" + filename + ".xls");
+		response.setContentType("application/vnd.ms-excel;charset=UTF-8");
+		response.setHeader("Pragma", "no-cache");
+		response.setHeader("Cache-Control", "no-cache");
+		response.setDateHeader("Expires", 0);
+
+		// 写出数据输出流到页面
+		try {
+			OutputStream output = response.getOutputStream();
+			BufferedOutputStream bufferedOutPut = new BufferedOutputStream(output);
+			workbook.write(bufferedOutPut);
+			bufferedOutPut.flush();
+			bufferedOutPut.close();
+			output.close();
+		} catch (IOException e) {
+			throw new ExprotExcelException(e.getMessage(), e);
+		}
+
+		return ServiceResultDTO.success();
 	}
 }

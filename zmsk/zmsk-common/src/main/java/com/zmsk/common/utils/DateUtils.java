@@ -7,6 +7,8 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.Period;
 import org.joda.time.PeriodType;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 /****
  * 日期操作工具类
@@ -171,6 +173,18 @@ public class DateUtils {
 	}
 
 	/****
+	 * 讲字符串格式转换成日期格式
+	 * 
+	 * @param dateStr
+	 * @return
+	 */
+	public static Date convertStr2Date(String dateStr) {
+		DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern("yyyy-MM-dd");
+		DateTime dateTime = dateTimeFormatter.parseDateTime(dateStr);
+		return dateTime.toDate();
+	}
+
+	/****
 	 * 获取当前日期的新增指定年时间戳
 	 * 
 	 * @param years
@@ -191,6 +205,11 @@ public class DateUtils {
 	public static String getCurrentDateStr() {
 		DateTime dateTime = new DateTime();
 		return dateTime.toString("yyyy-MM-dd");
+	}
+
+	public static void main(String[] args) {
+		Date date = new Date(1530029699000L);
+		System.out.println(convertDate2Str(date));
 	}
 
 }

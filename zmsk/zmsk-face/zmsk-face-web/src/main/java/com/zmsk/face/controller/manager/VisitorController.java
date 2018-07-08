@@ -35,11 +35,13 @@ public class VisitorController {
 	 *            主键Id
 	 * @param remark
 	 *            备注信息
+	 * @param groupId
+	 *            分组Id
 	 * @return
 	 */
 	@RequestMapping(value = "register", method = RequestMethod.POST)
 	@ResponseBody
-	public ServiceResultDTO registerVisitor(@RequestParam(value = "id") int id, @RequestParam(value = "remark") String remark) {
+	public ServiceResultDTO registerVisitor(@RequestParam(value = "id") int id, @RequestParam(value = "remark") String remark, @RequestParam(value = "groupId") int groupId) {
 
 		if (id <= 0) {
 			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid  id");
@@ -49,7 +51,11 @@ public class VisitorController {
 			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid  remark");
 		}
 
-		boolean success = authenticationInfoService.registerVisitor(id, remark);
+		if (groupId <= 0) {
+			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid  groupId");
+		}
+
+		boolean success = authenticationInfoService.registerVisitor(id, remark,groupId);
 
 		if (!success) {
 			return new ServiceResultDTO(BaseResultCode.VISITOR_LIBRARY_OPERATION_ERROR, "登记访客操作失败");
