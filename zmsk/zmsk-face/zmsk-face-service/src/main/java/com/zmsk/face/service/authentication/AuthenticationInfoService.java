@@ -88,7 +88,7 @@ public interface AuthenticationInfoService {
 	 *            主键Id
 	 * @return
 	 */
-	FaceAuthenticationInfo queryAuthenticationInfoById(int id);
+	AuthenticationInfoDTO queryAuthenticationInfoById(int id);
 
 	/****
 	 * 登记成访客

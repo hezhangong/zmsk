@@ -104,7 +104,7 @@ public class AuthenticationInfoManagerController {
 			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid  id");
 		}
 
-		FaceAuthenticationInfo authenticationInfo = authenticationInfoService.queryAuthenticationInfoById(id);
+		AuthenticationInfoDTO authenticationInfo = authenticationInfoService.queryAuthenticationInfoById(id);
 
 		return ServiceResultDTO.success(authenticationInfo);
 	}
