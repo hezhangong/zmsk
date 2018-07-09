@@ -36,6 +36,8 @@ public class AuthenticationInfoDTO implements Serializable {
 
 	private Integer equipmentId;
 
+	 private Integer groupId;
+	
 	private String  groupName;
 
 	private String idcardImage;
@@ -182,8 +184,16 @@ public class AuthenticationInfoDTO implements Serializable {
 		this.similarDegree = similarDegree;
 	}
 
+	public Integer getGroupId() {
+		return groupId;
+	}
+
+	public void setGroupId(Integer groupId) {
+		this.groupId = groupId;
+	}
+
 	@Override
 	public String toString() {
-		return "AuthenticationInfoDTO [id=" + id + ", name=" + name + ", avatar=" + avatar + ", sex=" + sex + ", idNumber=" + idNumber + ", nation=" + nation + ", address=" + address + ", type=" + type + ", source=" + source + ", result=" + result + ", organizationId=" + organizationId + ", equipmentId=" + equipmentId + ", groupName=" + groupName + ", idcardImage=" + idcardImage + ", idcardInfo=" + idcardInfo + ", similarDegree=" + similarDegree + ", ctime=" + ctime + "]";
+		return "AuthenticationInfoDTO [id=" + id + ", name=" + name + ", avatar=" + avatar + ", sex=" + sex + ", idNumber=" + idNumber + ", nation=" + nation + ", address=" + address + ", type=" + type + ", source=" + source + ", result=" + result + ", organizationId=" + organizationId + ", equipmentId=" + equipmentId + ", groupId=" + groupId + ", groupName=" + groupName + ", idcardImage=" + idcardImage + ", idcardInfo=" + idcardInfo + ", similarDegree=" + similarDegree + ", ctime=" + ctime + "]";
 	}
 }

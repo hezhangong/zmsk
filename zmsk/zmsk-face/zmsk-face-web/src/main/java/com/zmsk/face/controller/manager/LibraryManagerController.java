@@ -297,7 +297,7 @@ public class LibraryManagerController {
 			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid idNumber ");
 		}
 
-		FaceLibrary library = faceLibraryService.queryLibraryBuIdNumber(idNumber);
+		FaceLibraryDTO library = faceLibraryService.queryLibraryBuIdNumber(idNumber);
 
 		if (library == null) {
 			return new ServiceResultDTO(BaseResultCode.NOT_CONTENT, "没有找到数据");

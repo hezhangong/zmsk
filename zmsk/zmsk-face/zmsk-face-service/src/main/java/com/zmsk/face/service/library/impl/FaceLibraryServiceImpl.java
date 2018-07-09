@@ -216,7 +216,7 @@ public class FaceLibraryServiceImpl implements FaceLibraryService {
 	}
 
 	@Override
-	public FaceLibrary queryLibraryBuIdNumber(String idNumber) {
+	public FaceLibraryDTO queryLibraryBuIdNumber(String idNumber) {
 
 		FaceLibraryExample example = new FaceLibraryExample();
 
@@ -230,7 +230,9 @@ public class FaceLibraryServiceImpl implements FaceLibraryService {
 			return null;
 		}
 
-		return libraryList.get(0);
+		FaceLibrary faceLibrary = libraryList.get(0);
+
+		return convertFaceLibrary2DTO(faceLibrary);
 	}
 
 	private FaceLibraryDTO convertFaceLibrary2DTO(FaceLibrary faceLibrary) {
@@ -245,9 +247,7 @@ public class FaceLibraryServiceImpl implements FaceLibraryService {
 
 		List<EquipmetLibraryDTO> equipmentLibraryList = customerEquipmentLibraryMapper.queryEquipmentLibraryByLibraryId(faceLibrary.getId());
 
-		String supportDevice = convertEquipmentLibraryList2SupportDevice(equipmentLibraryList);
-
-		libraryDTO.setSupportDevice(supportDevice);
+		libraryDTO = convertEquipmentLibraryList2SupportDevice(equipmentLibraryList, libraryDTO);
 
 		return libraryDTO;
 	}
@@ -272,19 +272,24 @@ public class FaceLibraryServiceImpl implements FaceLibraryService {
 		return libraryList;
 	}
 
-	private String convertEquipmentLibraryList2SupportDevice(List<EquipmetLibraryDTO> equipmentLibraryList) {
+	private FaceLibraryDTO convertEquipmentLibraryList2SupportDevice(List<EquipmetLibraryDTO> equipmentLibraryList, FaceLibraryDTO libraryDTO) {
 
 		if (equipmentLibraryList == null || equipmentLibraryList.size() == 0) {
-			return "暂无支持设备";
+			libraryDTO.setSupportDevice("暂无支持设备");
+			return libraryDTO;
 		}
 
 		StringBuilder supportDevice = new StringBuilder();
+
+		StringBuilder supportDeviceIds = new StringBuilder();
 
 		for (EquipmetLibraryDTO equipmentLibrary : equipmentLibraryList) {
 
 			String remark = equipmentLibrary.getRemark();
 
 			int syncStatus = equipmentLibrary.getSyncStatus();
+
+			supportDeviceIds.append(equipmentLibrary.getEquipmentId());
 
 			supportDevice.append(remark);
 
@@ -295,13 +300,22 @@ public class FaceLibraryServiceImpl implements FaceLibraryService {
 			}
 
 			supportDevice.append(",");
+			supportDeviceIds.append(",");
 		}
 
 		String supportDeviceStr = supportDevice.toString();
 
-		supportDeviceStr = supportDeviceStr.substring(0, supportDeviceStr.length());
+		String deviceIds = supportDeviceIds.toString();
 
-		return supportDeviceStr;
+		supportDeviceStr = supportDeviceStr.substring(0, supportDeviceStr.length()-1);
+
+		deviceIds = deviceIds.substring(0, deviceIds.length()-1);
+
+		libraryDTO.setSupportDevice(supportDeviceStr);
+		
+		libraryDTO.setEquipmentIds(deviceIds);
+
+		return libraryDTO;
 	}
 
 }

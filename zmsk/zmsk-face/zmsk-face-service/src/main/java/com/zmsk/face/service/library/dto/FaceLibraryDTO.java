@@ -35,6 +35,8 @@ public class FaceLibraryDTO implements Serializable {
 	private Long ctime;
 
 	private String groupName;
+	
+	private String equipmentIds;
 
 	private String supportDevice;
 
@@ -142,8 +144,16 @@ public class FaceLibraryDTO implements Serializable {
 		this.supportDevice = supportDevice;
 	}
 
+	public String getEquipmentIds() {
+		return equipmentIds;
+	}
+
+	public void setEquipmentIds(String equipmentIds) {
+		this.equipmentIds = equipmentIds;
+	}
+
 	@Override
 	public String toString() {
-		return "FaceLibraryDTO [id=" + id + ", name=" + name + ", sex=" + sex + ", idNumber=" + idNumber + ", nation=" + nation + ", address=" + address + ", avatar=" + avatar + ", remark=" + remark + ", flag=" + flag + ", organizationId=" + organizationId +  ", ctime=" + ctime + ", groupName=" + groupName + ", supportDevice=" + supportDevice + "]";
+		return "FaceLibraryDTO [id=" + id + ", name=" + name + ", sex=" + sex + ", idNumber=" + idNumber + ", nation=" + nation + ", address=" + address + ", avatar=" + avatar + ", remark=" + remark + ", flag=" + flag + ", organizationId=" + organizationId + ", ctime=" + ctime + ", groupName=" + groupName + ", equipmentIds=" + equipmentIds + ", supportDevice=" + supportDevice + "]";
 	}
 }

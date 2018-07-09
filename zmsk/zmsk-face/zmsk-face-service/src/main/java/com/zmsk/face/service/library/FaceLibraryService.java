@@ -128,5 +128,5 @@ public interface FaceLibraryService {
 	 *            身份证Id
 	 * @return
 	 */
-	FaceLibrary queryLibraryBuIdNumber(String idNumber);
+	FaceLibraryDTO queryLibraryBuIdNumber(String idNumber);
 }
