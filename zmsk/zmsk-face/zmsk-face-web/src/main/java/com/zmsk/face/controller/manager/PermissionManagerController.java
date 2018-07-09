@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSONArray;
 import com.zmsk.common.dto.BaseResultCode;
 import com.zmsk.common.dto.ServiceResultDTO;
 import com.zmsk.face.service.permission.PermissionService;
@@ -75,5 +76,19 @@ public class PermissionManagerController {
 		}
 
 		return ServiceResultDTO.success();
+	}
+
+	/****
+	 * 查询所有权限的树型结构
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "tree", method = RequestMethod.GET)
+	@ResponseBody
+	public ServiceResultDTO queryTreePermissions() {
+
+		JSONArray jsonArray = permissionService.queryTreePermissions();
+
+		return ServiceResultDTO.success(jsonArray);
 	}
 }

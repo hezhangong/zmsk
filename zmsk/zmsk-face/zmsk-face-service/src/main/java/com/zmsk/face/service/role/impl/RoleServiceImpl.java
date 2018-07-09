@@ -226,10 +226,14 @@ public class RoleServiceImpl implements RoleService {
 	}
 
 	/***
+	 * 获取角色权限资源菜单
 	 * 
 	 * @param folders
+	 *            资源目录
 	 * @param permissions
+	 *            资源权限列表
 	 * @param rolePermissionIds
+	 *            角色对应资源Id列表
 	 * @return
 	 */
 	private JSONArray convert2Menus(JSONArray folders, List<FacePermission> permissions, List<Integer> rolePermissionIds) {

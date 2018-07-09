@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.zmsk.face.mapper.FacePermissionMapper;
 import com.zmsk.face.mapper.FaceUserMapper;
 import com.zmsk.face.mapper.custom.permission.CustomFacePermissionMapper;
@@ -16,6 +18,7 @@ import com.zmsk.face.pojo.FacePermission;
 import com.zmsk.face.pojo.FacePermissionExample;
 import com.zmsk.face.pojo.FaceUser;
 import com.zmsk.face.service.permission.PermissionService;
+import com.zmsk.face.service.permission.constants.PermissionTypeConstants;
 import com.zmsk.face.service.user.constants.UserLockStatusConstants;
 
 /****
@@ -94,4 +97,134 @@ public class PermissionServiceImpl implements PermissionService {
 
 		return permissionMapper.selectByExample(example);
 	}
+
+	@Override
+	public JSONArray queryTreePermissions() {
+
+		List<FacePermission> list = queryPermissionList();
+
+		// 目录
+		JSONArray folders = convert2Folders(list);
+
+		return convert2Menus(folders, list);
+	}
+
+	private JSONArray convert2Folders(List<FacePermission> list) {
+		// 目录
+		JSONArray folders = new JSONArray();
+
+		JSONObject node = null;
+
+		for (FacePermission permission : list) {
+
+			int pid = permission.getPid();
+
+			int type = permission.getType();
+
+			if (pid != 0 || type != PermissionTypeConstants.CATALOG) {
+				continue;
+			}
+
+			node = new JSONObject();
+
+			node.put("id", permission.getPermissionId());
+
+			node.put("name", permission.getName());
+
+			node.put("check", false);
+
+			folders.add(node);
+		}
+
+		return folders;
+	}
+
+	private JSONArray convert2Menus(JSONArray folders, List<FacePermission> permissions) {
+
+		// 菜单
+		JSONArray menus = null;
+
+		JSONObject node = null;
+
+		for (Object folder : folders) {
+
+			menus = new JSONArray();
+
+			int id = ((JSONObject) folder).getIntValue("id");
+
+			for (FacePermission permission : permissions) {
+
+				int pid = permission.getPid();
+
+				int type = permission.getType();
+
+				if (pid != id || type != PermissionTypeConstants.MENU) {
+					continue;
+				}
+
+				node = new JSONObject();
+
+				node.put("id", permission.getPermissionId());
+
+				node.put("name", permission.getName());
+
+				node.put("check", false);
+
+				menus.add(node);
+			}
+
+			if (menus.size() < 0) {
+				continue;
+			}
+
+			menus = convert2Button(menus, permissions);
+
+			((JSONObject) folder).put("children", menus);
+		}
+
+		return folders;
+	}
+
+	private JSONArray convert2Button(JSONArray menus, List<FacePermission> permissions) {
+
+		// 按钮
+		JSONArray buttons = null;
+
+		JSONObject node = null;
+
+		for (Object menu : menus) {
+
+			int id = ((JSONObject) menu).getIntValue("id");
+
+			buttons = new JSONArray();
+
+			for (FacePermission permission : permissions) {
+
+				int pid = permission.getPid();
+
+				int type = permission.getType();
+
+				if (pid != id || type != PermissionTypeConstants.BUTTON) {
+					continue;
+				}
+
+				node = new JSONObject();
+
+				node.put("id", permission.getPermissionId());
+
+				node.put("name", permission.getName());
+
+				node.put("check", false);
+
+				buttons.add(node);
+			}
+
+			if (buttons.size() > 0) {
+				((JSONObject) menu).put("children", buttons);
+			}
+		}
+
+		return menus;
+	}
+
 }

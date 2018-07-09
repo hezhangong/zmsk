@@ -2,6 +2,7 @@ package com.zmsk.face.service.permission;
 
 import java.util.List;
 
+import com.alibaba.fastjson.JSONArray;
 import com.zmsk.face.pojo.FacePermission;
 
 /****
@@ -55,5 +56,12 @@ public interface PermissionService {
 	 * @return
 	 */
 	List<FacePermission> queryPermissionList();
+
+	/****
+	 * 获取所有的权限资源信息
+	 * 
+	 * @return
+	 */
+	JSONArray queryTreePermissions();
 
 }
