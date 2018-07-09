@@ -2,9 +2,9 @@ package com.zmsk.face.controller.manager;
 
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSON;
 import com.zmsk.common.dto.BaseResultCode;
 import com.zmsk.common.dto.ServiceResultDTO;
+import com.zmsk.face.pojo.FaceLibrary;
 import com.zmsk.face.service.library.FaceLibraryService;
 import com.zmsk.face.service.library.constants.LibraryFlagConstants;
 import com.zmsk.face.service.library.dto.FaceLibraryDTO;
@@ -280,4 +281,29 @@ public class LibraryManagerController {
 
 		return ServiceResultDTO.success(pageInfo);
 	}
+
+	/****
+	 * 根据身份证Id获取人脸库信息
+	 * 
+	 * @param idNumber
+	 *            身份证Id
+	 * @return
+	 */
+	@RequestMapping(value = "query", method = RequestMethod.GET)
+	@ResponseBody
+	public ServiceResultDTO queryLibraryBuIdNumber(@RequestParam(value = "idNumber") String idNumber) {
+
+		if (StringUtils.isEmpty(idNumber)) {
+			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid idNumber ");
+		}
+
+		FaceLibrary library = faceLibraryService.queryLibraryBuIdNumber(idNumber);
+
+		if (library == null) {
+			return new ServiceResultDTO(BaseResultCode.NOT_CONTENT, "没有找到数据");
+		}
+
+		return ServiceResultDTO.success(library);
+	}
+
 }

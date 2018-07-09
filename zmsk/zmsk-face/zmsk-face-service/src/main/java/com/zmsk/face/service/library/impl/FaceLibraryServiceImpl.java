@@ -215,6 +215,24 @@ public class FaceLibraryServiceImpl implements FaceLibraryService {
 		return faceLibraryMapper.selectByExample(example);
 	}
 
+	@Override
+	public FaceLibrary queryLibraryBuIdNumber(String idNumber) {
+
+		FaceLibraryExample example = new FaceLibraryExample();
+
+		Criteria criteria = example.createCriteria();
+
+		criteria.andIdNumberEqualTo(idNumber);
+
+		List<FaceLibrary> libraryList = faceLibraryMapper.selectByExample(example);
+
+		if (libraryList == null || libraryList.size() == 0) {
+			return null;
+		}
+
+		return libraryList.get(0);
+	}
+
 	private FaceLibraryDTO convertFaceLibrary2DTO(FaceLibrary faceLibrary) {
 
 		FaceLibraryDTO libraryDTO = new FaceLibraryDTO();

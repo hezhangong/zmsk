@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.zmsk.common.dto.BaseResultCode;
 import com.zmsk.common.dto.ServiceResultDTO;
 import com.zmsk.common.exception.ExprotExcelException;
-import com.zmsk.face.pojo.FaceAuthenticationInfo;
 import com.zmsk.face.service.authentication.AuthenticationInfoService;
 import com.zmsk.face.service.authentication.dto.AuthenticationInfoDTO;
 

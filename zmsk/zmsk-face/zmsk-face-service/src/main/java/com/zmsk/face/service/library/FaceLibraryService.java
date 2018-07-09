@@ -120,4 +120,13 @@ public interface FaceLibraryService {
 	 * @return
 	 */
 	List<FaceLibrary> queryUnSyncFaceLibrary(int equipmentId);
+
+	/****
+	 * 根据身份证Id获取人脸库信息
+	 * 
+	 * @param idNumber
+	 *            身份证Id
+	 * @return
+	 */
+	FaceLibrary queryLibraryBuIdNumber(String idNumber);
 }
