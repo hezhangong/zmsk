@@ -1,5 +1,7 @@
 package com.zmsk.face.service.statistic.impl;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -11,6 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.zmsk.common.utils.DateUtils;
 import com.zmsk.face.dto.authentic.EquipmentDetailAuthenticationDTO;
 import com.zmsk.face.mapper.custom.authentication.CustomAuthenticationInfoMapper;
+import com.zmsk.face.pojo.FaceEquipment;
+import com.zmsk.face.service.equipment.EquipmentService;
 import com.zmsk.face.service.statistic.StatisticService;
 
 /****
@@ -26,6 +30,9 @@ public class StatisticServiceImpl implements StatisticService {
 	@Autowired
 	private CustomAuthenticationInfoMapper customAuthenticationMapper;
 
+	@Autowired
+	private EquipmentService equiomentService;
+
 	@Override
 	public Map<String, Long> todayAuthenticationNumber(int organizationId) {
 
@@ -33,7 +40,8 @@ public class StatisticServiceImpl implements StatisticService {
 
 		long endTime = DateUtils.getCurrentNextDaysDateTime(1);
 
-		long successCount = customAuthenticationMapper.countAuthenticationSuccessResult(organizationId, startTime, endTime);
+		long successCount = customAuthenticationMapper.countAuthenticationSuccessResult(organizationId, startTime,
+				endTime);
 
 		long failCount = customAuthenticationMapper.countAuthenticationFailResult(organizationId, startTime, endTime);
 
@@ -53,7 +61,8 @@ public class StatisticServiceImpl implements StatisticService {
 
 		long endTime = DateUtils.getCurrentDateTime();
 
-		long successCount = customAuthenticationMapper.countAuthenticationSuccessResult(organizationId, startTime, endTime);
+		long successCount = customAuthenticationMapper.countAuthenticationSuccessResult(organizationId, startTime,
+				endTime);
 
 		long failCount = customAuthenticationMapper.countAuthenticationFailResult(organizationId, startTime, endTime);
 
@@ -73,27 +82,57 @@ public class StatisticServiceImpl implements StatisticService {
 
 		long endTime = DateUtils.getCurrentNextDaysDateTime(1);
 
-		List<EquipmentDetailAuthenticationDTO> successList = customAuthenticationMapper.countEquipmentAuthenticationSuccessResult(organizationId, startTime, endTime);
+		List<FaceEquipment> equipmentList = equiomentService.queryEquipmentByOrganizationId(organizationId);
 
-		List<EquipmentDetailAuthenticationDTO> failList = customAuthenticationMapper.countEquipmentAuthenticationFailResult(organizationId, startTime, endTime);
+		if (equipmentList == null || equipmentList.size() == 0) {
+			return Collections.emptyList();
+		}
 
-		for (EquipmentDetailAuthenticationDTO equipmentSuccess : successList) {
+		List<EquipmentDetailAuthenticationDTO> successList = customAuthenticationMapper
+				.countEquipmentAuthenticationSuccessResult(organizationId, startTime, endTime);
 
-			int equipmentId = equipmentSuccess.getEquipmentId();
+		List<EquipmentDetailAuthenticationDTO> failList = customAuthenticationMapper
+				.countEquipmentAuthenticationFailResult(organizationId, startTime, endTime);
+
+		List<EquipmentDetailAuthenticationDTO> resultList = new ArrayList<>(equipmentList.size());
+
+		EquipmentDetailAuthenticationDTO equipmentDetailAuthentication = null;
+
+		for (FaceEquipment equipment : equipmentList) {
+
+			int equipmentId = equipment.getId();
+
+			String remark = equipment.getRemark();
+
+			int status = equipment.getStatus();
+
+			equipmentDetailAuthentication = new EquipmentDetailAuthenticationDTO(equipmentId, remark, status);
+
+			for (EquipmentDetailAuthenticationDTO equipmentSuccess : successList) {
+
+				int successId = equipmentSuccess.getEquipmentId();
+
+				if (equipmentId == successId) {
+					equipmentDetailAuthentication.setTodaySuccessCount(equipmentSuccess.getTodaySuccessCount());
+					break;
+				}
+			}
 
 			for (EquipmentDetailAuthenticationDTO equipmentFail : failList) {
 
 				int failId = equipmentFail.getEquipmentId();
 
 				if (equipmentId == failId) {
-					equipmentSuccess.setTodayFailCount(equipmentFail.getTodayFailCount());
+					equipmentDetailAuthentication.setTodayFailCount(equipmentFail.getTodayFailCount());
 					break;
 				}
 			}
 
+			resultList.add(equipmentDetailAuthentication);
+
 		}
 
-		return successList;
+		return resultList;
 	}
 
 }

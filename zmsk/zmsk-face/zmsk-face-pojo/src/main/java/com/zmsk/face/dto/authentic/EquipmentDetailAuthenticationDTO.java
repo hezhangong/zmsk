@@ -27,6 +27,16 @@ public class EquipmentDetailAuthenticationDTO implements Serializable {
 	/** 今日认证失败数 **/
 	private long todayFailCount;
 
+	public EquipmentDetailAuthenticationDTO() {
+
+	}
+
+	public EquipmentDetailAuthenticationDTO(int equipmentId, String remark, int status) {
+		this.equipmentId = equipmentId;
+		this.remark = remark;
+		this.status = status;
+	}
+
 	public int getEquipmentId() {
 		return equipmentId;
 	}
@@ -69,6 +79,7 @@ public class EquipmentDetailAuthenticationDTO implements Serializable {
 
 	@Override
 	public String toString() {
-		return "EquipmentDetailAuthenticationDTO [equipmentId=" + equipmentId + ", remark=" + remark + ", status=" + status + ", todaySuccessCount=" + todaySuccessCount + ", todayFailCount=" + todayFailCount + "]";
+		return "EquipmentDetailAuthenticationDTO [equipmentId=" + equipmentId + ", remark=" + remark + ", status="
+				+ status + ", todaySuccessCount=" + todaySuccessCount + ", todayFailCount=" + todayFailCount + "]";
 	}
 }

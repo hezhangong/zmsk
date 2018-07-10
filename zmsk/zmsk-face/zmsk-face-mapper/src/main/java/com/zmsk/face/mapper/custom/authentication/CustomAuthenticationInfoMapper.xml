@@ -21,26 +21,22 @@
 		resultType="com.zmsk.face.dto.authentic.EquipmentDetailAuthenticationDTO">
 		SELECT count(*) AS todaySuccessCount
 		,authentication.equipment_id AS
-		equipmentId,equipment.remark,equipment.`status` FROM
-		face_authentication_info AS authentication,face_equipment AS equipment
+		equipmentId FROM
+		face_authentication_info AS authentication
 		WHERE authentication.organization_id=#{organizationId} AND
 		authentication.result=1 AND
 		ctime BETWEEN #{startTime} AND #{endTime}
-		AND
-		equipment.id=authentication.equipment_id GROUP BY equipment_id
 	</select>
 
 	<select id="countEquipmentAuthenticationFailResult"
 		resultType="com.zmsk.face.dto.authentic.EquipmentDetailAuthenticationDTO">
 		SELECT count(*) AS todayFailCount
 		,authentication.equipment_id AS
-		equipmentId,equipment.remark,equipment.`status` FROM
-		face_authentication_info AS authentication,face_equipment AS equipment
+		equipmentId FROM
+		face_authentication_info AS authentication
 		WHERE authentication.organization_id=#{organizationId} AND
 		authentication.result=0 AND
 		ctime BETWEEN #{startTime} AND #{endTime}
-		AND
-		equipment.id=authentication.equipment_id GROUP BY equipment_id
 	</select>
 
 </mapper>
