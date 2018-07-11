@@ -32,10 +32,12 @@ public class FaceLibraryDTO implements Serializable {
 
 	private Integer organizationId;
 
+	private Integer groupId;
+
 	private Long ctime;
 
 	private String groupName;
-	
+
 	private String equipmentIds;
 
 	private String supportDevice;
@@ -152,8 +154,16 @@ public class FaceLibraryDTO implements Serializable {
 		this.equipmentIds = equipmentIds;
 	}
 
+	public Integer getGroupId() {
+		return groupId;
+	}
+
+	public void setGroupId(Integer groupId) {
+		this.groupId = groupId;
+	}
+
 	@Override
 	public String toString() {
-		return "FaceLibraryDTO [id=" + id + ", name=" + name + ", sex=" + sex + ", idNumber=" + idNumber + ", nation=" + nation + ", address=" + address + ", avatar=" + avatar + ", remark=" + remark + ", flag=" + flag + ", organizationId=" + organizationId + ", ctime=" + ctime + ", groupName=" + groupName + ", equipmentIds=" + equipmentIds + ", supportDevice=" + supportDevice + "]";
+		return "FaceLibraryDTO [id=" + id + ", name=" + name + ", sex=" + sex + ", idNumber=" + idNumber + ", nation=" + nation + ", address=" + address + ", avatar=" + avatar + ", remark=" + remark + ", flag=" + flag + ", organizationId=" + organizationId + ", groupId=" + groupId + ", ctime=" + ctime + ", groupName=" + groupName + ", equipmentIds=" + equipmentIds + ", supportDevice=" + supportDevice + "]";
 	}
 }
