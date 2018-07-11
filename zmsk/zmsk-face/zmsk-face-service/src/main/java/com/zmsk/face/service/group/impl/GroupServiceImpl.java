@@ -57,7 +57,7 @@ public class GroupServiceImpl implements GroupService {
 		FaceGroup group = groupMapper.selectByPrimaryKey(groupId);
 
 		if (group == null) {
-			return "暂无分组";
+			return "--";
 		}
 
 		return group.getGroupName();
