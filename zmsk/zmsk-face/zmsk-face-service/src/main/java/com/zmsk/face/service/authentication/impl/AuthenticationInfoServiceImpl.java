@@ -54,9 +54,7 @@ public class AuthenticationInfoServiceImpl implements AuthenticationInfoService 
 	private GroupService groupService;
 
 	@Override
-	public boolean addAuthenticationInfo(String name, String idNumber, String nation, String address, String avatar,
-			int sex, int type, int result, String deviceNumber, int groupId, long authTimeStamp, String idcardImage,
-			String idcardInfo, String similarDegree) {
+	public boolean addAuthenticationInfo(String name, String idNumber, String nation, String address, String avatar, int sex, int type, int result, String deviceNumber, int groupId, long authTimeStamp, String idcardImage, String idcardInfo, String similarDegree) {
 
 		// 获取设备信息
 		FaceEquipment equipment = equipmentService.queryEquipmentByNumber(deviceNumber);
@@ -110,17 +108,16 @@ public class AuthenticationInfoServiceImpl implements AuthenticationInfoService 
 	}
 
 	@Override
-	public List<AuthenticationInfoDTO> queryAuthenticationInfo(String search, int organizationId, int pageSize,
-			int pageNum) {
+	public List<AuthenticationInfoDTO> queryAuthenticationInfo(String search, int organizationId, int pageSize, int pageNum) {
 
 		FaceAuthenticationInfoExample example = new FaceAuthenticationInfoExample();
 
 		Criteria criteria = example.createCriteria();
 
 		criteria.andOrganizationIdEqualTo(organizationId);
-		
+
 		if (!StringUtils.isEmpty(search)) {
-			example.or().andNameLike("%" + search + "%");
+			criteria.andNameLike("%" + search + "%");
 			example.or().andIdNumberLike("%" + search + "%");
 		}
 
@@ -135,8 +132,7 @@ public class AuthenticationInfoServiceImpl implements AuthenticationInfoService 
 	}
 
 	@Override
-	public List<AuthenticationInfoDTO> queryWarnAuthenticationInfo(String search, int organizationId, int pageSize,
-			int pageNum) {
+	public List<AuthenticationInfoDTO> queryWarnAuthenticationInfo(String search, int organizationId, int pageSize, int pageNum) {
 
 		FaceAuthenticationInfoExample example = new FaceAuthenticationInfoExample();
 
@@ -147,7 +143,7 @@ public class AuthenticationInfoServiceImpl implements AuthenticationInfoService 
 		criteria.andResultEqualTo(AuthenticResultConstant.AUTHENTIC_FAIL);
 
 		if (!StringUtils.isEmpty(search)) {
-			example.or().andNameLike("%" + search + "%");
+			criteria.andNameLike("%" + search + "%");
 			example.or().andIdNumberLike("%" + search + "%");
 		}
 
