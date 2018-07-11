@@ -15,6 +15,7 @@ import com.zmsk.common.pagehelper.PageHelper;
 import com.zmsk.common.utils.BeanUtils;
 import com.zmsk.common.utils.PageUtils;
 import com.zmsk.face.dto.library.EquipmetLibraryDTO;
+import com.zmsk.face.dto.library.SyncFaceLibraryDTO;
 import com.zmsk.face.mapper.FaceLibraryMapper;
 import com.zmsk.face.mapper.custom.library.CustomerEquipmentLibraryMapper;
 import com.zmsk.face.mapper.custom.library.CustomerLibraryMapper;
@@ -199,21 +200,9 @@ public class FaceLibraryServiceImpl implements FaceLibraryService {
 	}
 
 	@Override
-	public List<FaceLibrary> queryUnSyncFaceLibrary(int equipmentId) {
+	public List<SyncFaceLibraryDTO> queryUnSyncFaceLibrary(int equipmentId) {
 
-		List<Integer> libraryIds = libraryEquipmentService.queryEquipmentUnSyncFaceLibraryIds(equipmentId);
-
-		if (libraryIds == null || libraryIds.size() == 0) {
-			return Collections.emptyList();
-		}
-
-		FaceLibraryExample example = new FaceLibraryExample();
-
-		Criteria criteria = example.createCriteria();
-
-		criteria.andIdIn(libraryIds);
-
-		return faceLibraryMapper.selectByExample(example);
+		return customerLibraryMapper.queryUnSyncFaceLibrary(equipmentId);
 	}
 
 	@Override

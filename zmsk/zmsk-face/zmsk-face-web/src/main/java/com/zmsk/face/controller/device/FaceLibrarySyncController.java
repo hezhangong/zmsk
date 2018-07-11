@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.zmsk.common.dto.BaseResultCode;
 import com.zmsk.common.dto.ServiceResultDTO;
-import com.zmsk.face.pojo.FaceLibrary;
+import com.zmsk.face.dto.library.SyncFaceLibraryDTO;
 import com.zmsk.face.service.library.FaceLibraryEquipmentService;
 import com.zmsk.face.service.library.FaceLibraryService;
 
@@ -41,7 +41,7 @@ public class FaceLibrarySyncController {
 			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid deviceId ");
 		}
 
-		List<FaceLibrary> result = faceLibraryService.queryUnSyncFaceLibrary(deviceId);
+		List<SyncFaceLibraryDTO> result = faceLibraryService.queryUnSyncFaceLibrary(deviceId);
 
 		return ServiceResultDTO.success(result);
 	}

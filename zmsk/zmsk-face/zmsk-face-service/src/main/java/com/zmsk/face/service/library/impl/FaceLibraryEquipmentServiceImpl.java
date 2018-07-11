@@ -51,7 +51,7 @@ public class FaceLibraryEquipmentServiceImpl implements FaceLibraryEquipmentServ
 
 		for (int equipmentId : equipmentIds) {
 
-			if (oldEquipmentIds.contains(equipmentIds)) {
+			if (oldEquipmentIds.contains(equipmentId)) {
 				continue;
 			}
 

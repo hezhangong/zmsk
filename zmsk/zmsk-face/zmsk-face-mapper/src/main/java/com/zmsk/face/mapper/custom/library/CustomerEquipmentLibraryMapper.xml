@@ -93,8 +93,8 @@
 	</select>
 
 	<select id="queryEquipmentIdByLibraryId" resultType="java.lang.Integer">
-		SELECT equipment_id FROM face_equipment_library WHERE
+		SELECT
+		equipment_id FROM face_equipment_library WHERE
 		library_id=#{libraryId}
 	</select>
-
 </mapper>

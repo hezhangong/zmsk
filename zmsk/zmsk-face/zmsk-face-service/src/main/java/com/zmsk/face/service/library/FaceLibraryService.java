@@ -2,7 +2,7 @@ package com.zmsk.face.service.library;
 
 import java.util.List;
 
-import com.zmsk.face.pojo.FaceLibrary;
+import com.zmsk.face.dto.library.SyncFaceLibraryDTO;
 import com.zmsk.face.service.library.dto.FaceLibraryDTO;
 
 /****
@@ -119,7 +119,7 @@ public interface FaceLibraryService {
 	 *            设备Id
 	 * @return
 	 */
-	List<FaceLibrary> queryUnSyncFaceLibrary(int equipmentId);
+	List<SyncFaceLibraryDTO> queryUnSyncFaceLibrary(int equipmentId);
 
 	/****
 	 * 根据身份证Id获取人脸库信息

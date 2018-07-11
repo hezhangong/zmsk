@@ -1,6 +1,5 @@
 package com.zmsk.face.controller.manager;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -144,8 +143,6 @@ public class LibraryManagerController {
 	 *            备注
 	 * @param flag
 	 *            黑白名单标识
-	 * @param organizationId
-	 *            组织Id
 	 * @param groupId
 	 *            所属分组Id
 	 * @param equipmentIds
@@ -154,8 +151,8 @@ public class LibraryManagerController {
 	 */
 	@RequestMapping(value = "update", method = RequestMethod.POST)
 	@ResponseBody
-	public ServiceResultDTO updateFaceLibrary(@RequestParam(value = "id") int id, @RequestParam(value = "name") String name, @RequestParam(value = "sex") int sex, @RequestParam(value = "idNumber") String idNumber, @RequestParam(value = "nation", required = false, defaultValue = "") String nation, @RequestParam(value = "address", defaultValue = "", required = false) String address, @RequestParam(value = "avatar") String avatar, @RequestParam(value = "remark", defaultValue = "", required = false) String remark, @RequestParam(value = "flag") int flag,
-			@RequestParam(value = "organizationId") int organizationId, @RequestParam(value = "groupId") int groupId, @RequestParam(value = "equipmentIds") String equipmentIds) {
+	public ServiceResultDTO updateFaceLibrary(@RequestParam(value = "id") int id, @RequestParam(value = "name",required=false,defaultValue="") String name, @RequestParam(value = "sex",required=false,defaultValue="0") int sex, @RequestParam(value = "idNumber",required=false,defaultValue="") String idNumber, @RequestParam(value = "nation", required = false, defaultValue = "") String nation, @RequestParam(value = "address", defaultValue = "", required = false) String address, @RequestParam(value = "avatar",required=false,defaultValue="") String avatar, @RequestParam(value = "remark", defaultValue = "", required = false) String remark, @RequestParam(value = "flag",required=false,defaultValue="0") int flag, @RequestParam(value = "groupId",required=false,defaultValue="0") int groupId,
+			@RequestParam(value = "equipmentIds") String equipmentIds) {
 
 		if (id <= 0) {
 			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid id");
@@ -170,7 +167,7 @@ public class LibraryManagerController {
 			equipmentIdList = JSONArray.parseArray(equipmentIds, Integer.class);
 		}
 
-		boolean success = faceLibraryService.updateFaceLibrary(organizationId, name, sex, idNumber, nation, address, avatar, remark, flag, groupId, equipmentIdList);
+		boolean success = faceLibraryService.updateFaceLibrary(id, name, sex, idNumber, nation, address, avatar, remark, flag, groupId, equipmentIdList);
 
 		if (!success) {
 			return new ServiceResultDTO(BaseResultCode.LIBRARY_OPERATION_ERROR, "修改人脸库失败");
