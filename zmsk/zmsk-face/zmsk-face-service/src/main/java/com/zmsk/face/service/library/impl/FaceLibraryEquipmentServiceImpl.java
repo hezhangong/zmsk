@@ -10,6 +10,7 @@ import com.zmsk.face.mapper.FaceEquipmentLibraryMapper;
 import com.zmsk.face.mapper.custom.library.CustomerEquipmentLibraryMapper;
 import com.zmsk.face.pojo.FaceEquipmentLibrary;
 import com.zmsk.face.service.library.FaceLibraryEquipmentService;
+import com.zmsk.face.service.library.constants.EquipmentLibraryOperationType;
 import com.zmsk.face.service.library.constants.EquipmentLibrarySyncStatus;
 
 /****
@@ -31,19 +32,36 @@ public class FaceLibraryEquipmentServiceImpl implements FaceLibraryEquipmentServ
 	@Override
 	public boolean addLibraryEquipment(int libraryId, List<Integer> equipmentIds) {
 
-		FaceEquipmentLibrary equipmentLibrary = null;
+		for (int equipmentId : equipmentIds) {
+
+			addIncreaseLibrary(libraryId, equipmentId);
+		}
+
+		return true;
+	}
+
+	@Override
+	public boolean updateLibraryEquipment(int libraryId, List<Integer> equipmentIds) {
+
+		List<Integer> oldEquipmentIds = customerEquiomentLibraryMapper.queryEquipmentIdByLibraryId(libraryId);
+
+		if (oldEquipmentIds == null || oldEquipmentIds.size() == 0) {
+			return addLibraryEquipment(libraryId, oldEquipmentIds);
+		}
 
 		for (int equipmentId : equipmentIds) {
 
-			equipmentLibrary = new FaceEquipmentLibrary();
+			if (oldEquipmentIds.contains(equipmentIds)) {
+				continue;
+			}
 
-			equipmentLibrary.setLibraryId(libraryId);
+			addIncreaseLibrary(libraryId, equipmentId);
+		}
 
-			equipmentLibrary.setEquipmentId(equipmentId);
+		oldEquipmentIds.removeAll(equipmentIds);
 
-			equipmentLibrary.setSyncStatus(EquipmentLibrarySyncStatus.UNSYNC);
-
-			equipmentLibraryMapper.insert(equipmentLibrary);
+		for (int oldEquipmentId : oldEquipmentIds) {
+			addDeleteLibrary(libraryId, oldEquipmentId);
 		}
 
 		return true;
@@ -64,6 +82,56 @@ public class FaceLibraryEquipmentServiceImpl implements FaceLibraryEquipmentServ
 		equipmentLibrary.setId(id);
 
 		return equipmentLibraryMapper.updateByPrimaryKeySelective(equipmentLibrary) > 0;
+	}
+
+	/****
+	 * 新增类型人脸库和设备管理
+	 * 
+	 * @param libraryId
+	 *            人脸库Id
+	 * @param equipmentId
+	 *            设备Id
+	 */
+	private void addIncreaseLibrary(int libraryId, int equipmentId) {
+
+		FaceEquipmentLibrary equipmentLibrary = new FaceEquipmentLibrary();
+
+		equipmentLibrary.setLibraryId(libraryId);
+
+		equipmentLibrary.setEquipmentId(equipmentId);
+
+		equipmentLibrary.setSyncStatus(EquipmentLibrarySyncStatus.UNSYNC);
+
+		equipmentLibrary.setOperation(EquipmentLibraryOperationType.INCREASE_TYPE);
+
+		equipmentLibrary.setCtime(System.currentTimeMillis() / 1000);
+
+		equipmentLibraryMapper.insert(equipmentLibrary);
+	}
+
+	/****
+	 * 删除类型人脸库和设备管理
+	 * 
+	 * @param libraryId
+	 *            人脸库Id
+	 * @param equipmentId
+	 *            设备Id
+	 */
+	public void addDeleteLibrary(int libraryId, int equipmentId) {
+
+		FaceEquipmentLibrary equipmentLibrary = new FaceEquipmentLibrary();
+
+		equipmentLibrary.setLibraryId(libraryId);
+
+		equipmentLibrary.setEquipmentId(equipmentId);
+
+		equipmentLibrary.setSyncStatus(EquipmentLibrarySyncStatus.UNSYNC);
+
+		equipmentLibrary.setOperation(EquipmentLibraryOperationType.DELETE_TYPE);
+
+		equipmentLibrary.setCtime(System.currentTimeMillis() / 1000);
+
+		equipmentLibraryMapper.insert(equipmentLibrary);
 	}
 
 }

@@ -145,7 +145,8 @@ public class FaceLibraryServiceImpl implements FaceLibraryService {
 
 		boolean result = faceLibraryMapper.updateByPrimaryKey(library) > 0;
 
-		// TODO 人脸库操作
+		// 人脸库操作
+		libraryEquipmentService.updateLibraryEquipment(id, equipmentIds);
 
 		return result;
 	}
@@ -307,12 +308,12 @@ public class FaceLibraryServiceImpl implements FaceLibraryService {
 
 		String deviceIds = supportDeviceIds.toString();
 
-		supportDeviceStr = supportDeviceStr.substring(0, supportDeviceStr.length()-1);
+		supportDeviceStr = supportDeviceStr.substring(0, supportDeviceStr.length() - 1);
 
-		deviceIds = deviceIds.substring(0, deviceIds.length()-1);
+		deviceIds = deviceIds.substring(0, deviceIds.length() - 1);
 
 		libraryDTO.setSupportDevice(supportDeviceStr);
-		
+
 		libraryDTO.setEquipmentIds(deviceIds);
 
 		return libraryDTO;

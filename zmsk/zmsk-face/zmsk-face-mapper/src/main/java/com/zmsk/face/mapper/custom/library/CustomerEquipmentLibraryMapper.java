@@ -11,5 +11,7 @@ public interface CustomerEquipmentLibraryMapper {
 	List<EquipmetLibraryDTO> queryEquipmentLibraryByLibraryId(@Param("libraryId") int libraryId);
 
 	List<Integer> queryEquipmentUnSyncFaceLibraryIds(@Param("deviceId") int deviceId);
-	
+
+	List<Integer> queryEquipmentIdByLibraryId(@Param("libraryId") int libraryId);
+
 }

@@ -1,5 +1,7 @@
 package com.zmsk.face.controller.manager;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.zmsk.common.dto.BaseResultCode;
 import com.zmsk.common.dto.ServiceResultDTO;
 import com.zmsk.face.service.library.FaceLibraryService;
@@ -145,20 +148,35 @@ public class LibraryManagerController {
 	 *            组织Id
 	 * @param groupId
 	 *            所属分组Id
-	 * @param equipmentId
+	 * @param equipmentIds
 	 *            设备Id列表
 	 * @return
 	 */
 	@RequestMapping(value = "update", method = RequestMethod.POST)
 	@ResponseBody
 	public ServiceResultDTO updateFaceLibrary(@RequestParam(value = "id") int id, @RequestParam(value = "name") String name, @RequestParam(value = "sex") int sex, @RequestParam(value = "idNumber") String idNumber, @RequestParam(value = "nation", required = false, defaultValue = "") String nation, @RequestParam(value = "address", defaultValue = "", required = false) String address, @RequestParam(value = "avatar") String avatar, @RequestParam(value = "remark", defaultValue = "", required = false) String remark, @RequestParam(value = "flag") int flag,
-			@RequestParam(value = "organizationId") int organizationId, @RequestParam(value = "groupId") int groupId, @RequestParam(value = "equipmentId") String equipmentId) {
+			@RequestParam(value = "organizationId") int organizationId, @RequestParam(value = "groupId") int groupId, @RequestParam(value = "equipmentIds") String equipmentIds) {
 
 		if (id <= 0) {
 			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid id");
 		}
 
-		return null;
+		List<Integer> equipmentIdList = null;
+
+		if (StringUtils.isEmpty(equipmentIds)) {
+			equipmentIdList = Collections.emptyList();
+		} else {
+			equipmentIds = "[" + equipmentIds + "]";
+			equipmentIdList = JSONArray.parseArray(equipmentIds, Integer.class);
+		}
+
+		boolean success = faceLibraryService.updateFaceLibrary(organizationId, name, sex, idNumber, nation, address, avatar, remark, flag, groupId, equipmentIdList);
+
+		if (!success) {
+			return new ServiceResultDTO(BaseResultCode.LIBRARY_OPERATION_ERROR, "修改人脸库失败");
+		}
+
+		return ServiceResultDTO.success();
 	}
 
 	/****

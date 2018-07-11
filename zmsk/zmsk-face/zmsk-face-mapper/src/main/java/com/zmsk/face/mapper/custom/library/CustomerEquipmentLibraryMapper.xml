@@ -86,9 +86,15 @@
 		face_equipment.id=equipment_id
 	</select>
 
-	<select id="queryEquipmentUnSyncFaceLibraryIds"  resultType="java.lang.Integer">
-		SELECT library_id FROM face_equipment_library WHERE equipment_id=#{deviceId}
+	<select id="queryEquipmentUnSyncFaceLibraryIds" resultType="java.lang.Integer">
+		SELECT library_id FROM face_equipment_library WHERE
+		equipment_id=#{deviceId}
 		AND sync_status=0
+	</select>
+
+	<select id="queryEquipmentIdByLibraryId" resultType="java.lang.Integer">
+		SELECT equipment_id FROM face_equipment_library WHERE
+		library_id=#{libraryId}
 	</select>
 
 </mapper>

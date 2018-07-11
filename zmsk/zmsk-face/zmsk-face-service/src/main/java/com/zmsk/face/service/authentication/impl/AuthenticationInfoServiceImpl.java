@@ -118,7 +118,7 @@ public class AuthenticationInfoServiceImpl implements AuthenticationInfoService 
 		Criteria criteria = example.createCriteria();
 
 		criteria.andOrganizationIdEqualTo(organizationId);
-
+		
 		if (!StringUtils.isEmpty(search)) {
 			example.or().andNameLike("%" + search + "%");
 			example.or().andIdNumberLike("%" + search + "%");

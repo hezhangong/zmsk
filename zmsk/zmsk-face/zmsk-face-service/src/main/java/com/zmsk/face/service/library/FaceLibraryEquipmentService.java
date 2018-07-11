@@ -22,6 +22,17 @@ public interface FaceLibraryEquipmentService {
 	boolean addLibraryEquipment(int libraryId, List<Integer> equipmentIds);
 
 	/****
+	 * 修改人脸库和设备关联记录信息
+	 * 
+	 * @param libraryId
+	 *            人脸库Id
+	 * @param equipmentIds
+	 *            设备Id
+	 * @return
+	 */
+	boolean updateLibraryEquipment(int libraryId, List<Integer> equipmentIds);
+
+	/****
 	 * 获取设备未同步的人脸库Id列表
 	 * 
 	 * @param deviceId
