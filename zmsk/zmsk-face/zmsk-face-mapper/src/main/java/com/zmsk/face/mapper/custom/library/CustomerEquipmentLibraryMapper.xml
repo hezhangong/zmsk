@@ -79,11 +79,12 @@
 
 	<select id="queryEquipmentLibraryByLibraryId" resultType="com.zmsk.face.dto.library.EquipmetLibraryDTO">
 		SELECT
+		DISTINCT
 		equipment_id AS equipmentId,sync_status AS
 		syncStatus,face_equipment.remark AS remark FROM
 		face_equipment_library,face_equipment WHERE library_id=#{libraryId}
 		AND
-		face_equipment.id=equipment_id
+		face_equipment.id=equipment_id AND operation=1
 	</select>
 
 	<select id="queryEquipmentUnSyncFaceLibraryIds" resultType="java.lang.Integer">
