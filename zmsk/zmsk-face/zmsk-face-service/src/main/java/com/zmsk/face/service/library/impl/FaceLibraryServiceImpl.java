@@ -165,7 +165,15 @@ public class FaceLibraryServiceImpl implements FaceLibraryService {
 			return null;
 		}
 
-		return convertFaceLibrary2DTO(library);
+		FaceLibraryDTO libraryDTO = new FaceLibraryDTO();
+
+		BeanUtils.copyPropertiesNotForce(libraryDTO, library);
+
+		String groupName = groupService.queryGroupNameById(library.getGroupId());
+
+		libraryDTO.setGroupName(groupName);
+
+		return libraryDTO;
 	}
 
 	@Override
@@ -226,7 +234,15 @@ public class FaceLibraryServiceImpl implements FaceLibraryService {
 
 		FaceLibrary faceLibrary = libraryList.get(0);
 
-		return convertFaceLibrary2DTO(faceLibrary);
+		FaceLibraryDTO libraryDTO = new FaceLibraryDTO();
+
+		BeanUtils.copyPropertiesNotForce(libraryDTO, faceLibrary);
+
+		String groupName = groupService.queryGroupNameById(faceLibrary.getGroupId());
+
+		libraryDTO.setGroupName(groupName);
+
+		return libraryDTO;
 	}
 
 	private FaceLibraryDTO convertFaceLibrary2DTO(FaceLibrary faceLibrary) {
