@@ -1,5 +1,6 @@
 package com.zmsk.face.service.user.impl;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -111,13 +112,25 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<FaceUser> queryUserList(String search) {
+	public List<FaceUser> queryOrganizationUserList(String search, int organizationId) {
+
+		List<Integer> userIds = userOrganizationService.queryUserIdsByOrganizationId(organizationId);
+
+		if (userIds == null || userIds.size() == 0) {
+			return Collections.emptyList();
+		}
 
 		FaceUserExample example = new FaceUserExample();
 
+		Criteria criteria = example.createCriteria();
+
+		criteria.andUserIdIn(userIds);
+
 		if (!StringUtils.isEmpty(search)) {
-			example.or().andUsernameLike("%" + search + "%");
-			example.or().andRealnameLike("%" + search + "%");
+			criteria.andUsernameLike("%" + search + "%");
+			Criteria criteria2 = example.createCriteria();
+			criteria2.andRealnameLike("%" + search + "%");
+			example.or(criteria2);
 		}
 
 		return userMapper.selectByExample(example);
@@ -216,7 +229,7 @@ public class UserServiceImpl implements UserService {
 
 		return UserConstants.FAIL;
 	}
-	
+
 	@Override
 	public List<AdminUserDTO> queryAdminUserList() {
 		// TODO Auto-generated method stub

@@ -98,18 +98,24 @@ public class UserManagerController {
 	}
 
 	/****
-	 * 获取用户列表
+	 * 获取组织下用户列表
 	 * 
 	 * @param search
 	 *            查询条件
+	 * @param organizationId
+	 *            组织Id
 	 * @return
 	 */
 	@RequestMapping(value = "list", method = RequestMethod.GET)
 	@RequiresPermissions("upms:user:read")
 	@ResponseBody
-	public ServiceResultDTO queryUserList(@RequestParam(value = "search", defaultValue = "", required = false) String search) {
+	public ServiceResultDTO queryOrganizationUserList(@RequestParam(value = "search", defaultValue = "", required = false) String search, @RequestParam(value = "organizationId") int organizationId) {
 
-		List<FaceUser> userList = userService.queryUserList(search);
+		if (organizationId <= 0) {
+			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid organizationId ");
+		}
+
+		List<FaceUser> userList = userService.queryOrganizationUserList(search, organizationId);
 
 		return ServiceResultDTO.success(userList);
 	}

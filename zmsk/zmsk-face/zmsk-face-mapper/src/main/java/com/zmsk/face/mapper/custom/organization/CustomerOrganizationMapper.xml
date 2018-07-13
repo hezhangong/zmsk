@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.zmsk.face.mapper.custom.organization.CustomerOrganizationMapper">
+<mapper
+	namespace="com.zmsk.face.mapper.custom.organization.CustomerOrganizationMapper">
 	<resultMap id="BaseResultMap"
 		type="com.zmsk.face.pojo.FaceOrganization">
 		<id column="organization_id" property="organizationId"
@@ -81,7 +82,8 @@
 		organization_id, pid, name, description, ctime
 	</sql>
 
-	<select id="queryOrganizationIdByUsername"  resultType="java.lang.Integer">
+	<select id="queryOrganizationIdByUsername"
+		resultType="java.lang.Integer">
 		SELECT
 		organization_id
 		FROM
@@ -95,6 +97,12 @@
 		WHERE
 		username = #{userName}
 		)
+	</select>
+
+	<select id="queryUserIdsByOrganizationId" resultType="java.lang.Integer">
+		SELECT
+		DISTINCT user_id FROM face_user_organization WHERE
+		organization_id=#{organizationId}
 	</select>
 
 </mapper>

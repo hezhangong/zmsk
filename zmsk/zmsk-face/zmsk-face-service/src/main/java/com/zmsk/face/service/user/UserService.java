@@ -52,9 +52,12 @@ public interface UserService {
 	 * 
 	 * @param search
 	 *            查询条件
+	 * @param organizationId
+	 *            组织id
+	 * 
 	 * @return
 	 */
-	List<FaceUser> queryUserList(String search);
+	List<FaceUser> queryOrganizationUserList(String search, int organizationId);
 
 	/****
 	 * 根据用户Id获取用户信息

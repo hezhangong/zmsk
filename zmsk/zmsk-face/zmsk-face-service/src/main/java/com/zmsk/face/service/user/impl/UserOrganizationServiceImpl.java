@@ -1,10 +1,13 @@
 package com.zmsk.face.service.user.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.zmsk.face.mapper.FaceUserOrganizationMapper;
+import com.zmsk.face.mapper.custom.organization.CustomerOrganizationMapper;
 import com.zmsk.face.pojo.FaceUserOrganization;
 import com.zmsk.face.pojo.FaceUserOrganizationExample;
 import com.zmsk.face.pojo.FaceUserOrganizationExample.Criteria;
@@ -22,6 +25,9 @@ public class UserOrganizationServiceImpl implements UserOrganizationService {
 
 	@Autowired
 	private FaceUserOrganizationMapper userOrganizationMapper;
+
+	@Autowired
+	private CustomerOrganizationMapper customerOrganizationMapper;
 
 	@Override
 	public boolean createUserOrganizationReleation(int userId, int organizationId) {
@@ -49,6 +55,11 @@ public class UserOrganizationServiceImpl implements UserOrganizationService {
 		criteria.andUserIdEqualTo(userId);
 
 		return userOrganizationMapper.updateByExampleSelective(userOrganization, example) > 0;
+	}
+
+	@Override
+	public List<Integer> queryUserIdsByOrganizationId(int organizationId) {
+		return customerOrganizationMapper.queryUserIdsByOrganizationId(organizationId);
 	}
 
 }

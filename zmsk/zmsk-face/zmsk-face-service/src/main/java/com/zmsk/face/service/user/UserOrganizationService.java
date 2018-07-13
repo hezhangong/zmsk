@@ -1,5 +1,7 @@
 package com.zmsk.face.service.user;
 
+import java.util.List;
+
 /***
  * 用户组织操作服务接口声明
  * 
@@ -29,4 +31,14 @@ public interface UserOrganizationService {
 	 * @return
 	 */
 	boolean updateUserOrganizationReleation(int userId, int organizationId);
+
+	/****
+	 * 查询组织下用户Id列表
+	 * 
+	 * @param organizationId
+	 *            组织id
+	 * 
+	 * @return
+	 */
+	List<Integer> queryUserIdsByOrganizationId(int organizationId);
 }

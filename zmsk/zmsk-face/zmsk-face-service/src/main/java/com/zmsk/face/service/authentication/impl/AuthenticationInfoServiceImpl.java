@@ -118,7 +118,9 @@ public class AuthenticationInfoServiceImpl implements AuthenticationInfoService 
 
 		if (!StringUtils.isEmpty(search)) {
 			criteria.andNameLike("%" + search + "%");
-			example.or().andIdNumberLike("%" + search + "%");
+			Criteria criteria2 = example.createCriteria();
+			criteria2.andIdNumberLike("%" + search + "%");
+			example.or(criteria2);
 		}
 
 		example.setOrderByClause(" id DESC ");
