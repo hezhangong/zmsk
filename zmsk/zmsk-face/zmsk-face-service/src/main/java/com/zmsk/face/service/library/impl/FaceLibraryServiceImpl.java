@@ -82,6 +82,8 @@ public class FaceLibraryServiceImpl implements FaceLibraryService {
 
 		library.setCtime(System.currentTimeMillis() / 1000);
 
+		library.setEquipmentIds(StringUtils.join(equipmentIds, ","));
+
 		boolean success = faceLibraryMapper.insert(library) > 0;
 
 		// 添加人脸库设备同步数据
@@ -143,6 +145,8 @@ public class FaceLibraryServiceImpl implements FaceLibraryService {
 		if (groupId > 0 && groupId != library.getGroupId()) {
 			library.setGroupId(groupId);
 		}
+
+		library.setEquipmentIds(StringUtils.join(equipmentIds, ","));
 
 		boolean result = faceLibraryMapper.updateByPrimaryKey(library) > 0;
 

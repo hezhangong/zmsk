@@ -1,123 +1,133 @@
 package com.zmsk.face.pojo;
 
 public class FaceLibrary {
-    private Integer id;
+	private Integer id;
 
-    private String name;
+	private String name;
 
-    private Integer sex;
+	private Integer sex;
 
-    private String idNumber;
+	private String idNumber;
 
-    private String nation;
+	private String nation;
 
-    private String address;
+	private String address;
 
-    private String avatar;
+	private String avatar;
 
-    private String remark;
+	private String remark;
 
-    private Integer flag;
+	private Integer flag;
 
-    private Integer organizationId;
+	private Integer organizationId;
 
-    private Integer groupId;
+	private Integer groupId;
 
-    private Long ctime;
+	private String equipmentIds;
 
-    public Integer getId() {
-        return id;
-    }
+	private Long ctime;
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+	public Integer getId() {
+		return id;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
-    }
+	public String getName() {
+		return name;
+	}
 
-    public Integer getSex() {
-        return sex;
-    }
+	public void setName(String name) {
+		this.name = name == null ? null : name.trim();
+	}
 
-    public void setSex(Integer sex) {
-        this.sex = sex;
-    }
+	public Integer getSex() {
+		return sex;
+	}
 
-    public String getIdNumber() {
-        return idNumber;
-    }
+	public void setSex(Integer sex) {
+		this.sex = sex;
+	}
 
-    public void setIdNumber(String idNumber) {
-        this.idNumber = idNumber == null ? null : idNumber.trim();
-    }
+	public String getIdNumber() {
+		return idNumber;
+	}
 
-    public String getNation() {
-        return nation;
-    }
+	public void setIdNumber(String idNumber) {
+		this.idNumber = idNumber == null ? null : idNumber.trim();
+	}
 
-    public void setNation(String nation) {
-        this.nation = nation == null ? null : nation.trim();
-    }
+	public String getNation() {
+		return nation;
+	}
 
-    public String getAddress() {
-        return address;
-    }
+	public void setNation(String nation) {
+		this.nation = nation == null ? null : nation.trim();
+	}
 
-    public void setAddress(String address) {
-        this.address = address == null ? null : address.trim();
-    }
+	public String getAddress() {
+		return address;
+	}
 
-    public String getAvatar() {
-        return avatar;
-    }
+	public void setAddress(String address) {
+		this.address = address == null ? null : address.trim();
+	}
 
-    public void setAvatar(String avatar) {
-        this.avatar = avatar == null ? null : avatar.trim();
-    }
+	public String getAvatar() {
+		return avatar;
+	}
 
-    public String getRemark() {
-        return remark;
-    }
+	public void setAvatar(String avatar) {
+		this.avatar = avatar == null ? null : avatar.trim();
+	}
 
-    public void setRemark(String remark) {
-        this.remark = remark == null ? null : remark.trim();
-    }
+	public String getRemark() {
+		return remark;
+	}
 
-    public Integer getFlag() {
-        return flag;
-    }
+	public void setRemark(String remark) {
+		this.remark = remark == null ? null : remark.trim();
+	}
 
-    public void setFlag(Integer flag) {
-        this.flag = flag;
-    }
+	public Integer getFlag() {
+		return flag;
+	}
 
-    public Integer getOrganizationId() {
-        return organizationId;
-    }
+	public void setFlag(Integer flag) {
+		this.flag = flag;
+	}
 
-    public void setOrganizationId(Integer organizationId) {
-        this.organizationId = organizationId;
-    }
+	public Integer getOrganizationId() {
+		return organizationId;
+	}
 
-    public Integer getGroupId() {
-        return groupId;
-    }
+	public void setOrganizationId(Integer organizationId) {
+		this.organizationId = organizationId;
+	}
 
-    public void setGroupId(Integer groupId) {
-        this.groupId = groupId;
-    }
+	public Integer getGroupId() {
+		return groupId;
+	}
 
-    public Long getCtime() {
-        return ctime;
-    }
+	public void setGroupId(Integer groupId) {
+		this.groupId = groupId;
+	}
 
-    public void setCtime(Long ctime) {
-        this.ctime = ctime;
-    }
+	public String getEquipmentIds() {
+		return equipmentIds;
+	}
+
+	public void setEquipmentIds(String equipmentIds) {
+		this.equipmentIds = equipmentIds == null ? null : equipmentIds.trim();
+	}
+
+	public Long getCtime() {
+		return ctime;
+	}
+
+	public void setCtime(Long ctime) {
+		this.ctime = ctime;
+	}
 }

@@ -13,6 +13,7 @@
     <result column="flag" property="flag" jdbcType="BIT" />
     <result column="organization_id" property="organizationId" jdbcType="INTEGER" />
     <result column="group_id" property="groupId" jdbcType="INTEGER" />
+    <result column="equipment_ids" property="equipmentIds" jdbcType="VARCHAR" />
     <result column="ctime" property="ctime" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -75,7 +76,7 @@
   </sql>
   <sql id="Base_Column_List" >
     id, name, sex, id_number, nation, address, avatar, remark, flag, organization_id, 
-    group_id, ctime
+    group_id, equipment_ids, ctime
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zmsk.face.pojo.FaceLibraryExample" >
     select
@@ -107,15 +108,17 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.zmsk.face.pojo.FaceLibrary" useGeneratedKeys="true" keyProperty="id" >
+  <insert id="insert" parameterType="com.zmsk.face.pojo.FaceLibrary" >
     insert into face_library (id, name, sex, id_number, 
       nation, address, avatar, 
       remark, flag, organization_id, 
-      group_id, ctime)
+      group_id, equipment_ids, ctime
+      )
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{sex,jdbcType=BIT}, #{idNumber,jdbcType=VARCHAR}, 
       #{nation,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{avatar,jdbcType=VARCHAR}, 
       #{remark,jdbcType=VARCHAR}, #{flag,jdbcType=BIT}, #{organizationId,jdbcType=INTEGER}, 
-      #{groupId,jdbcType=INTEGER}, #{ctime,jdbcType=INTEGER})
+      #{groupId,jdbcType=INTEGER}, #{equipmentIds,jdbcType=VARCHAR}, #{ctime,jdbcType=INTEGER}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.zmsk.face.pojo.FaceLibrary" >
     insert into face_library
@@ -152,6 +155,9 @@
       </if>
       <if test="groupId != null" >
         group_id,
+      </if>
+      <if test="equipmentIds != null" >
+        equipment_ids,
       </if>
       <if test="ctime != null" >
         ctime,
@@ -190,6 +196,9 @@
       </if>
       <if test="groupId != null" >
         #{groupId,jdbcType=INTEGER},
+      </if>
+      <if test="equipmentIds != null" >
+        #{equipmentIds,jdbcType=VARCHAR},
       </if>
       <if test="ctime != null" >
         #{ctime,jdbcType=INTEGER},
@@ -238,6 +247,9 @@
       <if test="record.groupId != null" >
         group_id = #{record.groupId,jdbcType=INTEGER},
       </if>
+      <if test="record.equipmentIds != null" >
+        equipment_ids = #{record.equipmentIds,jdbcType=VARCHAR},
+      </if>
       <if test="record.ctime != null" >
         ctime = #{record.ctime,jdbcType=INTEGER},
       </if>
@@ -259,6 +271,7 @@
       flag = #{record.flag,jdbcType=BIT},
       organization_id = #{record.organizationId,jdbcType=INTEGER},
       group_id = #{record.groupId,jdbcType=INTEGER},
+      equipment_ids = #{record.equipmentIds,jdbcType=VARCHAR},
       ctime = #{record.ctime,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -297,6 +310,9 @@
       <if test="groupId != null" >
         group_id = #{groupId,jdbcType=INTEGER},
       </if>
+      <if test="equipmentIds != null" >
+        equipment_ids = #{equipmentIds,jdbcType=VARCHAR},
+      </if>
       <if test="ctime != null" >
         ctime = #{ctime,jdbcType=INTEGER},
       </if>
@@ -315,6 +331,7 @@
       flag = #{flag,jdbcType=BIT},
       organization_id = #{organizationId,jdbcType=INTEGER},
       group_id = #{groupId,jdbcType=INTEGER},
+      equipment_ids = #{equipmentIds,jdbcType=VARCHAR},
       ctime = #{ctime,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
