@@ -24,6 +24,7 @@ import com.zmsk.face.service.permission.PermissionService;
 import com.zmsk.face.service.permission.constants.PermissionTypeConstants;
 import com.zmsk.face.service.role.RolePermissionService;
 import com.zmsk.face.service.role.RoleService;
+import com.zmsk.face.service.user.UserRoleService;
 import com.zmsk.face.service.user.constants.UserLockStatusConstants;
 
 /****
@@ -40,6 +41,9 @@ public class RoleServiceImpl implements RoleService {
 
 	@Autowired
 	private RolePermissionService rolePermissionService;
+
+	@Autowired
+	private UserRoleService userRoleService;
 
 	@Autowired
 	private PermissionService permissionService;
@@ -154,6 +158,9 @@ public class RoleServiceImpl implements RoleService {
 
 		// 删除关联的权限资源信息
 		rolePermissionService.deleteRolePermissionByRoleIds(ids);
+
+		// 关联删除用户角色
+		userRoleService.deleteUserRoleReleation(ids);
 
 		return roleMapper.deleteByExample(example) > 0;
 	}

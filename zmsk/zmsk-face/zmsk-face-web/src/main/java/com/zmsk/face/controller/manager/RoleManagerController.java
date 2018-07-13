@@ -179,7 +179,7 @@ public class RoleManagerController {
 	 * @param ids
 	 * @return
 	 */
-	@RequestMapping(value = "delete/{ids}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "delete/{ids}", method = RequestMethod.POST)
 	@RequiresPermissions("upms:role:delete")
 	@ResponseBody
 	public ServiceResultDTO deleteRole(@PathVariable(value = "ids") String ids) {

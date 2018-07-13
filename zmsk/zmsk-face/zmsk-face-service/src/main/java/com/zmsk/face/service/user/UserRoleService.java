@@ -1,5 +1,7 @@
 package com.zmsk.face.service.user;
 
+import java.util.List;
+
 /****
  * 用户角色操作服务接口声明
  * 
@@ -29,4 +31,13 @@ public interface UserRoleService {
 	 * @return
 	 */
 	boolean updateUserRoleReleation(int userId, int roleId);
+
+	/****
+	 * 删除用户角色关联关系
+	 * 
+	 * @param roleIds
+	 *            角色Ids
+	 * @return
+	 */
+	boolean deleteUserRoleReleation(List<Integer> roleIds);
 }

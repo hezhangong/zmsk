@@ -1,5 +1,7 @@
 package com.zmsk.face.service.user.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -49,6 +51,18 @@ public class UserRoleServiceImpl implements UserRoleService {
 		criteria.andUserIdEqualTo(userId);
 
 		return userRoleMapper.updateByExampleSelective(userRole, example) > 0;
+	}
+
+	@Override
+	public boolean deleteUserRoleReleation(List<Integer> roleIds) {
+
+		FaceUserRoleExample example = new FaceUserRoleExample();
+
+		Criteria criteria = example.createCriteria();
+
+		criteria.andRoleIdIn(roleIds);
+
+		return userRoleMapper.deleteByExample(example) > 0;
 	}
 
 }
