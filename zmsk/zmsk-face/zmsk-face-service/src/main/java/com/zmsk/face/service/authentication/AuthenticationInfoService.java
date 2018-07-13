@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.apache.poi.ss.usermodel.Workbook;
 
-import com.zmsk.face.pojo.FaceAuthenticationInfo;
 import com.zmsk.face.service.authentication.dto.AuthenticationInfoDTO;
 import com.zmsk.face.service.authentication.dto.VisistorInfoDTO;
 
