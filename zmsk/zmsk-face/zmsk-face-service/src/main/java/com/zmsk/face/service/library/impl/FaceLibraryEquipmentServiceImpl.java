@@ -1,14 +1,19 @@
 package com.zmsk.face.service.library.impl;
 
+import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.alibaba.fastjson.JSON;
 import com.zmsk.face.mapper.FaceEquipmentLibraryMapper;
+import com.zmsk.face.mapper.FaceLibraryMapper;
 import com.zmsk.face.mapper.custom.library.CustomerEquipmentLibraryMapper;
 import com.zmsk.face.pojo.FaceEquipmentLibrary;
+import com.zmsk.face.pojo.FaceLibrary;
 import com.zmsk.face.service.library.FaceLibraryEquipmentService;
 import com.zmsk.face.service.library.constants.EquipmentLibraryOperationType;
 import com.zmsk.face.service.library.constants.EquipmentLibrarySyncStatus;
@@ -27,6 +32,9 @@ public class FaceLibraryEquipmentServiceImpl implements FaceLibraryEquipmentServ
 	private FaceEquipmentLibraryMapper equipmentLibraryMapper;
 
 	@Autowired
+	private FaceLibraryMapper libraryMapper;
+
+	@Autowired
 	private CustomerEquipmentLibraryMapper customerEquiomentLibraryMapper;
 
 	@Override
@@ -41,9 +49,10 @@ public class FaceLibraryEquipmentServiceImpl implements FaceLibraryEquipmentServ
 	}
 
 	@Override
-	public boolean updateLibraryEquipment(int libraryId, List<Integer> equipmentIds) {
+	public boolean updateLibraryEquipment(int libraryId, List<Integer> equipmentIds, List<Integer> oldEquipmentIds) {
 
-		List<Integer> oldEquipmentIds = customerEquiomentLibraryMapper.queryEquipmentIdByLibraryId(libraryId);
+		// List<Integer> oldEquipmentIds =
+		// customerEquiomentLibraryMapper.queryIncreaseEquipmentIdByLibraryId(libraryId);
 
 		if (oldEquipmentIds == null || oldEquipmentIds.size() == 0) {
 			return addLibraryEquipment(libraryId, oldEquipmentIds);
@@ -82,6 +91,42 @@ public class FaceLibraryEquipmentServiceImpl implements FaceLibraryEquipmentServ
 		equipmentLibrary.setId(id);
 
 		return equipmentLibraryMapper.updateByPrimaryKeySelective(equipmentLibrary) > 0;
+	}
+
+	@Override
+	public boolean flagEnableFaceLibrary(int id) {
+
+		FaceEquipmentLibrary equipmentLibrary = equipmentLibraryMapper.selectByPrimaryKey(id);
+
+		int libraryId = equipmentLibrary.getLibraryId();
+
+		equipmentLibraryMapper.deleteByPrimaryKey(id);
+
+		FaceLibrary faceLibrary = libraryMapper.selectByPrimaryKey(libraryId);
+
+		String remark = faceLibrary.getRemark();
+
+		remark = remark + "(人脸图片不清晰)";
+
+		String equipIds = faceLibrary.getEquipmentIds();
+
+		List<Integer> equipIdList = JSON.parseArray("[" + equipIds + "]", Integer.class);
+
+		Iterator<Integer> iterator = equipIdList.iterator();
+
+		while (iterator.hasNext()) {
+			int equipmentId = iterator.next();
+			if (equipmentId == equipmentLibrary.getEquipmentId()) {
+				iterator.remove();
+				break;
+			}
+		}
+
+		faceLibrary.setRemark(remark);
+
+		faceLibrary.setEquipmentIds(StringUtils.join(equipIdList, ","));
+
+		return libraryMapper.updateByPrimaryKey(faceLibrary) > 0;
 	}
 
 	/****

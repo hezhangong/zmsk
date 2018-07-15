@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.alibaba.fastjson.JSON;
 import com.zmsk.common.pagehelper.PageHelper;
 import com.zmsk.common.utils.BeanUtils;
 import com.zmsk.common.utils.PageUtils;
@@ -25,6 +26,7 @@ import com.zmsk.face.pojo.FaceLibraryExample.Criteria;
 import com.zmsk.face.service.group.GroupService;
 import com.zmsk.face.service.library.FaceLibraryEquipmentService;
 import com.zmsk.face.service.library.FaceLibraryService;
+import com.zmsk.face.service.library.constants.EquipmentLibraryOperationType;
 import com.zmsk.face.service.library.constants.EquipmentLibrarySyncStatus;
 import com.zmsk.face.service.library.dto.FaceLibraryDTO;
 
@@ -146,14 +148,21 @@ public class FaceLibraryServiceImpl implements FaceLibraryService {
 			library.setGroupId(groupId);
 		}
 
-		library.setEquipmentIds(StringUtils.join(equipmentIds, ","));
+		String oldEquipmentIds = library.getEquipmentIds();
 
-		boolean result = faceLibraryMapper.updateByPrimaryKey(library) > 0;
+		List<Integer> oldEquipmentIdList = null;
+
+		if (!StringUtils.isEmpty(oldEquipmentIds)) {
+			oldEquipmentIds = "[" + oldEquipmentIds + "]";
+			oldEquipmentIdList = JSON.parseArray(oldEquipmentIds, Integer.class);
+		}
 
 		// 人脸库操作
-		libraryEquipmentService.updateLibraryEquipment(id, equipmentIds);
+		libraryEquipmentService.updateLibraryEquipment(id, equipmentIds, oldEquipmentIdList);
 
-		return result;
+		library.setEquipmentIds(StringUtils.join(equipmentIds, ","));
+
+		return faceLibraryMapper.updateByPrimaryKey(library) > 0;
 	}
 
 	@Override
@@ -257,7 +266,35 @@ public class FaceLibraryServiceImpl implements FaceLibraryService {
 
 		List<EquipmetLibraryDTO> equipmentLibraryList = customerEquipmentLibraryMapper.queryEquipmentLibraryByLibraryId(faceLibrary.getId());
 
-		libraryDTO = convertEquipmentLibraryList2SupportDevice(equipmentLibraryList, libraryDTO);
+		if (equipmentLibraryList == null || equipmentLibraryList.size() == 0) {
+			libraryDTO.setSupportDevice("暂无支持设备");
+			return libraryDTO;
+		}
+
+		// 删除状态的设备Id列表
+		List<Integer> deleTypeEquipmentIds = new ArrayList<>();
+
+		for (EquipmetLibraryDTO equipmentLibrary : equipmentLibraryList) {
+
+			int operation = equipmentLibrary.getOperation();
+
+			int equipmentId = equipmentLibrary.getEquipmentId();
+
+			if (operation == EquipmentLibraryOperationType.DELETE_TYPE) {
+				deleTypeEquipmentIds.add(equipmentId);
+			}
+		}
+
+		String equipmentIds = faceLibrary.getEquipmentIds();
+
+		List<Integer> faceEquipmentIds = Collections.emptyList();
+
+		if (!StringUtils.isEmpty(equipmentIds)) {
+			equipmentIds = "[" + equipmentIds + "]";
+			faceEquipmentIds = JSON.parseArray(equipmentIds, Integer.class);
+		}
+
+		libraryDTO = convertEquipmentLibraryList2SupportDevice(equipmentLibraryList, deleTypeEquipmentIds, faceEquipmentIds, libraryDTO);
 
 		return libraryDTO;
 	}
@@ -282,12 +319,7 @@ public class FaceLibraryServiceImpl implements FaceLibraryService {
 		return libraryList;
 	}
 
-	private FaceLibraryDTO convertEquipmentLibraryList2SupportDevice(List<EquipmetLibraryDTO> equipmentLibraryList, FaceLibraryDTO libraryDTO) {
-
-		if (equipmentLibraryList == null || equipmentLibraryList.size() == 0) {
-			libraryDTO.setSupportDevice("暂无支持设备");
-			return libraryDTO;
-		}
+	private FaceLibraryDTO convertEquipmentLibraryList2SupportDevice(List<EquipmetLibraryDTO> equipmentLibraryList, List<Integer> deleTypeEquipmentIds, List<Integer> faceEquipmentIds, FaceLibraryDTO libraryDTO) {
 
 		StringBuilder supportDevice = new StringBuilder();
 
@@ -298,6 +330,19 @@ public class FaceLibraryServiceImpl implements FaceLibraryService {
 			String remark = equipmentLibrary.getRemark();
 
 			int syncStatus = equipmentLibrary.getSyncStatus();
+
+			int equipmentId = equipmentLibrary.getEquipmentId();
+
+			int operation = equipmentLibrary.getOperation();
+
+			// 去除删除状态的设备Id
+			if (operation == EquipmentLibraryOperationType.DELETE_TYPE && deleTypeEquipmentIds.contains(equipmentId)) {
+				continue;
+			}
+
+			if (!faceEquipmentIds.contains(equipmentId)) {
+				continue;
+			}
 
 			supportDeviceIds.append(equipmentLibrary.getEquipmentId());
 

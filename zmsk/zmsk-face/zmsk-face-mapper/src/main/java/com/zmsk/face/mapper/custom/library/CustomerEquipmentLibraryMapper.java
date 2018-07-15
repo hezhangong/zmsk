@@ -12,6 +12,12 @@ public interface CustomerEquipmentLibraryMapper {
 
 	List<Integer> queryEquipmentUnSyncFaceLibraryIds(@Param("deviceId") int deviceId);
 
-	List<Integer> queryEquipmentIdByLibraryId(@Param("libraryId") int libraryId);
+	/***
+	 * 获取新增类型的设备Id
+	 * 
+	 * @param libraryId
+	 * @return
+	 */
+	List<Integer> queryIncreaseEquipmentIdByLibraryId(@Param("libraryId") int libraryId);
 
 }

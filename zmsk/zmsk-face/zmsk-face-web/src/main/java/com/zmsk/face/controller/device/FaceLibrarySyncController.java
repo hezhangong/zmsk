@@ -70,4 +70,28 @@ public class FaceLibrarySyncController {
 		return ServiceResultDTO.success();
 	}
 
+	/****
+	 * 标记无效人脸库
+	 * 
+	 * @param id
+	 *            主键Id
+	 * @return
+	 */
+	@RequestMapping(value = "flag/enable/{id}", method = RequestMethod.POST)
+	@ResponseBody
+	public ServiceResultDTO flagEnableFaceLibrary(@PathVariable(value = "id") int id) {
+
+		if (id <= 0) {
+			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "invalid Id");
+		}
+
+		boolean success = libraryEquipmentService.flagEnableFaceLibrary(id);
+
+		if (!success) {
+			return new ServiceResultDTO(BaseResultCode.SYNC_FACE_LIBRARY_FAIL, "人脸库无效标记失败");
+		}
+
+		return ServiceResultDTO.success();
+	}
+
 }

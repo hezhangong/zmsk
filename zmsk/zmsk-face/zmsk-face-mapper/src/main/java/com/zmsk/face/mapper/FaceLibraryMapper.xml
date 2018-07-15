@@ -108,7 +108,7 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.zmsk.face.pojo.FaceLibrary" >
+  <insert id="insert" parameterType="com.zmsk.face.pojo.FaceLibrary" useGeneratedKeys="true" keyProperty="id" >
     insert into face_library (id, name, sex, id_number, 
       nation, address, avatar, 
       remark, flag, organization_id, 

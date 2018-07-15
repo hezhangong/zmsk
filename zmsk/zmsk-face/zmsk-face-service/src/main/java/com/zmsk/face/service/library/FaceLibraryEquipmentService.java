@@ -28,9 +28,11 @@ public interface FaceLibraryEquipmentService {
 	 *            人脸库Id
 	 * @param equipmentIds
 	 *            设备Id
+	 * @param oldEquipmentIds
+	 *            原始设备Id列表
 	 * @return
 	 */
-	boolean updateLibraryEquipment(int libraryId, List<Integer> equipmentIds);
+	boolean updateLibraryEquipment(int libraryId, List<Integer> equipmentIds, List<Integer> oldEquipmentIds);
 
 	/****
 	 * 获取设备未同步的人脸库Id列表
@@ -49,5 +51,14 @@ public interface FaceLibraryEquipmentService {
 	 * @return
 	 */
 	boolean flagsyncedFaceLibrary(int id);
+
+	/****
+	 * 标记未同步状态
+	 * 
+	 * @param id
+	 *            主键Id
+	 * @return
+	 */
+	boolean flagEnableFaceLibrary(int id);
 
 }

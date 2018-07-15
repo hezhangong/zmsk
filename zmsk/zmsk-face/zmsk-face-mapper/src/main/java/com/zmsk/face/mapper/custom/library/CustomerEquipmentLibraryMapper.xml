@@ -81,10 +81,11 @@
 		SELECT
 		DISTINCT
 		equipment_id AS equipmentId,sync_status AS
-		syncStatus,face_equipment.remark AS remark FROM
+		syncStatus,face_equipment.remark AS
+		remark,face_equipment_library.operation AS operation FROM
 		face_equipment_library,face_equipment WHERE library_id=#{libraryId}
 		AND
-		face_equipment.id=equipment_id AND operation=1
+		face_equipment.id=equipment_id
 	</select>
 
 	<select id="queryEquipmentUnSyncFaceLibraryIds" resultType="java.lang.Integer">
@@ -93,9 +94,9 @@
 		AND sync_status=0
 	</select>
 
-	<select id="queryEquipmentIdByLibraryId" resultType="java.lang.Integer">
+	<select id="queryIncreaseEquipmentIdByLibraryId" resultType="java.lang.Integer">
 		SELECT
 		equipment_id FROM face_equipment_library WHERE
-		library_id=#{libraryId}
+		library_id=#{libraryId} AND operation=1
 	</select>
 </mapper>

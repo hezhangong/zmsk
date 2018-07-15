@@ -47,6 +47,10 @@ public class AuthenticationInfoDTO implements Serializable {
 	private String similarDegree;
 	
 	private Long ctime;
+	
+	private String remark;
+	
+	private Long registerTime;
 
 	public Integer getId() {
 		return id;
@@ -191,9 +195,25 @@ public class AuthenticationInfoDTO implements Serializable {
 	public void setGroupId(Integer groupId) {
 		this.groupId = groupId;
 	}
+	
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+
+	public Long getRegisterTime() {
+		return registerTime;
+	}
+
+	public void setRegisterTime(Long registerTime) {
+		this.registerTime = registerTime;
+	}
 
 	@Override
 	public String toString() {
-		return "AuthenticationInfoDTO [id=" + id + ", name=" + name + ", avatar=" + avatar + ", sex=" + sex + ", idNumber=" + idNumber + ", nation=" + nation + ", address=" + address + ", type=" + type + ", source=" + source + ", result=" + result + ", organizationId=" + organizationId + ", equipmentId=" + equipmentId + ", groupId=" + groupId + ", groupName=" + groupName + ", idcardImage=" + idcardImage + ", idcardInfo=" + idcardInfo + ", similarDegree=" + similarDegree + ", ctime=" + ctime + "]";
+		return "AuthenticationInfoDTO [id=" + id + ", name=" + name + ", avatar=" + avatar + ", sex=" + sex + ", idNumber=" + idNumber + ", nation=" + nation + ", address=" + address + ", type=" + type + ", source=" + source + ", result=" + result + ", organizationId=" + organizationId + ", equipmentId=" + equipmentId + ", groupId=" + groupId + ", groupName=" + groupName + ", idcardImage=" + idcardImage + ", idcardInfo=" + idcardInfo + ", similarDegree=" + similarDegree + ", ctime=" + ctime + ", remark=" + remark + ", registerTime=" + registerTime + "]";
 	}
 }

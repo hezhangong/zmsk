@@ -11,11 +11,13 @@ import java.io.Serializable;
 public class EquipmetLibraryDTO implements Serializable {
 
 	private static final long serialVersionUID = 6502430018601817555L;
-	
+
 	private Integer equipmentId;
-	
+
 	private Integer syncStatus;
-	
+
+	private Integer operation;
+
 	private String remark;
 
 	public Integer getEquipmentId() {
@@ -42,8 +44,16 @@ public class EquipmetLibraryDTO implements Serializable {
 		this.remark = remark;
 	}
 
+	public Integer getOperation() {
+		return operation;
+	}
+
+	public void setOperation(Integer operation) {
+		this.operation = operation;
+	}
+
 	@Override
 	public String toString() {
-		return "EquipmetLibraryDTO [equipmentId=" + equipmentId + ", syncStatus=" + syncStatus + ", remark=" + remark + "]";
+		return "EquipmetLibraryDTO [equipmentId=" + equipmentId + ", syncStatus=" + syncStatus + ", operation=" + operation + ", remark=" + remark + "]";
 	}
 }
