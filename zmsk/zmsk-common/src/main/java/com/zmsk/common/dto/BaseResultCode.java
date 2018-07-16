@@ -3,7 +3,7 @@ package com.zmsk.common.dto;
 public class BaseResultCode {
 
 	public static final int SUCCESS = 200;
-	
+
 	public static final int NOT_CONTENT = 204;
 
 	/** 无效的参数 **/
@@ -11,6 +11,9 @@ public class BaseResultCode {
 
 	/** 原始密码错误 **/
 	public static final int INVALID_OLDPASSWORD = 40002;
+
+	/** 无效的签名 **/
+	public static final int INVALID_SIGN = 40003;
 
 	/** 会员操作错误code **/
 	public static final int USER_OPERATION_ERROR = 50001;
