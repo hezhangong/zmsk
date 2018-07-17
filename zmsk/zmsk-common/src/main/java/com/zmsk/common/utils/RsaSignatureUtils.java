@@ -195,7 +195,7 @@ public class RsaSignatureUtils {
 	}
 	
 	public static void main(String[] args) {
-		String content = "zd10013";
+		String content = "12";
 		try {
 			String sign = rsaSign(content, PRIVATEKEY);
 			System.out.println("sign:"+sign);

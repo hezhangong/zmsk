@@ -2,10 +2,12 @@ package com.zmsk.face.controller.device;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.security.SignatureException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.zmsk.common.dto.BaseResultCode;
 import com.zmsk.common.dto.ServiceResultDTO;
+import com.zmsk.common.utils.RsaSignatureUtils;
 import com.zmsk.face.service.authentication.AuthenticationInfoService;
 
 /****
@@ -61,11 +64,12 @@ public class AuthenticationInfoDeviceController {
 	 *            相似度
 	 * @return
 	 * @throws UnsupportedEncodingException
+	 * @throws SignatureException
 	 */
 	@RequestMapping(value = "add", method = RequestMethod.POST)
 	@ResponseBody
 	public ServiceResultDTO addAuthenticationRecord(@RequestParam(value = "name") String name, @RequestParam(value = "idNumber", required = false, defaultValue = "") String idNumber, @RequestParam(value = "nation", defaultValue = "", required = false) String nation, @RequestParam(value = "address", required = false, defaultValue = "") String address, @RequestParam(value = "avatar", required = false, defaultValue = "") String avatar, @RequestParam(value = "sex") int sex, @RequestParam(value = "type") int type, @RequestParam(value = "result") int result, @RequestParam(value = "deviceNumber") String deviceNumber,
-			@RequestParam(value = "groupId", defaultValue = "0", required = false) int groupId, @RequestParam(value = "authTimeStamp") long authTimeStamp, @RequestParam(value = "idcardImage", defaultValue = "", required = false) String idcardImage, @RequestParam(value = "idcardInfo", required = false, defaultValue = "") String idcardInfo, @RequestParam(value = "similarDegree", defaultValue = "", required = false) String similarDegree) throws UnsupportedEncodingException {
+			@RequestParam(value = "groupId", defaultValue = "0", required = false) int groupId, @RequestParam(value = "authTimeStamp") long authTimeStamp, @RequestParam(value = "idcardImage", defaultValue = "", required = false) String idcardImage, @RequestParam(value = "idcardInfo", required = false, defaultValue = "") String idcardInfo, @RequestParam(value = "similarDegree", defaultValue = "", required = false) String similarDegree, @RequestBody String sign) throws UnsupportedEncodingException, SignatureException {
 
 		if (StringUtils.isEmpty(name)) {
 			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, " invalid name");
@@ -93,6 +97,17 @@ public class AuthenticationInfoDeviceController {
 
 		if (StringUtils.isEmpty(avatar)) {
 			avatar = URLDecoder.decode(avatar, "UTF-8");
+		}
+
+		if (StringUtils.isEmpty(sign)) {
+			return new ServiceResultDTO(BaseResultCode.INVALID_SIGN, "Invalid sign ");
+		}
+
+		boolean signSuccess = RsaSignatureUtils.rsaCheck(deviceNumber, sign);
+
+		// 签名不对
+		if (!signSuccess) {
+			return new ServiceResultDTO(BaseResultCode.INVALID_SIGN, "Invalid sign ");
 		}
 
 		boolean success = authenticationServiceInfo.addAuthenticationInfo(name, idNumber, nation, address, avatar, sex, type, result, deviceNumber, groupId, authTimeStamp, idcardImage, idcardInfo, similarDegree);
