@@ -19,6 +19,7 @@ import com.zmsk.face.service.equipment.EquipmentService;
 import com.zmsk.face.service.user.constants.UserConstants;
 
 /****
+ * 设备操作controller
  * 
  * @author warrior
  *
@@ -29,74 +30,6 @@ public class EquipmentManagerController {
 
 	@Autowired
 	private EquipmentService equipmentService;
-
-	/****
-	 * 创建设备
-	 * 
-	 * @param organizationId
-	 *            组织Id
-	 * @param count
-	 *            数量
-	 * @param password
-	 *            初始密码
-	 * @param type
-	 *            类型
-	 * @param renewalFee
-	 *            续费值
-	 * @return
-	 */
-	@RequestMapping(value = "create", method = RequestMethod.POST)
-	@ResponseBody
-	public ServiceResultDTO createEquipment(@RequestParam(value = "organizationId") int organizationId, @RequestParam(value = "count") int count, @RequestParam(value = "password") String password, @RequestParam(value = "type") int type, @RequestParam(value = "renewalFee") int renewalFee) {
-
-		if (organizationId <= 0) {
-			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid organization id");
-		}
-
-		if (count <= 0) {
-			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid count ");
-		}
-
-		if (StringUtils.isEmpty(password)) {
-			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid password ");
-		}
-
-		if (type <= 0) {
-			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid type ");
-		}
-
-		boolean success = equipmentService.createEquipment(organizationId, count, password, type, renewalFee);
-
-		if (!success) {
-			return new ServiceResultDTO(BaseResultCode.EQUIPMENT_OPERATION_ERROR, "create equipment error");
-		}
-
-		return ServiceResultDTO.success();
-	}
-
-	/***
-	 * 激活设备
-	 * 
-	 * @param deviceId
-	 *            设备Id
-	 * @return
-	 */
-	@RequestMapping(value = "activate/{deviceId}", method = RequestMethod.POST)
-	@ResponseBody
-	public ServiceResultDTO activateEquipment(@PathVariable(value = "deviceId") int deviceId) {
-
-		if (deviceId <= 0) {
-			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid device id");
-		}
-
-		boolean success = equipmentService.activateEquipment(deviceId);
-
-		if (!success) {
-			return new ServiceResultDTO(BaseResultCode.EQUIPMENT_OPERATION_ERROR, "activate equipment error");
-		}
-
-		return ServiceResultDTO.success();
-	}
 
 	/****
 	 * 获取组织对应的设备列表
