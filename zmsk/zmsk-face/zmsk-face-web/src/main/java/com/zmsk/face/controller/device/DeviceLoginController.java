@@ -34,11 +34,13 @@ public class DeviceLoginController {
 	 *            设备登入账号
 	 * @param devicePassword
 	 *            设备登入密码
+	 * @param macId
+	 *            机器的mac地址
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.POST)
 	@ResponseBody
-	public ServiceResultDTO login(@RequestParam(value = "deviceNumber") String deviceNumber, @RequestParam(value = "devicePassword") String devicePassword) {
+	public ServiceResultDTO login(@RequestParam(value = "deviceNumber") String deviceNumber, @RequestParam(value = "devicePassword") String devicePassword, @RequestParam(value = "macId", required = false, defaultValue = "") String macId) {
 
 		if (StringUtils.isEmpty(deviceNumber)) {
 			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "无效的账号");
@@ -48,10 +50,10 @@ public class DeviceLoginController {
 			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "无效的密码");
 		}
 
-		DeviceLoginResultDTO deviceLoginResult = equipmentService.deviceLogin(deviceNumber, devicePassword);
+		DeviceLoginResultDTO deviceLoginResult = equipmentService.deviceLogin(deviceNumber, devicePassword, macId);
 
 		if (deviceLoginResult == null) {
-			return new ServiceResultDTO(ExceptionCodeConstants.UNAUTH_CODE, "无效的账号密码或设备未激活");
+			return new ServiceResultDTO(ExceptionCodeConstants.DEVICE_CONFICT, "设备登入冲突");
 		}
 
 		return ServiceResultDTO.success(deviceLoginResult);

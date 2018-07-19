@@ -3,10 +3,12 @@ package com.zmsk.face.service.equipment.impl;
 import java.util.List;
 import java.util.UUID;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.zmsk.common.exception.UnauthorizedAccessException;
 import com.zmsk.common.utils.DateUtils;
 import com.zmsk.common.utils.StringDigestUtils;
 import com.zmsk.face.dto.equipment.EquipmentRemarkDTO;
@@ -192,7 +194,7 @@ public class EquipmentServiceImpl implements EquipmentService {
 	}
 
 	@Override
-	public DeviceLoginResultDTO deviceLogin(String deviceNumber, String devicePassword) {
+	public DeviceLoginResultDTO deviceLogin(String deviceNumber, String devicePassword, String macId) {
 
 		FaceEquipmentExample example = new FaceEquipmentExample();
 
@@ -207,19 +209,32 @@ public class EquipmentServiceImpl implements EquipmentService {
 		List<FaceEquipment> list = equipmentMapper.selectByExample(example);
 
 		if (list == null || list.size() == 0) {
-			return null;
+			throw new UnauthorizedAccessException("Invalid deviceNumber or devicePassword");
 		}
 
 		FaceEquipment equipment = list.get(0);
 
-		// 生产物理Id
-		String macId = UUID.randomUUID().toString();
+		String dbMacId = equipment.getMacId();
 
-		equipment.setMacId(macId);
+		// 第一次登入
+		if (StringUtils.isEmpty(dbMacId) && StringUtils.isEmpty(macId)) {
+			// 生产物理Id
+			macId = UUID.randomUUID().toString();
 
-		// 更新到物理IdDB
-		equipmentMapper.updateByPrimaryKey(equipment);
+			equipment.setMacId(macId);
+
+			// 更新到物理IdDB
+			equipmentMapper.updateByPrimaryKey(equipment);
+
+			return new DeviceLoginResultDTO(deviceNumber, equipment.getId(), macId);
+		}
+
+		// 不是同一个设备登入
+		if (!dbMacId.equals(macId)) {
+			return null;
+		}
 
 		return new DeviceLoginResultDTO(deviceNumber, equipment.getId(), macId);
+
 	}
 }

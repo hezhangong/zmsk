@@ -106,7 +106,9 @@ public interface EquipmentService {
 	 *            登入账号
 	 * @param devicePassword
 	 *            登入密码
-	 * @return
+	 * @param macId
+	 *            机器物理地址
+	 * @return null 不是同一个设备登入
 	 */
-	DeviceLoginResultDTO deviceLogin(String deviceNumber, String devicePassword);
+	DeviceLoginResultDTO deviceLogin(String deviceNumber, String devicePassword, String macId);
 }
