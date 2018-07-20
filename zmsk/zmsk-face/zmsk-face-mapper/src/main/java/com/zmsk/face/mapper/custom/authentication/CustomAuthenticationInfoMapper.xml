@@ -3,16 +3,14 @@
 <mapper
 	namespace="com.zmsk.face.mapper.custom.authentication.CustomAuthenticationInfoMapper">
 
-	<select id="countAuthenticationSuccessResult"
-		resultType="java.lang.Long">
+	<select id="countAuthenticationSuccessResult" resultType="java.lang.Long">
 		SELECT
 		count(*) FROM face_authentication_info WHERE
 		organization_id=#{organizationId} AND result=1 AND ctime BETWEEN
 		#{startTime} AND #{endTime}
 	</select>
 
-	<select id="countAuthenticationFailResult"
-		resultType="java.lang.Long">
+	<select id="countAuthenticationFailResult" resultType="java.lang.Long">
 		SELECT
 		count(*) FROM face_authentication_info WHERE
 		organization_id=#{organizationId} AND result=0 AND ctime BETWEEN
@@ -43,11 +41,10 @@
 		ctime BETWEEN #{startTime} AND #{endTime}
 	</select>
 
-	<select id="queryAuthenticationInfo"
-		resultType="com.zmsk.face.dto.authentic.AuthenticationInfoDTO">
+	<select id="queryAuthenticationInfo" resultType="com.zmsk.face.dto.authentic.AuthenticationInfoDTO">
 		SELECT
 		authen_info.id,
-		authen_info. NAME,
+		authen_info. name,
 		authen_info.avatar,
 		authen_info.sex,
 		authen_info.id_number AS idNumber,
@@ -76,8 +73,52 @@
 		WHERE
 		authen_info.organization_id = #{organizationId}
 		<if test="search !=null and search !=''">
-		  AND `name` LIKE CONCAT('%',#{search},'%')  OR id_number LIKE CONCAT('%',#{search},'%')
+			AND `name` LIKE CONCAT('%',#{search},'%') OR id_number
+			LIKE
+			CONCAT('%',#{search},'%')
 		</if>
+		ORDER BY id DESC
+	</select>
+
+	<select id="queryWarnAuthenticationInfo" resultType="com.zmsk.face.dto.authentic.AuthenticationInfoDTO">
+		SELECT
+		authen_info.id,
+		authen_info. name,
+		authen_info.avatar,
+		authen_info.sex,
+		authen_info.id_number AS idNumber,
+		authen_info.nation,
+		authen_info.address,
+		authen_info.type,
+		authen_info.source,
+		authen_info.result,
+		authen_info.organization_id AS organizationId,
+		authen_info.equipment_id AS equipmentId,
+		authen_info.group_id AS
+		groupId,
+		authen_info.idcard_image AS idcardImage,
+		authen_info.idcard_info AS idcardInfo,
+		authen_info.similar_degree AS
+		similarDegree,
+		authen_info.remark,
+		authen_info.ctime,
+		authen_info.register_time AS registerTime,
+		face_group.group_name AS
+		groupName
+		FROM
+		face_authentication_info AS authen_info
+		LEFT JOIN
+		face_group ON authen_info.group_id = face_group.id
+		WHERE
+		authen_info.organization_id = #{organizationId}
+		AND
+		authen_info.result=0
+		<if test="search !=null and search !=''">
+			AND `name` LIKE CONCAT('%',#{search},'%') OR id_number
+			LIKE
+			CONCAT('%',#{search},'%')
+		</if>
+		ORDER BY id DESC
 	</select>
 
 </mapper>

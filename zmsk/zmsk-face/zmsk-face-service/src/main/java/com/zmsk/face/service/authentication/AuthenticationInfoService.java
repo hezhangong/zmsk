@@ -79,7 +79,7 @@ public interface AuthenticationInfoService {
 	 *            页数
 	 * @return
 	 */
-	List<AuthenticationInfoDTO> queryWarnAuthenticationInfo(String search, int organizationId, int pageSize, int pageNum);
+	PageInfo<AuthenticationInfoDTO> queryWarnAuthenticationInfo(String search, int organizationId, int pageSize, int pageNum);
 
 	/****
 	 * 根据id获取认证记录信息

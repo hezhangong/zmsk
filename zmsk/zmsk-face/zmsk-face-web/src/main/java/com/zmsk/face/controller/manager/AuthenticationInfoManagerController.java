@@ -3,7 +3,6 @@ package com.zmsk.face.controller.manager;
 import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -84,7 +83,7 @@ public class AuthenticationInfoManagerController {
 			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid organization id");
 		}
 
-		List<AuthenticationInfoDTO> list = authenticationInfoService.queryWarnAuthenticationInfo(search, organizationId, pageSize, pageNum);
+		PageInfo<AuthenticationInfoDTO> list = authenticationInfoService.queryWarnAuthenticationInfo(search, organizationId, pageSize, pageNum);
 
 		return ServiceResultDTO.success(list);
 	}

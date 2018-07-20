@@ -38,13 +38,13 @@ public class AuthenticationInfoDTO implements Serializable {
 
 	 private Integer groupId;
 	
-	private String  groupName;
+	private String  groupName="--";
 
 	private String idcardImage;
 
-	private String idcardInfo;
+	private String idcardInfo="";
 	
-	private String similarDegree;
+	private String similarDegree="";
 	
 	private Long ctime;
 	

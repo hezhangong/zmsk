@@ -1,5 +1,9 @@
 package com.zmsk.face.service.authentication.impl;
 
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -25,7 +29,6 @@ import com.zmsk.face.pojo.FaceAuthenticationInfoExample;
 import com.zmsk.face.pojo.FaceAuthenticationInfoExample.Criteria;
 import com.zmsk.face.pojo.FaceEquipment;
 import com.zmsk.face.service.authentication.AuthenticationInfoService;
-import com.zmsk.face.service.authentication.constant.AuthenticResultConstant;
 import com.zmsk.face.service.authentication.dto.ExportAuthenticationInfoDTO;
 import com.zmsk.face.service.authentication.dto.VisistorInfoDTO;
 import com.zmsk.face.service.equipment.EquipmentService;
@@ -48,7 +51,7 @@ public class AuthenticationInfoServiceImpl implements AuthenticationInfoService 
 
 	@Autowired
 	private FaceAuthenticationInfoMapper authenticationInfoMapper;
-	
+
 	@Autowired
 	private CustomAuthenticationInfoMapper customAuthenticationInfoMapper;
 
@@ -115,28 +118,9 @@ public class AuthenticationInfoServiceImpl implements AuthenticationInfoService 
 	@Override
 	public PageInfo<AuthenticationInfoDTO> queryAuthenticationInfo(String search, int organizationId, int pageSize, int pageNum) {
 
-		//FaceAuthenticationInfoExample example = new FaceAuthenticationInfoExample();
-
-		//Criteria criteria = example.createCriteria();
-
-		//criteria.andOrganizationIdEqualTo(organizationId);
-
-		//if (!StringUtils.isEmpty(search)) {
-			//criteria.andNameLike("%" + search + "%");
-			//Criteria criteria2 = example.createCriteria();
-			//criteria2.andIdNumberLike("%" + search + "%");
-		//	example.or(criteria2);
-		//}
-
-	//	example.setOrderByClause(" id DESC ");
-
 		// 分页处理
 		PageHelper.startPage(pageNum, pageSize);
 
-		//List<FaceAuthenticationInfo> list = authenticationInfoMapper.selectByExample(example);
-
-		//List<AuthenticationInfoDTO> authenticationInfoList = convertAuthenticationInfo2DTO(list);
-		
 		List<AuthenticationInfoDTO> list = customAuthenticationInfoMapper.queryAuthenticationInfo(search, organizationId);
 
 		PageInfo<AuthenticationInfoDTO> pageInfo = new PageInfo<>(list);
@@ -145,29 +129,17 @@ public class AuthenticationInfoServiceImpl implements AuthenticationInfoService 
 	}
 
 	@Override
-	public List<AuthenticationInfoDTO> queryWarnAuthenticationInfo(String search, int organizationId, int pageSize, int pageNum) {
-
-		FaceAuthenticationInfoExample example = new FaceAuthenticationInfoExample();
-
-		Criteria criteria = example.createCriteria();
-
-		criteria.andOrganizationIdEqualTo(organizationId);
-
-		criteria.andResultEqualTo(AuthenticResultConstant.AUTHENTIC_FAIL);
-
-		if (!StringUtils.isEmpty(search)) {
-			criteria.andNameLike("%" + search + "%");
-			example.or().andIdNumberLike("%" + search + "%");
-		}
-
-		example.setOrderByClause(" id DESC ");
+	public PageInfo<AuthenticationInfoDTO> queryWarnAuthenticationInfo(String search, int organizationId, int pageSize, int pageNum) {
 
 		// 分页处理
 		PageHelper.startPage(pageNum, pageSize);
 
-		List<FaceAuthenticationInfo> list = authenticationInfoMapper.selectByExample(example);
+		List<AuthenticationInfoDTO> list = customAuthenticationInfoMapper.queryWarnAuthenticationInfo(search, organizationId);
 
-		return convertAuthenticationInfo2DTO(list);
+		PageInfo<AuthenticationInfoDTO> pageInfo = new PageInfo<>(list);
+
+		return pageInfo;
+
 	}
 
 	@Override
@@ -252,27 +224,6 @@ public class AuthenticationInfoServiceImpl implements AuthenticationInfoService 
 		return ExcelExportUtil.exportExcel(params, ExportAuthenticationInfoDTO.class, reslt);
 	}
 
-	private List<AuthenticationInfoDTO> convertAuthenticationInfo2DTO(List<FaceAuthenticationInfo> list) {
-
-		if (list == null || list.size() == 0) {
-			return Collections.emptyList();
-		}
-
-		List<AuthenticationInfoDTO> result = new ArrayList<>(list.size());
-
-		AuthenticationInfoDTO authenticationInfoDTO = null;
-
-		for (FaceAuthenticationInfo authenticationInfo : list) {
-			authenticationInfoDTO = new AuthenticationInfoDTO();
-			BeanUtils.copyPropertiesNotNull(authenticationInfoDTO, authenticationInfo);
-			String groupName = groupService.queryGroupNameById(authenticationInfo.getGroupId());
-			authenticationInfoDTO.setGroupName(groupName);
-			result.add(authenticationInfoDTO);
-		}
-
-		return result;
-	}
-
 	private List<VisistorInfoDTO> convertAuthenticationInfo2VisistorDTO(List<FaceAuthenticationInfo> list) {
 
 		List<VisistorInfoDTO> result = new ArrayList<>(list.size());
@@ -280,10 +231,15 @@ public class AuthenticationInfoServiceImpl implements AuthenticationInfoService 
 		VisistorInfoDTO visistorInfo = null;
 
 		for (FaceAuthenticationInfo authenticationInfo : list) {
+
 			visistorInfo = new VisistorInfoDTO();
+
 			BeanUtils.copyPropertiesNotNull(visistorInfo, authenticationInfo);
+
 			String groupName = groupService.queryGroupNameById(authenticationInfo.getGroupId());
+
 			visistorInfo.setGroupName(groupName);
+
 			result.add(visistorInfo);
 		}
 
@@ -308,10 +264,68 @@ public class AuthenticationInfoServiceImpl implements AuthenticationInfoService 
 
 			importAuthentication.setCtime(new Date(authenticationInfo.getCtime() * 1000));
 
+			byte[] avatarByte = getImageFromNetByUrl(authenticationInfo.getAvatar());
+
+			byte[] idcardByte = getImageFromNetByUrl(authenticationInfo.getIdcardImage());
+
+			importAuthentication.setAvatar(avatarByte);
+
+			importAuthentication.setIdcardImage(idcardByte);
+
 			result.add(importAuthentication);
 		}
 
 		return result;
+	}
+
+	/**
+	 * 根据地址获得数据的字节流
+	 * 
+	 * @param strUrl
+	 *            网络连接地址
+	 * @return
+	 */
+	private byte[] getImageFromNetByUrl(String strUrl) {
+		try {
+
+			URL url = new URL(strUrl);
+
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+			conn.setRequestMethod("GET");
+
+			conn.setConnectTimeout(5 * 1000);
+
+			// 通过输入流获取图片数据
+			InputStream inStream = conn.getInputStream();
+
+			// 得到图片的二进制数据
+			byte[] btImg = readInputStream(inStream);
+
+			return btImg;
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+		}
+		return null;
+	}
+
+	/**
+	 * 从输入流中获取数据
+	 * 
+	 * @param inStream
+	 *            输入流
+	 * @return
+	 * @throws Exception
+	 */
+	private byte[] readInputStream(InputStream inStream) throws Exception {
+		ByteArrayOutputStream outStream = new ByteArrayOutputStream();
+		byte[] buffer = new byte[1024];
+		int len = 0;
+		while ((len = inStream.read(buffer)) != -1) {
+			outStream.write(buffer, 0, len);
+		}
+		inStream.close();
+		return outStream.toByteArray();
 	}
 
 }
