@@ -4,7 +4,8 @@ import java.util.List;
 
 import org.apache.poi.ss.usermodel.Workbook;
 
-import com.zmsk.face.service.authentication.dto.AuthenticationInfoDTO;
+import com.zmsk.common.pagehelper.PageInfo;
+import com.zmsk.face.dto.authentic.AuthenticationInfoDTO;
 import com.zmsk.face.service.authentication.dto.VisistorInfoDTO;
 
 /****
@@ -63,7 +64,7 @@ public interface AuthenticationInfoService {
 	 *            第几页
 	 * @return
 	 */
-	List<AuthenticationInfoDTO> queryAuthenticationInfo(String search, int organizationId, int pageSize, int pageNum);
+	PageInfo<AuthenticationInfoDTO> queryAuthenticationInfo(String search, int organizationId, int pageSize, int pageNum);
 
 	/****
 	 * 获取组织对应警告认证记录

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.zmsk.face.dto.authentic.AuthenticationInfoDTO;
 import com.zmsk.face.dto.authentic.EquipmentDetailAuthenticationDTO;
 
 public interface CustomAuthenticationInfoMapper {
@@ -60,4 +61,14 @@ public interface CustomAuthenticationInfoMapper {
 	 */
 	List<EquipmentDetailAuthenticationDTO> countEquipmentAuthenticationFailResult(@Param("organizationId") int organizationId, @Param("startTime") long startTime, @Param("endTime") long endTime);
 
+	/****
+	 * 查询认证信息记录
+	 * 
+	 * @param search
+	 *            查询条件
+	 * @param organizationId
+	 *            组织Id
+	 * @return
+	 */
+	List<AuthenticationInfoDTO> queryAuthenticationInfo(@Param("search") String search, @Param("organizationId") int organizationId);
 }

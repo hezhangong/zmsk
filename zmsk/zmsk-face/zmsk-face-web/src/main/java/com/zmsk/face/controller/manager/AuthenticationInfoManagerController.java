@@ -20,8 +20,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.zmsk.common.dto.BaseResultCode;
 import com.zmsk.common.dto.ServiceResultDTO;
 import com.zmsk.common.exception.ExprotExcelException;
+import com.zmsk.common.pagehelper.PageInfo;
+import com.zmsk.face.dto.authentic.AuthenticationInfoDTO;
 import com.zmsk.face.service.authentication.AuthenticationInfoService;
-import com.zmsk.face.service.authentication.dto.AuthenticationInfoDTO;
 
 /****
  * 认证记录后台操作Controller
@@ -57,7 +58,7 @@ public class AuthenticationInfoManagerController {
 			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid organization id");
 		}
 
-		List<AuthenticationInfoDTO> list = authenticationInfoService.queryAuthenticationInfo(search, organizationId, pageSize, pageNum);
+		PageInfo<AuthenticationInfoDTO> list = authenticationInfoService.queryAuthenticationInfo(search, organizationId, pageSize, pageNum);
 
 		return ServiceResultDTO.success(list);
 	}

@@ -36,9 +36,21 @@ public class AuthenticationInfoDTO implements Serializable {
 
 	private Integer equipmentId;
 
+	 private Integer groupId;
+	
 	private String  groupName;
 
+	private String idcardImage;
+
+	private String idcardInfo;
+	
+	private String similarDegree;
+	
 	private Long ctime;
+	
+	private String remark;
+	
+	private Long registerTime;
 
 	public Integer getId() {
 		return id;
@@ -151,9 +163,57 @@ public class AuthenticationInfoDTO implements Serializable {
 	public void setCtime(Long ctime) {
 		this.ctime = ctime;
 	}
+	
+	public String getIdcardImage() {
+		return idcardImage;
+	}
+
+	public void setIdcardImage(String idcardImage) {
+		this.idcardImage = idcardImage;
+	}
+
+	public String getIdcardInfo() {
+		return idcardInfo;
+	}
+
+	public void setIdcardInfo(String idcardInfo) {
+		this.idcardInfo = idcardInfo;
+	}
+	
+	public String getSimilarDegree() {
+		return similarDegree;
+	}
+
+	public void setSimilarDegree(String similarDegree) {
+		this.similarDegree = similarDegree;
+	}
+
+	public Integer getGroupId() {
+		return groupId;
+	}
+
+	public void setGroupId(Integer groupId) {
+		this.groupId = groupId;
+	}
+	
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+
+	public Long getRegisterTime() {
+		return registerTime;
+	}
+
+	public void setRegisterTime(Long registerTime) {
+		this.registerTime = registerTime;
+	}
 
 	@Override
 	public String toString() {
-		return "AuthenticationInfoDTO [id=" + id + ", name=" + name + ", avatar=" + avatar + ", sex=" + sex + ", idNumber=" + idNumber + ", nation=" + nation + ", address=" + address + ", type=" + type + ", source=" + source + ", result=" + result + ", organizationId=" + organizationId + ", equipmentId=" + equipmentId + ", groupName=" + groupName + ", ctime=" + ctime + "]";
+		return "AuthenticationInfoDTO [id=" + id + ", name=" + name + ", avatar=" + avatar + ", sex=" + sex + ", idNumber=" + idNumber + ", nation=" + nation + ", address=" + address + ", type=" + type + ", source=" + source + ", result=" + result + ", organizationId=" + organizationId + ", equipmentId=" + equipmentId + ", groupId=" + groupId + ", groupName=" + groupName + ", idcardImage=" + idcardImage + ", idcardInfo=" + idcardInfo + ", similarDegree=" + similarDegree + ", ctime=" + ctime + ", remark=" + remark + ", registerTime=" + registerTime + "]";
 	}
 }

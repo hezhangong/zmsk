@@ -14,16 +14,18 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import com.zmsk.common.pagehelper.PageHelper;
+import com.zmsk.common.pagehelper.PageInfo;
 import com.zmsk.common.utils.BeanUtils;
 import com.zmsk.common.utils.DateUtils;
+import com.zmsk.face.dto.authentic.AuthenticationInfoDTO;
 import com.zmsk.face.mapper.FaceAuthenticationInfoMapper;
+import com.zmsk.face.mapper.custom.authentication.CustomAuthenticationInfoMapper;
 import com.zmsk.face.pojo.FaceAuthenticationInfo;
 import com.zmsk.face.pojo.FaceAuthenticationInfoExample;
 import com.zmsk.face.pojo.FaceAuthenticationInfoExample.Criteria;
 import com.zmsk.face.pojo.FaceEquipment;
 import com.zmsk.face.service.authentication.AuthenticationInfoService;
 import com.zmsk.face.service.authentication.constant.AuthenticResultConstant;
-import com.zmsk.face.service.authentication.dto.AuthenticationInfoDTO;
 import com.zmsk.face.service.authentication.dto.ExportAuthenticationInfoDTO;
 import com.zmsk.face.service.authentication.dto.VisistorInfoDTO;
 import com.zmsk.face.service.equipment.EquipmentService;
@@ -46,6 +48,9 @@ public class AuthenticationInfoServiceImpl implements AuthenticationInfoService 
 
 	@Autowired
 	private FaceAuthenticationInfoMapper authenticationInfoMapper;
+	
+	@Autowired
+	private CustomAuthenticationInfoMapper customAuthenticationInfoMapper;
 
 	@Autowired
 	private EquipmentService equipmentService;
@@ -108,29 +113,35 @@ public class AuthenticationInfoServiceImpl implements AuthenticationInfoService 
 	}
 
 	@Override
-	public List<AuthenticationInfoDTO> queryAuthenticationInfo(String search, int organizationId, int pageSize, int pageNum) {
+	public PageInfo<AuthenticationInfoDTO> queryAuthenticationInfo(String search, int organizationId, int pageSize, int pageNum) {
 
-		FaceAuthenticationInfoExample example = new FaceAuthenticationInfoExample();
+		//FaceAuthenticationInfoExample example = new FaceAuthenticationInfoExample();
 
-		Criteria criteria = example.createCriteria();
+		//Criteria criteria = example.createCriteria();
 
-		criteria.andOrganizationIdEqualTo(organizationId);
+		//criteria.andOrganizationIdEqualTo(organizationId);
 
-		if (!StringUtils.isEmpty(search)) {
-			criteria.andNameLike("%" + search + "%");
-			Criteria criteria2 = example.createCriteria();
-			criteria2.andIdNumberLike("%" + search + "%");
-			example.or(criteria2);
-		}
+		//if (!StringUtils.isEmpty(search)) {
+			//criteria.andNameLike("%" + search + "%");
+			//Criteria criteria2 = example.createCriteria();
+			//criteria2.andIdNumberLike("%" + search + "%");
+		//	example.or(criteria2);
+		//}
 
-		example.setOrderByClause(" id DESC ");
+	//	example.setOrderByClause(" id DESC ");
 
 		// 分页处理
 		PageHelper.startPage(pageNum, pageSize);
 
-		List<FaceAuthenticationInfo> list = authenticationInfoMapper.selectByExample(example);
+		//List<FaceAuthenticationInfo> list = authenticationInfoMapper.selectByExample(example);
 
-		return convertAuthenticationInfo2DTO(list);
+		//List<AuthenticationInfoDTO> authenticationInfoList = convertAuthenticationInfo2DTO(list);
+		
+		List<AuthenticationInfoDTO> list = customAuthenticationInfoMapper.queryAuthenticationInfo(search, organizationId);
+
+		PageInfo<AuthenticationInfoDTO> pageInfo = new PageInfo<>(list);
+
+		return pageInfo;
 	}
 
 	@Override
