@@ -47,4 +47,5 @@ public class BaseResultCode {
 
 	/** 访客人脸库操作失败 **/
 	public static final int VISITOR_LIBRARY_OPERATION_ERROR = 50011;
+	
 }
