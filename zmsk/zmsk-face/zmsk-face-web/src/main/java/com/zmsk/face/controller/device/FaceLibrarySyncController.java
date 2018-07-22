@@ -36,7 +36,7 @@ public class FaceLibrarySyncController {
 	 *            签名内容
 	 * @return
 	 */
-	@RequestMapping(value = "unsync", method = RequestMethod.POST)
+	@RequestMapping(value = "unsync", method = RequestMethod.GET)
 	@ResponseBody
 	public ServiceResultDTO queryUnSyncFaceLibrary(@RequestParam(value = "deviceId") int deviceId) {
 
@@ -57,7 +57,7 @@ public class FaceLibrarySyncController {
 	 * @return
 	 * @throws SignatureException
 	 */
-	@RequestMapping(value = "flag/synced/{id}", method = RequestMethod.POST)
+	@RequestMapping(value = "flag/synced/{id}", method = RequestMethod.GET)
 	@ResponseBody
 	public ServiceResultDTO flagsyncedFaceLibrary(@PathVariable(value = "id") int id) {
 
@@ -81,7 +81,7 @@ public class FaceLibrarySyncController {
 	 *            主键Id
 	 * @return
 	 */
-	@RequestMapping(value = "flag/enable/{id}", method = RequestMethod.POST)
+	@RequestMapping(value = "flag/enable/{id}", method = RequestMethod.GET)
 	@ResponseBody
 	public ServiceResultDTO flagEnableFaceLibrary(@PathVariable(value = "id") int id) {
 
