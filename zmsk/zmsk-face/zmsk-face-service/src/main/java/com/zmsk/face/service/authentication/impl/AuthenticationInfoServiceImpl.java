@@ -20,6 +20,7 @@ import org.springframework.util.StringUtils;
 import com.zmsk.common.pagehelper.PageHelper;
 import com.zmsk.common.pagehelper.PageInfo;
 import com.zmsk.common.utils.BeanUtils;
+import com.zmsk.common.utils.DataTablePageUtil;
 import com.zmsk.common.utils.DateUtils;
 import com.zmsk.face.dto.authentic.AuthenticationInfoDTO;
 import com.zmsk.face.mapper.FaceAuthenticationInfoMapper;
@@ -116,29 +117,49 @@ public class AuthenticationInfoServiceImpl implements AuthenticationInfoService 
 	}
 
 	@Override
-	public PageInfo<AuthenticationInfoDTO> queryAuthenticationInfo(String search, int organizationId, int pageSize, int pageNum) {
+	public DataTablePageUtil<AuthenticationInfoDTO> queryAuthenticationInfo(String search, int organizationId, int start, int length, int draw) {
+
+		DataTablePageUtil<AuthenticationInfoDTO> dataTable = new DataTablePageUtil<>(start, length, draw);
 
 		// 分页处理
-		PageHelper.startPage(pageNum, pageSize);
+		PageHelper.startPage(dataTable.getPage_num(), dataTable.getPage_size());
 
 		List<AuthenticationInfoDTO> list = customAuthenticationInfoMapper.queryAuthenticationInfo(search, organizationId);
 
 		PageInfo<AuthenticationInfoDTO> pageInfo = new PageInfo<>(list);
 
-		return pageInfo;
+		dataTable.setDraw(dataTable.getDraw());
+
+		dataTable.setData(pageInfo.getList());
+
+		dataTable.setRecordsTotal((int) pageInfo.getTotal());
+
+		dataTable.setRecordsFiltered(dataTable.getRecordsTotal());
+
+		return dataTable;
 	}
 
 	@Override
-	public PageInfo<AuthenticationInfoDTO> queryWarnAuthenticationInfo(String search, int organizationId, int pageSize, int pageNum) {
+	public DataTablePageUtil<AuthenticationInfoDTO> queryWarnAuthenticationInfo(String search, int organizationId, int start, int length, int draw) {
+
+		DataTablePageUtil<AuthenticationInfoDTO> dataTable = new DataTablePageUtil<>(start, length, draw);
 
 		// 分页处理
-		PageHelper.startPage(pageNum, pageSize);
+		PageHelper.startPage(dataTable.getPage_num(), dataTable.getPage_size());
 
 		List<AuthenticationInfoDTO> list = customAuthenticationInfoMapper.queryWarnAuthenticationInfo(search, organizationId);
 
 		PageInfo<AuthenticationInfoDTO> pageInfo = new PageInfo<>(list);
 
-		return pageInfo;
+		dataTable.setDraw(dataTable.getDraw());
+
+		dataTable.setData(pageInfo.getList());
+
+		dataTable.setRecordsTotal((int) pageInfo.getTotal());
+
+		dataTable.setRecordsFiltered(dataTable.getRecordsTotal());
+
+		return dataTable;
 
 	}
 

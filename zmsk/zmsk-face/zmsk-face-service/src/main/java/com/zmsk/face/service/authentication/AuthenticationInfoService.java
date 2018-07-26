@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.apache.poi.ss.usermodel.Workbook;
 
-import com.zmsk.common.pagehelper.PageInfo;
+import com.zmsk.common.utils.DataTablePageUtil;
 import com.zmsk.face.dto.authentic.AuthenticationInfoDTO;
 import com.zmsk.face.service.authentication.dto.VisistorInfoDTO;
 
@@ -58,13 +58,14 @@ public interface AuthenticationInfoService {
 	 *            查询条件
 	 * @param organizationId
 	 *            组织Id
-	 * @param pageSize
-	 *            每页显示条数
-	 * @param pageNum
-	 *            第几页
+	 * @param start
+	 *            开始的数据行数
+	 * @param length
+	 *            每页的数据数
+	 * @param draw
 	 * @return
 	 */
-	PageInfo<AuthenticationInfoDTO> queryAuthenticationInfo(String search, int organizationId, int pageSize, int pageNum);
+	DataTablePageUtil<AuthenticationInfoDTO> queryAuthenticationInfo(String search, int organizationId, int start, int length, int draw);
 
 	/****
 	 * 获取组织对应警告认证记录
@@ -73,13 +74,14 @@ public interface AuthenticationInfoService {
 	 *            查询条件
 	 * @param organizationId
 	 *            组织Id
-	 * @param pageSize
-	 *            每页显示条数
-	 * @param pageNum
-	 *            页数
+	 * @param start
+	 *            开始的数据行数
+	 * @param length
+	 *            每页的数据数
+	 * @param draw
 	 * @return
 	 */
-	PageInfo<AuthenticationInfoDTO> queryWarnAuthenticationInfo(String search, int organizationId, int pageSize, int pageNum);
+	DataTablePageUtil<AuthenticationInfoDTO>  queryWarnAuthenticationInfo(String search, int organizationId, int start, int length, int draw);
 
 	/****
 	 * 根据id获取认证记录信息
