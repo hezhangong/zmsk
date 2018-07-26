@@ -48,6 +48,7 @@ public class AuthenticationInfoManagerController {
 	 * @param length
 	 *            每页的数据数
 	 * @param draw
+	 *            第几次请求
 	 * @return
 	 */
 	@RequestMapping(value = "list", method = RequestMethod.GET)
@@ -75,6 +76,7 @@ public class AuthenticationInfoManagerController {
 	 * @param length
 	 *            每页的数据数数
 	 * @param draw
+	 *            第几次请求
 	 * @return
 	 */
 	@RequestMapping(value = "warn/list", method = RequestMethod.GET)
