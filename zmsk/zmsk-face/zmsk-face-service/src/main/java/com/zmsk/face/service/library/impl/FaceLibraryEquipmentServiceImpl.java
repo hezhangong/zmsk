@@ -118,9 +118,9 @@ public class FaceLibraryEquipmentServiceImpl implements FaceLibraryEquipmentServ
 
 		FaceLibrary faceLibrary = libraryMapper.selectByPrimaryKey(libraryId);
 
-		// String remark = faceLibrary.getRemark();
+		String remark = faceLibrary.getRemark();
 
-		// remark = remark + "(人脸图片不清晰)";
+		remark = remark + "(人脸图片不清晰)";
 
 		String equipIds = faceLibrary.getEquipmentIds();
 
@@ -136,7 +136,7 @@ public class FaceLibraryEquipmentServiceImpl implements FaceLibraryEquipmentServ
 			}
 		}
 
-		// faceLibrary.setRemark(remark);
+		faceLibrary.setRemark(remark);
 
 		faceLibrary.setEquipmentIds(StringUtils.join(equipIdList, ","));
 

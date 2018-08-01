@@ -362,9 +362,13 @@ public class FaceLibraryServiceImpl implements FaceLibraryService {
 
 		String deviceIds = supportDeviceIds.toString();
 
-		supportDeviceStr = supportDeviceStr.substring(0, supportDeviceStr.length() - 1);
+		if (!StringUtils.isEmpty(supportDeviceStr)) {
+			supportDeviceStr = supportDeviceStr.substring(0, supportDeviceStr.length() - 1);
+		}
 
-		deviceIds = deviceIds.substring(0, deviceIds.length() - 1);
+		if (!StringUtils.isEmpty(deviceIds)) {
+			deviceIds = deviceIds.substring(0, deviceIds.length() - 1);
+		}
 
 		libraryDTO.setSupportDevice(supportDeviceStr);
 
