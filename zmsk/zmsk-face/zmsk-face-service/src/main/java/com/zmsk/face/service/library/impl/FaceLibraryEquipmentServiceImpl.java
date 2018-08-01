@@ -17,6 +17,7 @@ import com.zmsk.face.pojo.FaceLibrary;
 import com.zmsk.face.service.library.FaceLibraryEquipmentService;
 import com.zmsk.face.service.library.constants.EquipmentLibraryOperationType;
 import com.zmsk.face.service.library.constants.EquipmentLibrarySyncStatus;
+import com.zmsk.face.service.library.constants.FaceLibraryErrorCode;
 
 /****
  * 人脸库，设备管理操作服务接口实现
@@ -50,9 +51,6 @@ public class FaceLibraryEquipmentServiceImpl implements FaceLibraryEquipmentServ
 
 	@Override
 	public boolean updateLibraryEquipment(int libraryId, List<Integer> equipmentIds, List<Integer> oldEquipmentIds) {
-
-		// List<Integer> oldEquipmentIds =
-		// customerEquiomentLibraryMapper.queryIncreaseEquipmentIdByLibraryId(libraryId);
 
 		if (oldEquipmentIds == null || oldEquipmentIds.size() == 0) {
 			return addLibraryEquipment(libraryId, oldEquipmentIds);
@@ -88,25 +86,41 @@ public class FaceLibraryEquipmentServiceImpl implements FaceLibraryEquipmentServ
 
 		equipmentLibrary.setSyncStatus(EquipmentLibrarySyncStatus.SYNCED);
 
+		equipmentLibrary.setRemark("同步人脸库成功");
+
 		equipmentLibrary.setId(id);
 
 		return equipmentLibraryMapper.updateByPrimaryKeySelective(equipmentLibrary) > 0;
 	}
 
 	@Override
-	public boolean flagEnableFaceLibrary(int id) {
+	public boolean flagEnableFaceLibrary(int id, int errorCode) {
 
 		FaceEquipmentLibrary equipmentLibrary = equipmentLibraryMapper.selectByPrimaryKey(id);
 
 		int libraryId = equipmentLibrary.getLibraryId();
 
+		if (errorCode == FaceLibraryErrorCode.DOWNLOAD_FACE_LIBRARY) {
+			equipmentLibrary.setRemark("下载人脸库失败");
+			equipmentLibraryMapper.updateByPrimaryKey(equipmentLibrary);
+			return true;
+		}
+
+		if (errorCode == FaceLibraryErrorCode.REPEAT_ADD_FACE_LIBRARY) {
+			equipmentLibrary.setRemark("重复添加人脸库");
+			equipmentLibrary.setSyncStatus(EquipmentLibrarySyncStatus.SYNCED);
+			equipmentLibraryMapper.updateByPrimaryKey(equipmentLibrary);
+			return true;
+		}
+
+		// 无效人脸库特征
 		equipmentLibraryMapper.deleteByPrimaryKey(id);
 
 		FaceLibrary faceLibrary = libraryMapper.selectByPrimaryKey(libraryId);
 
-		String remark = faceLibrary.getRemark();
+		// String remark = faceLibrary.getRemark();
 
-		remark = remark + "(人脸图片不清晰)";
+		// remark = remark + "(人脸图片不清晰)";
 
 		String equipIds = faceLibrary.getEquipmentIds();
 
@@ -122,7 +136,7 @@ public class FaceLibraryEquipmentServiceImpl implements FaceLibraryEquipmentServ
 			}
 		}
 
-		faceLibrary.setRemark(remark);
+		// faceLibrary.setRemark(remark);
 
 		faceLibrary.setEquipmentIds(StringUtils.join(equipIdList, ","));
 

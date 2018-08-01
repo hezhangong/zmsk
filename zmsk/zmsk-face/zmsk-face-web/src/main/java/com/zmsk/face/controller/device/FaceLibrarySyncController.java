@@ -57,7 +57,7 @@ public class FaceLibrarySyncController {
 	 * @return
 	 * @throws SignatureException
 	 */
-	@RequestMapping(value = "flag/synced/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "flag/synced/{id}", method = RequestMethod.POST)
 	@ResponseBody
 	public ServiceResultDTO flagsyncedFaceLibrary(@PathVariable(value = "id") int id) {
 
@@ -79,17 +79,23 @@ public class FaceLibrarySyncController {
 	 * 
 	 * @param id
 	 *            主键Id
+	 * @param errorCode
+	 *            错误的code码
 	 * @return
 	 */
-	@RequestMapping(value = "flag/enable/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "flag/enable", method = RequestMethod.POST)
 	@ResponseBody
-	public ServiceResultDTO flagEnableFaceLibrary(@PathVariable(value = "id") int id) {
+	public ServiceResultDTO flagEnableFaceLibrary(@RequestParam(value = "id") int id, @RequestParam(value = "errorCode") int errorCode) {
 
 		if (id <= 0) {
 			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "invalid Id");
 		}
 
-		boolean success = libraryEquipmentService.flagEnableFaceLibrary(id);
+		if (errorCode <= 0) {
+			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "invalid error code");
+		}
+
+		boolean success = libraryEquipmentService.flagEnableFaceLibrary(id, errorCode);
 
 		if (!success) {
 			return new ServiceResultDTO(BaseResultCode.SYNC_FACE_LIBRARY_FAIL, "人脸库无效标记失败");

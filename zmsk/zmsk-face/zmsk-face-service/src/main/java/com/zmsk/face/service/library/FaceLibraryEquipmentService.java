@@ -57,8 +57,10 @@ public interface FaceLibraryEquipmentService {
 	 * 
 	 * @param id
 	 *            主键Id
+	 * @param errorCode
+	 *            错误的code码
 	 * @return
 	 */
-	boolean flagEnableFaceLibrary(int id);
+	boolean flagEnableFaceLibrary(int id, int errorCode);
 
 }
