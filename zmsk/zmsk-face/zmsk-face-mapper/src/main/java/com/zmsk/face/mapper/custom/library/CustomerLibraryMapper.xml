@@ -110,7 +110,7 @@
 	</select>
 
 	<select id="queryUnSyncFaceLibrary" resultType="com.zmsk.face.dto.library.SyncFaceLibraryDTO">
-		SELECT library.id
+		SELECT equipment_library.id
 		AS id,library.`name` AS name,library.sex AS
 		sex,library.id_number AS
 		idNumber,library.nation AS
