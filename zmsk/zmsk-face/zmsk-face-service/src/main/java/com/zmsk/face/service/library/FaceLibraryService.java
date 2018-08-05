@@ -129,4 +129,15 @@ public interface FaceLibraryService {
 	 * @return
 	 */
 	FaceLibraryDTO queryLibraryBuIdNumber(String idNumber);
+
+	/****
+	 * 获取设备的人脸库信息
+	 * 
+	 * @param equipmentId
+	 *            设备Id
+	 * @param organizationId
+	 *            组织Id
+	 * @return
+	 */
+	List<FaceLibraryDTO> queryEquipmentLibrary(int organizationId, int equipmentId);
 }

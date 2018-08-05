@@ -16,6 +16,8 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.zmsk.common.dto.BaseResultCode;
 import com.zmsk.common.dto.ServiceResultDTO;
+import com.zmsk.face.pojo.FaceEquipmentLibrary;
+import com.zmsk.face.service.library.FaceLibraryEquipmentService;
 import com.zmsk.face.service.library.FaceLibraryService;
 import com.zmsk.face.service.library.constants.LibraryFlagConstants;
 import com.zmsk.face.service.library.dto.FaceLibraryDTO;
@@ -32,6 +34,9 @@ public class LibraryManagerController {
 
 	@Autowired
 	private FaceLibraryService faceLibraryService;
+
+	@Autowired
+	private FaceLibraryEquipmentService faceLibraryEquipmentService;
 
 	/***
 	 * 新增人脸库
@@ -318,6 +323,26 @@ public class LibraryManagerController {
 		}
 
 		return ServiceResultDTO.success(library);
+	}
+
+	/****
+	 * 查看人脸库同步记录
+	 * 
+	 * @param libraryId
+	 *            人脸库Id
+	 * @return
+	 */
+	@RequestMapping(value = "synchro/record", method = RequestMethod.GET)
+	@ResponseBody
+	public ServiceResultDTO queryLibrarySynchroRecord(@RequestParam(value = "libraryId") int libraryId) {
+
+		if (libraryId <= 0) {
+			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid libraryId ");
+		}
+
+		List<FaceEquipmentLibrary> list = faceLibraryEquipmentService.queryLibrarySynchroRecord(libraryId);
+
+		return ServiceResultDTO.success(list);
 	}
 
 }

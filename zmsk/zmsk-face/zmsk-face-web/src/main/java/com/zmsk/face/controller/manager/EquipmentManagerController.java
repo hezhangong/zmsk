@@ -16,6 +16,8 @@ import com.zmsk.common.dto.ServiceResultDTO;
 import com.zmsk.face.dto.equipment.EquipmentRemarkDTO;
 import com.zmsk.face.pojo.FaceEquipment;
 import com.zmsk.face.service.equipment.EquipmentService;
+import com.zmsk.face.service.library.FaceLibraryService;
+import com.zmsk.face.service.library.dto.FaceLibraryDTO;
 import com.zmsk.face.service.user.constants.UserConstants;
 
 /****
@@ -30,6 +32,9 @@ public class EquipmentManagerController {
 
 	@Autowired
 	private EquipmentService equipmentService;
+
+	@Autowired
+	private FaceLibraryService faceLibraryService;
 
 	/****
 	 * 获取组织对应的设备列表
@@ -158,5 +163,31 @@ public class EquipmentManagerController {
 		}
 
 		return ServiceResultDTO.success();
+	}
+
+	/****
+	 * 获取设备的人脸库信息
+	 * 
+	 * @param equipmentId
+	 *            设备Id
+	 * @param organizationId
+	 *            组织Id
+	 * @return
+	 */
+	@RequestMapping(value = "face/library", method = RequestMethod.GET)
+	@ResponseBody
+	public ServiceResultDTO queryEquipmentLibrary(@RequestParam(value = "equipmentId") int equipmentId, @RequestParam(value = "organizationId") int organizationId) {
+
+		if (equipmentId <= 0) {
+			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid equipment id");
+		}
+
+		if (organizationId <= 0) {
+			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid organization id");
+		}
+
+		List<FaceLibraryDTO> list = faceLibraryService.queryEquipmentLibrary(organizationId, equipmentId);
+
+		return ServiceResultDTO.success(list);
 	}
 }

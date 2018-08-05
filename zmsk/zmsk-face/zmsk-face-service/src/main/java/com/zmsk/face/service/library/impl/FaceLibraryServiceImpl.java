@@ -254,6 +254,22 @@ public class FaceLibraryServiceImpl implements FaceLibraryService {
 		return libraryDTO;
 	}
 
+	@Override
+	public List<FaceLibraryDTO> queryEquipmentLibrary(int organizationId, int equipmentId) {
+
+		FaceLibraryExample example = new FaceLibraryExample();
+
+		Criteria criteria = example.createCriteria();
+
+		criteria.andOrganizationIdEqualTo(organizationId);
+
+		criteria.andEquipmentIdsLike("%" + equipmentId + "%");
+
+		List<FaceLibrary> libraryList = faceLibraryMapper.selectByExample(example);
+
+		return convertFaceLibraryList2DTO(libraryList);
+	}
+
 	private FaceLibraryDTO convertFaceLibrary2DTO(FaceLibrary faceLibrary) {
 
 		FaceLibraryDTO libraryDTO = new FaceLibraryDTO();

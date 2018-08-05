@@ -2,6 +2,8 @@ package com.zmsk.face.service.library;
 
 import java.util.List;
 
+import com.zmsk.face.pojo.FaceEquipmentLibrary;
+
 /****
  * 人脸库，设备管理操作服务接口声明
  * 
@@ -62,5 +64,14 @@ public interface FaceLibraryEquipmentService {
 	 * @return
 	 */
 	boolean flagEnableFaceLibrary(int id, int errorCode);
+	
+	/****
+	 * 查看人脸库同步记录
+	 * 
+	 * @param libraryId
+	 *            人脸库Id
+	 * @return
+	 */
+	List<FaceEquipmentLibrary> queryLibrarySynchroRecord(int libraryId);
 
 }

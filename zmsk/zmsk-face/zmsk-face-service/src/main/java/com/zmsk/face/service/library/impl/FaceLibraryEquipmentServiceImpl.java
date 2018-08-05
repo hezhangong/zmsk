@@ -13,6 +13,8 @@ import com.zmsk.face.mapper.FaceEquipmentLibraryMapper;
 import com.zmsk.face.mapper.FaceLibraryMapper;
 import com.zmsk.face.mapper.custom.library.CustomerEquipmentLibraryMapper;
 import com.zmsk.face.pojo.FaceEquipmentLibrary;
+import com.zmsk.face.pojo.FaceEquipmentLibraryExample;
+import com.zmsk.face.pojo.FaceEquipmentLibraryExample.Criteria;
 import com.zmsk.face.pojo.FaceLibrary;
 import com.zmsk.face.service.library.FaceLibraryEquipmentService;
 import com.zmsk.face.service.library.constants.EquipmentLibraryOperationType;
@@ -141,6 +143,20 @@ public class FaceLibraryEquipmentServiceImpl implements FaceLibraryEquipmentServ
 		faceLibrary.setEquipmentIds(StringUtils.join(equipIdList, ","));
 
 		return libraryMapper.updateByPrimaryKey(faceLibrary) > 0;
+	}
+
+	@Override
+	public List<FaceEquipmentLibrary> queryLibrarySynchroRecord(int libraryId) {
+
+		FaceEquipmentLibraryExample example = new FaceEquipmentLibraryExample();
+
+		Criteria criteria = example.createCriteria();
+
+		criteria.andLibraryIdEqualTo(libraryId);
+		
+		example.setOrderByClause(" id desc");
+
+		return equipmentLibraryMapper.selectByExample(example);
 	}
 
 	/****
