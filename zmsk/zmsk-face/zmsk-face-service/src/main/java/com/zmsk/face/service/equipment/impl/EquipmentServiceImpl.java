@@ -76,6 +76,8 @@ public class EquipmentServiceImpl implements EquipmentService {
 			equipment.setStatus(EquipmentStatus.UNABLE);
 
 			equipment.setRenewalFee(renewalFee);
+			
+			equipment.setRemark(String.valueOf(serialNumber));
 
 			equipment.setCreateTime(System.currentTimeMillis() / 1000);
 

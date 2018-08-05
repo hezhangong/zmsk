@@ -29,7 +29,8 @@
 									and ${criterion.condition} #{criterion.value}
 								</when>
 								<when test="criterion.betweenValue">
-									and ${criterion.condition} #{criterion.value} and
+									and ${criterion.condition} #{criterion.value}
+									and
 									#{criterion.secondValue}
 								</when>
 								<when test="criterion.listValue">
@@ -61,7 +62,8 @@
 									and ${criterion.condition} #{criterion.value}
 								</when>
 								<when test="criterion.betweenValue">
-									and ${criterion.condition} #{criterion.value} and
+									and ${criterion.condition} #{criterion.value}
+									and
 									#{criterion.secondValue}
 								</when>
 								<when test="criterion.listValue">
@@ -79,7 +81,8 @@
 		</where>
 	</sql>
 	<sql id="Base_Column_List">
-		id, name, sex, id_number, nation, address, avatar, remark, flag,
+		id, name, sex, id_number, nation, address, avatar, remark,
+		flag,
 		organization_id,
 		ctime
 	</sql>
@@ -104,13 +107,15 @@
 		FROM face_library AS library ,face_equipment_library AS
 		equipment_library
 		WHERE library.id=equipment_library.library_id
-		AND library.flag=#{flag}
+		AND
+		library.flag=#{flag}
 		AND equipment_library.equipment_id=#{equipmentId}
 		LIMIT #{pageStart},#{pageSize}
 	</select>
 
 	<select id="queryUnSyncFaceLibrary" resultType="com.zmsk.face.dto.library.SyncFaceLibraryDTO">
-		SELECT equipment_library.id
+		SELECT
+		equipment_library.id
 		AS id,library.`name` AS name,library.sex AS
 		sex,library.id_number AS
 		idNumber,library.nation AS
@@ -120,8 +125,9 @@
 		AS
 		flag,library.organization_id AS organizationId,library.group_id AS
 		groupId,library.ctime AS ctime,equipment_library.operation AS
-		operation
-		FROM face_equipment_library AS equipment_library,face_library
+		operation,equipment_library.library_id AS libraryId
+		FROM
+		face_equipment_library AS equipment_library,face_library
 		AS library
 		WHERE equipment_library.library_id =library.id AND
 		equipment_library.equipment_id=#{equipmentId} AND

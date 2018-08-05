@@ -35,6 +35,8 @@ public class SyncFaceLibraryDTO implements Serializable {
 	private Integer groupId;
 
 	private Integer operation;
+	
+	private Integer libraryId;
 
 	private Long ctime;
 
@@ -133,6 +135,15 @@ public class SyncFaceLibraryDTO implements Serializable {
 	public void setOperation(Integer operation) {
 		this.operation = operation;
 	}
+	
+
+	public Integer getLibraryId() {
+		return libraryId;
+	}
+
+	public void setLibraryId(Integer libraryId) {
+		this.libraryId = libraryId;
+	}
 
 	public Long getCtime() {
 		return ctime;
@@ -144,6 +155,6 @@ public class SyncFaceLibraryDTO implements Serializable {
 
 	@Override
 	public String toString() {
-		return "SyncFaceLibraryDTO [id=" + id + ", name=" + name + ", sex=" + sex + ", idNumber=" + idNumber + ", nation=" + nation + ", address=" + address + ", avatar=" + avatar + ", remark=" + remark + ", flag=" + flag + ", organizationId=" + organizationId + ", groupId=" + groupId + ", operation=" + operation + ", ctime=" + ctime + "]";
+		return "SyncFaceLibraryDTO [id=" + id + ", name=" + name + ", sex=" + sex + ", idNumber=" + idNumber + ", nation=" + nation + ", address=" + address + ", avatar=" + avatar + ", remark=" + remark + ", flag=" + flag + ", organizationId=" + organizationId + ", groupId=" + groupId + ", operation=" + operation + ", libraryId=" + libraryId + ", ctime=" + ctime + "]";
 	}
 }
