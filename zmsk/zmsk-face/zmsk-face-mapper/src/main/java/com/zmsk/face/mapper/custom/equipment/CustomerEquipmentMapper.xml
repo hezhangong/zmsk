@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zmsk.face.mapper.custom.equipment.CustomerEquipmentMapper">
+	<resultMap id="BaseResultMap" type="com.zmsk.face.pojo.FaceEquipment">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="organization_id" property="organizationId"
+			jdbcType="INTEGER" />
+		<result column="mac_id" property="macId" jdbcType="VARCHAR" />
+		<result column="equipment_number" property="equipmentNumber"
+			jdbcType="VARCHAR" />
+		<result column="equipment_pwd" property="equipmentPwd"
+			jdbcType="VARCHAR" />
+		<result column="equipment_plain_pwd" property="equipmentPlainPwd"
+			jdbcType="VARCHAR" />
+		<result column="equipment_type" property="equipmentType"
+			jdbcType="BIT" />
+		<result column="renewal_fee" property="renewalFee" jdbcType="INTEGER" />
+		<result column="status" property="status" jdbcType="BIT" />
+		<result column="create_time" property="createTime" jdbcType="INTEGER" />
+		<result column="activation_time" property="activationTime"
+			jdbcType="INTEGER" />
+		<result column="end_time" property="endTime" jdbcType="INTEGER" />
+		<result column="renewal_time" property="renewalTime" jdbcType="INTEGER" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		id, organization_id, mac_id, equipment_number,
+		equipment_pwd,
+		equipment_plain_pwd,
+		equipment_type, renewal_fee, status,
+		create_time, activation_time, end_time,
+		renewal_time,
+		remark
+	</sql>
+
+	<select id="queryEquipmentRemarkByorganizationId" resultType="com.zmsk.face.dto.equipment.EquipmentRemarkDTO">
+		SELECT id,remark FROM face_equipment WHERE
+		organization_id=#{organizationId}
+	</select>
+
+
+</mapper>

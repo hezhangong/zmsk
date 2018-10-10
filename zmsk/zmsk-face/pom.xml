@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.zmsk</groupId>
+		<artifactId>zmsk</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<artifactId>zmsk-face</artifactId>
+	<packaging>pom</packaging>
+  <modules>
+    <module>zmsk-face-pojo</module>
+    <module>zmsk-face-mapper</module>
+    <module>zmsk-face-service</module>
+    <module>zmsk-face-web</module>
+  </modules>
+</project>

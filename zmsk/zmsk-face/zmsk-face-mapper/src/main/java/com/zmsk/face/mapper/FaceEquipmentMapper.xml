@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zmsk.face.mapper.FaceEquipmentMapper" >
+  <resultMap id="BaseResultMap" type="com.zmsk.face.pojo.FaceEquipment" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="organization_id" property="organizationId" jdbcType="INTEGER" />
+    <result column="mac_id" property="macId" jdbcType="VARCHAR" />
+    <result column="equipment_number" property="equipmentNumber" jdbcType="VARCHAR" />
+    <result column="equipment_pwd" property="equipmentPwd" jdbcType="VARCHAR" />
+    <result column="equipment_plain_pwd" property="equipmentPlainPwd" jdbcType="VARCHAR" />
+    <result column="equipment_type" property="equipmentType" jdbcType="BIT" />
+    <result column="renewal_fee" property="renewalFee" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="BIT" />
+    <result column="create_time" property="createTime" jdbcType="INTEGER" />
+    <result column="activation_time" property="activationTime" jdbcType="INTEGER" />
+    <result column="end_time" property="endTime" jdbcType="INTEGER" />
+    <result column="renewal_time" property="renewalTime" jdbcType="INTEGER" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, organization_id, mac_id, equipment_number, equipment_pwd, equipment_plain_pwd, 
+    equipment_type, renewal_fee, status, create_time, activation_time, end_time, renewal_time, 
+    remark
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zmsk.face.pojo.FaceEquipmentExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from face_equipment
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from face_equipment
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from face_equipment
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zmsk.face.pojo.FaceEquipmentExample" >
+    delete from face_equipment
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zmsk.face.pojo.FaceEquipment" >
+    insert into face_equipment (id, organization_id, mac_id, 
+      equipment_number, equipment_pwd, equipment_plain_pwd, 
+      equipment_type, renewal_fee, status, 
+      create_time, activation_time, end_time, 
+      renewal_time, remark)
+    values (#{id,jdbcType=INTEGER}, #{organizationId,jdbcType=INTEGER}, #{macId,jdbcType=VARCHAR}, 
+      #{equipmentNumber,jdbcType=VARCHAR}, #{equipmentPwd,jdbcType=VARCHAR}, #{equipmentPlainPwd,jdbcType=VARCHAR}, 
+      #{equipmentType,jdbcType=BIT}, #{renewalFee,jdbcType=INTEGER}, #{status,jdbcType=BIT}, 
+      #{createTime,jdbcType=INTEGER}, #{activationTime,jdbcType=INTEGER}, #{endTime,jdbcType=INTEGER}, 
+      #{renewalTime,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zmsk.face.pojo.FaceEquipment" >
+    insert into face_equipment
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="organizationId != null" >
+        organization_id,
+      </if>
+      <if test="macId != null" >
+        mac_id,
+      </if>
+      <if test="equipmentNumber != null" >
+        equipment_number,
+      </if>
+      <if test="equipmentPwd != null" >
+        equipment_pwd,
+      </if>
+      <if test="equipmentPlainPwd != null" >
+        equipment_plain_pwd,
+      </if>
+      <if test="equipmentType != null" >
+        equipment_type,
+      </if>
+      <if test="renewalFee != null" >
+        renewal_fee,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="activationTime != null" >
+        activation_time,
+      </if>
+      <if test="endTime != null" >
+        end_time,
+      </if>
+      <if test="renewalTime != null" >
+        renewal_time,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="organizationId != null" >
+        #{organizationId,jdbcType=INTEGER},
+      </if>
+      <if test="macId != null" >
+        #{macId,jdbcType=VARCHAR},
+      </if>
+      <if test="equipmentNumber != null" >
+        #{equipmentNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="equipmentPwd != null" >
+        #{equipmentPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="equipmentPlainPwd != null" >
+        #{equipmentPlainPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="equipmentType != null" >
+        #{equipmentType,jdbcType=BIT},
+      </if>
+      <if test="renewalFee != null" >
+        #{renewalFee,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=BIT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=INTEGER},
+      </if>
+      <if test="activationTime != null" >
+        #{activationTime,jdbcType=INTEGER},
+      </if>
+      <if test="endTime != null" >
+        #{endTime,jdbcType=INTEGER},
+      </if>
+      <if test="renewalTime != null" >
+        #{renewalTime,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zmsk.face.pojo.FaceEquipmentExample" resultType="java.lang.Integer" >
+    select count(*) from face_equipment
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update face_equipment
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.organizationId != null" >
+        organization_id = #{record.organizationId,jdbcType=INTEGER},
+      </if>
+      <if test="record.macId != null" >
+        mac_id = #{record.macId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.equipmentNumber != null" >
+        equipment_number = #{record.equipmentNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.equipmentPwd != null" >
+        equipment_pwd = #{record.equipmentPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.equipmentPlainPwd != null" >
+        equipment_plain_pwd = #{record.equipmentPlainPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.equipmentType != null" >
+        equipment_type = #{record.equipmentType,jdbcType=BIT},
+      </if>
+      <if test="record.renewalFee != null" >
+        renewal_fee = #{record.renewalFee,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=BIT},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=INTEGER},
+      </if>
+      <if test="record.activationTime != null" >
+        activation_time = #{record.activationTime,jdbcType=INTEGER},
+      </if>
+      <if test="record.endTime != null" >
+        end_time = #{record.endTime,jdbcType=INTEGER},
+      </if>
+      <if test="record.renewalTime != null" >
+        renewal_time = #{record.renewalTime,jdbcType=INTEGER},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update face_equipment
+    set id = #{record.id,jdbcType=INTEGER},
+      organization_id = #{record.organizationId,jdbcType=INTEGER},
+      mac_id = #{record.macId,jdbcType=VARCHAR},
+      equipment_number = #{record.equipmentNumber,jdbcType=VARCHAR},
+      equipment_pwd = #{record.equipmentPwd,jdbcType=VARCHAR},
+      equipment_plain_pwd = #{record.equipmentPlainPwd,jdbcType=VARCHAR},
+      equipment_type = #{record.equipmentType,jdbcType=BIT},
+      renewal_fee = #{record.renewalFee,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=BIT},
+      create_time = #{record.createTime,jdbcType=INTEGER},
+      activation_time = #{record.activationTime,jdbcType=INTEGER},
+      end_time = #{record.endTime,jdbcType=INTEGER},
+      renewal_time = #{record.renewalTime,jdbcType=INTEGER},
+      remark = #{record.remark,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zmsk.face.pojo.FaceEquipment" >
+    update face_equipment
+    <set >
+      <if test="organizationId != null" >
+        organization_id = #{organizationId,jdbcType=INTEGER},
+      </if>
+      <if test="macId != null" >
+        mac_id = #{macId,jdbcType=VARCHAR},
+      </if>
+      <if test="equipmentNumber != null" >
+        equipment_number = #{equipmentNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="equipmentPwd != null" >
+        equipment_pwd = #{equipmentPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="equipmentPlainPwd != null" >
+        equipment_plain_pwd = #{equipmentPlainPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="equipmentType != null" >
+        equipment_type = #{equipmentType,jdbcType=BIT},
+      </if>
+      <if test="renewalFee != null" >
+        renewal_fee = #{renewalFee,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=BIT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=INTEGER},
+      </if>
+      <if test="activationTime != null" >
+        activation_time = #{activationTime,jdbcType=INTEGER},
+      </if>
+      <if test="endTime != null" >
+        end_time = #{endTime,jdbcType=INTEGER},
+      </if>
+      <if test="renewalTime != null" >
+        renewal_time = #{renewalTime,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zmsk.face.pojo.FaceEquipment" >
+    update face_equipment
+    set organization_id = #{organizationId,jdbcType=INTEGER},
+      mac_id = #{macId,jdbcType=VARCHAR},
+      equipment_number = #{equipmentNumber,jdbcType=VARCHAR},
+      equipment_pwd = #{equipmentPwd,jdbcType=VARCHAR},
+      equipment_plain_pwd = #{equipmentPlainPwd,jdbcType=VARCHAR},
+      equipment_type = #{equipmentType,jdbcType=BIT},
+      renewal_fee = #{renewalFee,jdbcType=INTEGER},
+      status = #{status,jdbcType=BIT},
+      create_time = #{createTime,jdbcType=INTEGER},
+      activation_time = #{activationTime,jdbcType=INTEGER},
+      end_time = #{endTime,jdbcType=INTEGER},
+      renewal_time = #{renewalTime,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

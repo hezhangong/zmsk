@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zmsk.face.mapper.custom.library.CustomerLibraryMapper">
+	<resultMap id="BaseResultMap" type="com.zmsk.face.pojo.FaceLibrary">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="sex" property="sex" jdbcType="BIT" />
+		<result column="id_number" property="idNumber" jdbcType="VARCHAR" />
+		<result column="nation" property="nation" jdbcType="VARCHAR" />
+		<result column="address" property="address" jdbcType="VARCHAR" />
+		<result column="avatar" property="avatar" jdbcType="VARCHAR" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+		<result column="flag" property="flag" jdbcType="BIT" />
+		<result column="organization_id" property="organizationId"
+			jdbcType="INTEGER" />
+		<result column="ctime" property="ctime" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		id, name, sex, id_number, nation, address, avatar, remark,
+		flag,
+		organization_id,
+		ctime
+	</sql>
+
+	<select id="queryLibraryListByEquipmentId" resultType="com.zmsk.face.pojo.FaceLibrary">
+		select
+		library.id AS id,
+		name AS name,
+		sex AS sex,
+		id_number AS idNumber,
+		nation
+		AS nation,
+		address AS address,
+		avatar AS avatar,
+		remark AS remark,
+		flag AS
+		flag,
+		organization_id AS organizationId,
+		group_id AS groupId,
+		ctime AS
+		ctime
+		FROM face_library AS library ,face_equipment_library AS
+		equipment_library
+		WHERE library.id=equipment_library.library_id
+		AND
+		library.flag=#{flag}
+		AND equipment_library.equipment_id=#{equipmentId}
+		LIMIT #{pageStart},#{pageSize}
+	</select>
+
+	<select id="queryUnSyncFaceLibrary" resultType="com.zmsk.face.dto.library.SyncFaceLibraryDTO">
+		SELECT
+		equipment_library.id
+		AS id,library.`name` AS name,library.sex AS
+		sex,library.id_number AS
+		idNumber,library.nation AS
+		nation,library.address AS
+		address,library.avatar AS
+		avatar,library.remark AS remark,library.flag
+		AS
+		flag,library.organization_id AS organizationId,library.group_id AS
+		groupId,library.ctime AS ctime,equipment_library.operation AS
+		operation,equipment_library.library_id AS libraryId
+		FROM
+		face_equipment_library AS equipment_library,face_library
+		AS library
+		WHERE equipment_library.library_id =library.id AND
+		equipment_library.equipment_id=#{equipmentId} AND
+		equipment_library.sync_status=0
+	</select>
+
+</mapper>
