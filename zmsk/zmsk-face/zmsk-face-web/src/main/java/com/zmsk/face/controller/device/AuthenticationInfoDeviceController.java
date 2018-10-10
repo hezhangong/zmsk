@@ -60,13 +60,20 @@ public class AuthenticationInfoDeviceController {
 	 *            身份证基本信息
 	 * @param similarDegree
 	 *            相似度
+	 * @param signOffice
+	 *            签发机关
+	 * @param legalDate
+	 *            有效日期
+	 * @param birthday
+	 *            生日
 	 * @return
 	 * @throws UnsupportedEncodingException
 	 */
 	@RequestMapping(value = "add", method = RequestMethod.POST)
 	@ResponseBody
 	public ServiceResultDTO addAuthenticationRecord(@RequestParam(value = "name") String name, @RequestParam(value = "idNumber", required = false, defaultValue = "") String idNumber, @RequestParam(value = "nation", defaultValue = "", required = false) String nation, @RequestParam(value = "address", required = false, defaultValue = "") String address, @RequestParam(value = "avatar", required = false, defaultValue = "") String avatar, @RequestParam(value = "sex") int sex, @RequestParam(value = "type") int type, @RequestParam(value = "result") int result,
-			@RequestParam(value = "deviceNumber") String deviceNumber, @RequestParam(value = "groupId", defaultValue = "0", required = false) int groupId, @RequestParam(value = "authTimeStamp") long authTimeStamp, @RequestParam(value = "idcardImage", defaultValue = "", required = false) String idcardImage, @RequestParam(value = "idcardInfo", required = false, defaultValue = "") String idcardInfo, @RequestParam(value = "similarDegree", defaultValue = "", required = false) String similarDegree) throws UnsupportedEncodingException, SignatureException {
+			@RequestParam(value = "deviceNumber") String deviceNumber, @RequestParam(value = "groupId", defaultValue = "0", required = false) int groupId, @RequestParam(value = "authTimeStamp") long authTimeStamp, @RequestParam(value = "idcardImage", defaultValue = "", required = false) String idcardImage, @RequestParam(value = "idcardInfo", required = false, defaultValue = "") String idcardInfo, @RequestParam(value = "similarDegree", defaultValue = "", required = false) String similarDegree,
+			@RequestParam(value = "signOffice", required = false, defaultValue = "") String signOffice, @RequestParam(value = "legalDate", required = false, defaultValue = "") String legalDate, @RequestParam(value = "birthday", required = false, defaultValue = "") String birthday) throws UnsupportedEncodingException, SignatureException {
 
 		if (StringUtils.isEmpty(name)) {
 			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, " invalid name");
@@ -92,11 +99,11 @@ public class AuthenticationInfoDeviceController {
 			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, " invalid groupId");
 		}
 
-		if (StringUtils.isEmpty(avatar)) {
+		if (!StringUtils.isEmpty(avatar)) {// URL方式
 			avatar = URLDecoder.decode(avatar, "UTF-8");
 		}
 
-		boolean success = authenticationServiceInfo.addAuthenticationInfo(name, idNumber, nation, address, avatar, sex, type, result, deviceNumber, groupId, authTimeStamp, idcardImage, idcardInfo, similarDegree);
+		boolean success = authenticationServiceInfo.addAuthenticationInfo(name, idNumber, nation, address, avatar, sex, type, result, deviceNumber, groupId, authTimeStamp, idcardImage, idcardInfo, similarDegree, signOffice, legalDate, birthday);
 
 		if (!success) {
 			return new ServiceResultDTO(BaseResultCode.AUTHENTICATION_INFO_OPERATION_ERROR, "create authentication record fail");

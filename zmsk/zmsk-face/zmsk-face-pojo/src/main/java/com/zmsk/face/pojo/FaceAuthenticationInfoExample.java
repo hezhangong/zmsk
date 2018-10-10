@@ -1343,6 +1343,216 @@ public class FaceAuthenticationInfoExample {
             addCriterion("register_time not between", value1, value2, "registerTime");
             return (Criteria) this;
         }
+
+        public Criteria andSignOfficeIsNull() {
+            addCriterion("idcard_info is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSignOfficeIsNotNull() {
+            addCriterion("idcard_info is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSignOfficeEqualTo(String value) {
+            addCriterion("idcard_info =", value, "signOffice");
+            return (Criteria) this;
+        }
+
+        public Criteria andSignOfficeNotEqualTo(String value) {
+            addCriterion("idcard_info <>", value, "signOffice");
+            return (Criteria) this;
+        }
+
+        public Criteria andSignOfficeGreaterThan(String value) {
+            addCriterion("idcard_info >", value, "signOffice");
+            return (Criteria) this;
+        }
+
+        public Criteria andSignOfficeGreaterThanOrEqualTo(String value) {
+            addCriterion("idcard_info >=", value, "signOffice");
+            return (Criteria) this;
+        }
+
+        public Criteria andSignOfficeLessThan(String value) {
+            addCriterion("idcard_info <", value, "signOffice");
+            return (Criteria) this;
+        }
+
+        public Criteria andSignOfficeLessThanOrEqualTo(String value) {
+            addCriterion("idcard_info <=", value, "signOffice");
+            return (Criteria) this;
+        }
+
+        public Criteria andSignOfficeLike(String value) {
+            addCriterion("idcard_info like", value, "signOffice");
+            return (Criteria) this;
+        }
+
+        public Criteria andSignOfficeNotLike(String value) {
+            addCriterion("idcard_info not like", value, "signOffice");
+            return (Criteria) this;
+        }
+
+        public Criteria andSignOfficeIn(List<String> values) {
+            addCriterion("idcard_info in", values, "signOffice");
+            return (Criteria) this;
+        }
+
+        public Criteria andSignOfficeNotIn(List<String> values) {
+            addCriterion("idcard_info not in", values, "signOffice");
+            return (Criteria) this;
+        }
+
+        public Criteria andSignOfficeBetween(String value1, String value2) {
+            addCriterion("idcard_info between", value1, value2, "signOffice");
+            return (Criteria) this;
+        }
+
+        public Criteria andSignOfficeNotBetween(String value1, String value2) {
+            addCriterion("idcard_info not between", value1, value2, "signOffice");
+            return (Criteria) this;
+        }
+
+        public Criteria andLegalDateIsNull() {
+            addCriterion("idcard_info is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLegalDateIsNotNull() {
+            addCriterion("idcard_info is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLegalDateEqualTo(String value) {
+            addCriterion("idcard_info =", value, "legalDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andLegalDateNotEqualTo(String value) {
+            addCriterion("idcard_info <>", value, "legalDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andLegalDateGreaterThan(String value) {
+            addCriterion("idcard_info >", value, "legalDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andLegalDateGreaterThanOrEqualTo(String value) {
+            addCriterion("idcard_info >=", value, "legalDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andLegalDateLessThan(String value) {
+            addCriterion("idcard_info <", value, "legalDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andLegalDateLessThanOrEqualTo(String value) {
+            addCriterion("idcard_info <=", value, "legalDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andLegalDateLike(String value) {
+            addCriterion("idcard_info like", value, "legalDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andLegalDateNotLike(String value) {
+            addCriterion("idcard_info not like", value, "legalDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andLegalDateIn(List<String> values) {
+            addCriterion("idcard_info in", values, "legalDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andLegalDateNotIn(List<String> values) {
+            addCriterion("idcard_info not in", values, "legalDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andLegalDateBetween(String value1, String value2) {
+            addCriterion("idcard_info between", value1, value2, "legalDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andLegalDateNotBetween(String value1, String value2) {
+            addCriterion("idcard_info not between", value1, value2, "legalDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andBirthdayIsNull() {
+            addCriterion("idcard_info is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBirthdayIsNotNull() {
+            addCriterion("idcard_info is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBirthdayEqualTo(String value) {
+            addCriterion("idcard_info =", value, "birthday");
+            return (Criteria) this;
+        }
+
+        public Criteria andBirthdayNotEqualTo(String value) {
+            addCriterion("idcard_info <>", value, "birthday");
+            return (Criteria) this;
+        }
+
+        public Criteria andBirthdayGreaterThan(String value) {
+            addCriterion("idcard_info >", value, "birthday");
+            return (Criteria) this;
+        }
+
+        public Criteria andBirthdayGreaterThanOrEqualTo(String value) {
+            addCriterion("idcard_info >=", value, "birthday");
+            return (Criteria) this;
+        }
+
+        public Criteria andBirthdayLessThan(String value) {
+            addCriterion("idcard_info <", value, "birthday");
+            return (Criteria) this;
+        }
+
+        public Criteria andBirthdayLessThanOrEqualTo(String value) {
+            addCriterion("idcard_info <=", value, "birthday");
+            return (Criteria) this;
+        }
+
+        public Criteria andBirthdayLike(String value) {
+            addCriterion("idcard_info like", value, "birthday");
+            return (Criteria) this;
+        }
+
+        public Criteria andBirthdayNotLike(String value) {
+            addCriterion("idcard_info not like", value, "birthday");
+            return (Criteria) this;
+        }
+
+        public Criteria andBirthdayIn(List<String> values) {
+            addCriterion("idcard_info in", values, "birthday");
+            return (Criteria) this;
+        }
+
+        public Criteria andBirthdayNotIn(List<String> values) {
+            addCriterion("idcard_info not in", values, "birthday");
+            return (Criteria) this;
+        }
+
+        public Criteria andBirthdayBetween(String value1, String value2) {
+            addCriterion("idcard_info between", value1, value2, "birthday");
+            return (Criteria) this;
+        }
+
+        public Criteria andBirthdayNotBetween(String value1, String value2) {
+            addCriterion("idcard_info not between", value1, value2, "birthday");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

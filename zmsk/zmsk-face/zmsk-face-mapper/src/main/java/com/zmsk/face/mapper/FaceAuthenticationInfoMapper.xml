@@ -21,6 +21,9 @@
     <result column="remark" property="remark" jdbcType="VARCHAR" />
     <result column="ctime" property="ctime" jdbcType="INTEGER" />
     <result column="register_time" property="registerTime" jdbcType="INTEGER" />
+    <result column="sign_office" property="signOffice" jdbcType="VARCHAR" />
+    <result column="legal_date" property="legalDate" jdbcType="VARCHAR" />
+    <result column="birthday" property="birthday" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -82,7 +85,7 @@
   </sql>
   <sql id="Base_Column_List" >
     id, name, avatar, sex, id_number, nation, address, type, source, result, organization_id, 
-    equipment_id, group_id, idcard_image, idcard_info, similar_degree, remark, ctime, 
+    equipment_id, group_id, idcard_image, idcard_info, similar_degree, remark, ctime, sign_office, legal_date, birthday
     register_time
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zmsk.face.pojo.FaceAuthenticationInfoExample" >
@@ -122,14 +125,14 @@
       result, organization_id, equipment_id, 
       group_id, idcard_image, idcard_info, 
       similar_degree, remark, ctime, 
-      register_time)
+      register_time, sign_office, legal_date, birthday)
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{avatar,jdbcType=VARCHAR}, 
       #{sex,jdbcType=BIT}, #{idNumber,jdbcType=VARCHAR}, #{nation,jdbcType=VARCHAR}, 
       #{address,jdbcType=VARCHAR}, #{type,jdbcType=BIT}, #{source,jdbcType=VARCHAR}, 
       #{result,jdbcType=BIT}, #{organizationId,jdbcType=INTEGER}, #{equipmentId,jdbcType=INTEGER}, 
       #{groupId,jdbcType=INTEGER}, #{idcardImage,jdbcType=VARCHAR}, #{idcardInfo,jdbcType=VARCHAR}, 
       #{similarDegree,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{ctime,jdbcType=INTEGER}, 
-      #{registerTime,jdbcType=INTEGER})
+      #{registerTime,jdbcType=INTEGER}, #{signOffice,jdbcType=VARCHAR}, #{legalDate,jdbcType=VARCHAR}, #{birthday,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.zmsk.face.pojo.FaceAuthenticationInfo" >
     insert into face_authentication_info
@@ -191,6 +194,15 @@
       <if test="registerTime != null" >
         register_time,
       </if>
+      <if test="signOffice != null" >
+        sign_office,
+      </if>
+      <if test="legalDate != null" >
+        legal_date,
+      </if>
+      <if test="birthday != null" >
+        birthday,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -249,6 +261,15 @@
       </if>
       <if test="registerTime != null" >
         #{registerTime,jdbcType=INTEGER},
+      </if>
+      <if test="signOffice != null" >
+        #{signOffice,jdbcType=VARCHAR},
+      </if>
+      <if test="legalDate != null" >
+        #{legalDate,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null" >
+        #{birthday,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -318,6 +339,15 @@
       <if test="record.registerTime != null" >
         register_time = #{record.registerTime,jdbcType=INTEGER},
       </if>
+      <if test="record.signOffice != null" >
+        sign_office = #{record.signOffice,jdbcType=VARCHAR},
+      </if>
+      <if test="record.legalDate != null" >
+        legal_date = #{record.legalDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.birthday != null" >
+        birthday = #{record.birthday,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -343,7 +373,10 @@
       similar_degree = #{record.similarDegree,jdbcType=VARCHAR},
       remark = #{record.remark,jdbcType=VARCHAR},
       ctime = #{record.ctime,jdbcType=INTEGER},
-      register_time = #{record.registerTime,jdbcType=INTEGER}
+      sign_office = #{record.registerTime,jdbcType=INTEGER},
+      idcard_info = #{record.signOffice,jdbcType=VARCHAR},
+      legal_date = #{record.legalDate,jdbcType=VARCHAR},
+      birthday = #{record.birthday,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -405,6 +438,15 @@
       <if test="registerTime != null" >
         register_time = #{registerTime,jdbcType=INTEGER},
       </if>
+      <if test="signOffice != null" >
+        sign_office = #{signOffice,jdbcType=VARCHAR},
+      </if>
+      <if test="legalDate != null" >
+        legal_date = #{legalDate,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null" >
+        birthday = #{birthday,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -427,7 +469,10 @@
       similar_degree = #{similarDegree,jdbcType=VARCHAR},
       remark = #{remark,jdbcType=VARCHAR},
       ctime = #{ctime,jdbcType=INTEGER},
-      register_time = #{registerTime,jdbcType=INTEGER}
+      register_time = #{registerTime,jdbcType=INTEGER},
+      idcard_info = #{record.signOffice,jdbcType=VARCHAR},
+      legal_date = #{record.legalDate,jdbcType=VARCHAR},
+      birthday = #{record.birthday,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

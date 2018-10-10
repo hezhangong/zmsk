@@ -47,9 +47,15 @@ public interface AuthenticationInfoService {
 	 *            身份证基本信息
 	 * @param similarDegree
 	 *            相似度
+	 * @param signOffice
+	 *            签发机关
+	 * @param legalDate
+	 *            有效日期
+	 * @param birthday
+	 *            生日
 	 * @return
 	 */
-	boolean addAuthenticationInfo(String name, String idNumber, String nation, String address, String avatar, int sex, int type, int result, String deviceNumber, int groupId, long authTimeStamp, String idcardImage, String idcardInfo, String similarDegree);
+	boolean addAuthenticationInfo(String name, String idNumber, String nation, String address, String avatar, int sex, int type, int result, String deviceNumber, int groupId, long authTimeStamp, String idcardImage, String idcardInfo, String similarDegree, String signOffice, String legalDate, String birthday);
 
 	/****
 	 * 查询认证信息记录

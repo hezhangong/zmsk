@@ -63,7 +63,7 @@ public class AuthenticationInfoServiceImpl implements AuthenticationInfoService 
 	private GroupService groupService;
 
 	@Override
-	public boolean addAuthenticationInfo(String name, String idNumber, String nation, String address, String avatar, int sex, int type, int result, String deviceNumber, int groupId, long authTimeStamp, String idcardImage, String idcardInfo, String similarDegree) {
+	public boolean addAuthenticationInfo(String name, String idNumber, String nation, String address, String avatar, int sex, int type, int result, String deviceNumber, int groupId, long authTimeStamp, String idcardImage, String idcardInfo, String similarDegree, String signOffice, String legalDate, String birthday) {
 
 		// 获取设备信息
 		FaceEquipment equipment = equipmentService.queryEquipmentByNumber(deviceNumber);
@@ -112,6 +112,12 @@ public class AuthenticationInfoServiceImpl implements AuthenticationInfoService 
 		authenticationInfo.setIdcardInfo(idcardInfo);
 
 		authenticationInfo.setSimilarDegree(similarDegree);
+		
+		authenticationInfo.setSignOffice(signOffice);
+		
+		authenticationInfo.setLegalDate(legalDate);
+		
+		authenticationInfo.setBirthday(birthday);
 
 		return authenticationInfoMapper.insert(authenticationInfo) > 0;
 	}

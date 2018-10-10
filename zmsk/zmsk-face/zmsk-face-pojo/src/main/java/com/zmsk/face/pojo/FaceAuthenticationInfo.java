@@ -39,6 +39,12 @@ public class FaceAuthenticationInfo {
 
     private Long registerTime;
 
+    private String signOffice;
+
+    private String legalDate;
+
+    private String birthday;
+
     public Integer getId() {
         return id;
     }
@@ -190,4 +196,28 @@ public class FaceAuthenticationInfo {
     public void setRegisterTime(Long registerTime) {
         this.registerTime = registerTime;
     }
+
+	public String getSignOffice() {
+		return signOffice;
+	}
+
+	public void setSignOffice(String signOffice) {
+		this.signOffice = signOffice == null ? null : signOffice.trim();
+	}
+
+	public String getLegalDate() {
+		return legalDate;
+	}
+
+	public void setLegalDate(String legalDate) {
+		this.legalDate = legalDate == null ? null : legalDate.trim();
+	}
+
+	public String getBirthday() {
+		return birthday;
+	}
+
+	public void setBirthday(String birthday) {
+		this.birthday = birthday == null ? null : birthday.trim();
+	}
 }
