@@ -41,6 +41,16 @@ public interface EquipmentService {
 	boolean activateEquipment(int deviceId);
 
 	/****
+	 * 根据设备物理Id获取设备信息
+	 * @param macId
+	 *            设备物理Id
+	 * @param equipmentNumber 
+	 *            登入账号
+	 * @return
+	 */
+	List<FaceEquipment> checkEquipment(String macId, String equipmentNumber);
+
+	/****
 	 * 获取设备列表
 	 * 
 	 * @param organizationId
@@ -56,7 +66,7 @@ public interface EquipmentService {
 	 * @return
 	 */
 	FaceEquipment queryEquipmentById(int deviceId);
-
+	
 	/****
 	 * 根据组织Id获取组织备注信息
 	 * 

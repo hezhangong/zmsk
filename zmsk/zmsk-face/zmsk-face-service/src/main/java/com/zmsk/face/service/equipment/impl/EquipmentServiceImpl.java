@@ -105,6 +105,20 @@ public class EquipmentServiceImpl implements EquipmentService {
 	}
 
 	@Override
+	public List<FaceEquipment> checkEquipment(String macId, String equipmentNumber) {
+		
+		FaceEquipmentExample example = new FaceEquipmentExample();
+
+		Criteria criteria = example.createCriteria();
+
+		criteria.andMacIdEqualTo(macId);
+		
+		criteria.andEquipmentNumberEqualTo(equipmentNumber);
+
+		return equipmentMapper.selectByExample(example);
+	}
+
+	@Override
 	public List<FaceEquipment> queryEquipmentByOrganizationId(int organizationId) {
 
 		FaceEquipmentExample example = new FaceEquipmentExample();
