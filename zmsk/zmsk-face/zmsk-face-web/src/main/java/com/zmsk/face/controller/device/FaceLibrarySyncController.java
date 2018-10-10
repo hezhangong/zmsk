@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.zmsk.common.dto.BaseResultCode;
 import com.zmsk.common.dto.ServiceResultDTO;
 import com.zmsk.face.dto.library.SyncFaceLibraryDTO;
+import com.zmsk.face.pojo.FaceEquipmentLibrary;
 import com.zmsk.face.service.library.FaceLibraryEquipmentService;
 import com.zmsk.face.service.library.FaceLibraryService;
 
@@ -70,8 +71,14 @@ public class FaceLibrarySyncController {
 		if (!success) {
 			return new ServiceResultDTO(BaseResultCode.SYNC_FACE_LIBRARY_FAIL, "人脸库同步标记失败");
 		}
+		
+		FaceEquipmentLibrary equipmentLibraryTemp = libraryEquipmentService.queryLibraryEquipmentById(id);
+		
+		FaceEquipmentLibrary equipmentLibrary = new FaceEquipmentLibrary();
+		
+		equipmentLibrary.setOperation(equipmentLibraryTemp.getOperation());
 
-		return ServiceResultDTO.success();
+		return ServiceResultDTO.success(equipmentLibrary);
 	}
 
 	/****

@@ -11,6 +11,15 @@ import com.zmsk.face.pojo.FaceEquipmentLibrary;
  *
  */
 public interface FaceLibraryEquipmentService {
+	
+	/****
+	 * 根据Id获取人脸和设备关联记录信息
+	 * 
+	 * @param id
+	 *            主键
+	 * @return
+	 */
+	FaceEquipmentLibrary queryLibraryEquipmentById(int id);
 
 	/****
 	 * 新增人脸和设备关联记录信息

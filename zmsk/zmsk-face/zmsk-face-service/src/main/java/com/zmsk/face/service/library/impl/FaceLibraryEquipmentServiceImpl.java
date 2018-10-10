@@ -39,6 +39,11 @@ public class FaceLibraryEquipmentServiceImpl implements FaceLibraryEquipmentServ
 
 	@Autowired
 	private CustomerEquipmentLibraryMapper customerEquiomentLibraryMapper;
+	
+	@Override
+	public FaceEquipmentLibrary queryLibraryEquipmentById(int id) {
+		return equipmentLibraryMapper.selectByPrimaryKey(id);
+	}
 
 	@Override
 	public boolean addLibraryEquipment(int libraryId, List<Integer> equipmentIds) {
@@ -98,7 +103,7 @@ public class FaceLibraryEquipmentServiceImpl implements FaceLibraryEquipmentServ
 	@Override
 	public boolean flagEnableFaceLibrary(int id, int errorCode) {
 
-		FaceEquipmentLibrary equipmentLibrary = equipmentLibraryMapper.selectByPrimaryKey(id);
+		FaceEquipmentLibrary equipmentLibrary = queryLibraryEquipmentById(id);
 
 		int libraryId = equipmentLibrary.getLibraryId();
 
