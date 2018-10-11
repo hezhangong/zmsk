@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.zmsk.common.dto.BaseResultCode;
 import com.zmsk.common.dto.ServiceResultDTO;
 import com.zmsk.face.dto.library.SyncFaceLibraryDTO;
-import com.zmsk.face.pojo.FaceEquipmentLibrary;
 import com.zmsk.face.service.library.FaceLibraryEquipmentService;
 import com.zmsk.face.service.library.FaceLibraryService;
 
@@ -55,30 +53,30 @@ public class FaceLibrarySyncController {
 	 * 
 	 * @param id
 	 *            主键Id
+	 * @param operation
+	 *            操作类型
 	 * @return
 	 * @throws SignatureException
 	 */
-	@RequestMapping(value = "flag/synced/{id}", method = RequestMethod.POST)
+	@RequestMapping(value = "flag/synced", method = RequestMethod.POST)
 	@ResponseBody
-	public ServiceResultDTO flagsyncedFaceLibrary(@PathVariable(value = "id") int id) {
+	public ServiceResultDTO flagsyncedFaceLibrary(@RequestParam(value = "id") int id, @RequestParam(value = "operation") int operation) {
 
 		if (id <= 0) {
 			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "invalid Id");
 		}
+		
+		if (operation <= 0) {
+			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "invalid operation");
+		}
 
-		boolean success = libraryEquipmentService.flagsyncedFaceLibrary(id);
+		boolean success = libraryEquipmentService.flagsyncedFaceLibrary(id, operation);
 
 		if (!success) {
 			return new ServiceResultDTO(BaseResultCode.SYNC_FACE_LIBRARY_FAIL, "人脸库同步标记失败");
 		}
 		
-		FaceEquipmentLibrary equipmentLibraryTemp = libraryEquipmentService.queryLibraryEquipmentById(id);
-		
-		FaceEquipmentLibrary equipmentLibrary = new FaceEquipmentLibrary();
-		
-		equipmentLibrary.setOperation(equipmentLibraryTemp.getOperation());
-
-		return ServiceResultDTO.success(equipmentLibrary);
+		return ServiceResultDTO.success();
 	}
 
 	/****

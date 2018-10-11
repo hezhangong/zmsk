@@ -13,15 +13,6 @@ import com.zmsk.face.pojo.FaceEquipmentLibrary;
 public interface FaceLibraryEquipmentService {
 	
 	/****
-	 * 根据Id获取人脸和设备关联记录信息
-	 * 
-	 * @param id
-	 *            主键
-	 * @return
-	 */
-	FaceEquipmentLibrary queryLibraryEquipmentById(int id);
-
-	/****
 	 * 新增人脸和设备关联记录信息
 	 * 
 	 * @param libraryId
@@ -59,9 +50,11 @@ public interface FaceLibraryEquipmentService {
 	 * 
 	 * @param id
 	 *            主键Id
+	 * @param operation
+	 *            操作类型
 	 * @return
 	 */
-	boolean flagsyncedFaceLibrary(int id);
+	boolean flagsyncedFaceLibrary(int id, int operation);
 
 	/****
 	 * 标记未同步状态

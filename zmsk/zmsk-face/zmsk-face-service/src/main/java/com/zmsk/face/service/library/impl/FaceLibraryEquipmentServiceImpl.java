@@ -41,11 +41,6 @@ public class FaceLibraryEquipmentServiceImpl implements FaceLibraryEquipmentServ
 	private CustomerEquipmentLibraryMapper customerEquiomentLibraryMapper;
 	
 	@Override
-	public FaceEquipmentLibrary queryLibraryEquipmentById(int id) {
-		return equipmentLibraryMapper.selectByPrimaryKey(id);
-	}
-
-	@Override
 	public boolean addLibraryEquipment(int libraryId, List<Integer> equipmentIds) {
 
 		for (int equipmentId : equipmentIds) {
@@ -87,7 +82,7 @@ public class FaceLibraryEquipmentServiceImpl implements FaceLibraryEquipmentServ
 	}
 
 	@Override
-	public boolean flagsyncedFaceLibrary(int id) {
+	public boolean flagsyncedFaceLibrary(int id, int operation) {
 
 		FaceEquipmentLibrary equipmentLibrary = new FaceEquipmentLibrary();
 
@@ -96,6 +91,8 @@ public class FaceLibraryEquipmentServiceImpl implements FaceLibraryEquipmentServ
 		equipmentLibrary.setRemark("同步人脸库成功");
 
 		equipmentLibrary.setId(id);
+		
+		equipmentLibrary.setOperation(operation);
 
 		return equipmentLibraryMapper.updateByPrimaryKeySelective(equipmentLibrary) > 0;
 	}
@@ -103,7 +100,7 @@ public class FaceLibraryEquipmentServiceImpl implements FaceLibraryEquipmentServ
 	@Override
 	public boolean flagEnableFaceLibrary(int id, int errorCode) {
 
-		FaceEquipmentLibrary equipmentLibrary = queryLibraryEquipmentById(id);
+		FaceEquipmentLibrary equipmentLibrary = equipmentLibraryMapper.selectByPrimaryKey(id);
 
 		int libraryId = equipmentLibrary.getLibraryId();
 
