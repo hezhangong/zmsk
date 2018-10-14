@@ -18,5 +18,14 @@ public interface CustomerLibraryMapper {
 	 *            设备Id
 	 * @return
 	 */
-	List<SyncFaceLibraryDTO> queryUnSyncFaceLibrary(@Param("equipmentId") int equipmentId);
+	List<SyncFaceLibraryDTO> queryUnSyncFaceLibraryById(@Param("equipmentId") int equipmentId);
+	
+	/****
+	 * 获取设备对应未同步的人脸库
+	 * 
+	 * @param equipmentNumber
+	 *            设备号
+	 * @return
+	 */
+	List<SyncFaceLibraryDTO> queryUnSyncFaceLibraryByNumber(@Param("equipmentNumber") String equipmentNumber);
 }

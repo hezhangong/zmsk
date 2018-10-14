@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,21 +32,39 @@ public class FaceLibrarySyncController {
 	 * 
 	 * @param deviceId
 	 *            设备Id
-	 * @param sign
-	 *            签名内容
+	 * @param deviceNumber
+	 *            设备号
 	 * @return
 	 */
 	@RequestMapping(value = "unsync", method = RequestMethod.GET)
 	@ResponseBody
-	public ServiceResultDTO queryUnSyncFaceLibrary(@RequestParam(value = "deviceId") int deviceId) {
+	public ServiceResultDTO queryUnSyncFaceLibrary(@RequestParam(value = "deviceId", required = false) String deviceId,@RequestParam(value = "deviceNumber", required = false) String deviceNumber) {
 
-		if (deviceId <= 0) {
-			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid deviceId ");
+		if (!StringUtils.isEmpty(deviceId)) {
+			int equipmentId=0;
+			try {
+				equipmentId = Integer.parseInt(deviceId);
+			} catch (Exception e) {
+				return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid deviceId ");
+			}
+			
+			if (equipmentId <= 0) {
+				return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid deviceId ");
+			}
+
+			List<SyncFaceLibraryDTO> result = faceLibraryService.queryUnSyncFaceLibraryById(equipmentId);
+			
+			return ServiceResultDTO.success(result);
+			
+		} else if (!StringUtils.isEmpty(deviceNumber)) {
+
+			List<SyncFaceLibraryDTO> result = faceLibraryService.queryUnSyncFaceLibraryByNumber(deviceNumber);
+			
+			return ServiceResultDTO.success(result);
+			
+		} else {
+			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid deviceId or deviceNumber");
 		}
-
-		List<SyncFaceLibraryDTO> result = faceLibraryService.queryUnSyncFaceLibrary(deviceId);
-
-		return ServiceResultDTO.success(result);
 	}
 
 	/****

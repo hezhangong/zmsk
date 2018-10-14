@@ -119,7 +119,16 @@ public interface FaceLibraryService {
 	 *            设备Id
 	 * @return
 	 */
-	List<SyncFaceLibraryDTO> queryUnSyncFaceLibrary(int equipmentId);
+	List<SyncFaceLibraryDTO> queryUnSyncFaceLibraryById(int equipmentId);
+	
+	/****
+	 * 获取设备对应未同步的人脸库
+	 * 
+	 * @param equipmentNumber
+	 *            设备号
+	 * @return
+	 */
+	List<SyncFaceLibraryDTO> queryUnSyncFaceLibraryByNumber(String equipmentNumber);
 
 	/****
 	 * 根据身份证Id获取人脸库信息

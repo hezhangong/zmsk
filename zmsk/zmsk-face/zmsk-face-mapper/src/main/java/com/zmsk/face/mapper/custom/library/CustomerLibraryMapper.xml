@@ -113,7 +113,7 @@
 		LIMIT #{pageStart},#{pageSize}
 	</select>
 
-	<select id="queryUnSyncFaceLibrary" resultType="com.zmsk.face.dto.library.SyncFaceLibraryDTO">
+	<select id="queryUnSyncFaceLibraryById" resultType="com.zmsk.face.dto.library.SyncFaceLibraryDTO">
 		SELECT
 		equipment_library.id
 		AS id,library.`name` AS name,library.sex AS
@@ -131,6 +131,29 @@
 		AS library
 		WHERE equipment_library.library_id =library.id AND
 		equipment_library.equipment_id=#{equipmentId} AND
+		equipment_library.sync_status=0
+	</select>
+
+	<select id="queryUnSyncFaceLibraryByNumber" resultType="com.zmsk.face.dto.library.SyncFaceLibraryDTO">
+		SELECT
+		equipment_library.id
+		AS id,library.`name` AS name,library.sex AS
+		sex,library.id_number AS
+		idNumber,library.nation AS
+		nation,library.address AS
+		address,library.avatar AS
+		avatar,library.remark AS remark,library.flag
+		AS
+		flag,library.organization_id AS organizationId,library.group_id AS
+		groupId,library.ctime AS ctime,equipment_library.operation AS
+		operation,equipment_library.library_id AS libraryId
+		FROM
+		face_equipment_library AS equipment_library,
+		face_library AS library,
+		face_equipment AS equipment 
+		WHERE equipment_library.library_id =library.id AND
+		equipment_library.equipment_id = equipment.id AND
+		equipment.equipment_number=#{equipmentNumber} AND
 		equipment_library.sync_status=0
 	</select>
 

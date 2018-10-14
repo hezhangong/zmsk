@@ -221,9 +221,15 @@ public class FaceLibraryServiceImpl implements FaceLibraryService {
 	}
 
 	@Override
-	public List<SyncFaceLibraryDTO> queryUnSyncFaceLibrary(int equipmentId) {
+	public List<SyncFaceLibraryDTO> queryUnSyncFaceLibraryById(int equipmentId) {
 
-		return customerLibraryMapper.queryUnSyncFaceLibrary(equipmentId);
+		return customerLibraryMapper.queryUnSyncFaceLibraryById(equipmentId);
+	}
+	
+	@Override
+	public List<SyncFaceLibraryDTO> queryUnSyncFaceLibraryByNumber(String equipmentNumber) {
+		
+		return customerLibraryMapper.queryUnSyncFaceLibraryByNumber(equipmentNumber);
 	}
 
 	@Override
