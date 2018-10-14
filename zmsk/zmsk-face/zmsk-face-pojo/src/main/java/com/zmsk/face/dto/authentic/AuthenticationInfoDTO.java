@@ -52,6 +52,12 @@ public class AuthenticationInfoDTO implements Serializable {
 	
 	private Long registerTime;
 
+    private String signOffice="";
+
+    private String legalDate="";
+
+    private String birthday="";
+
 	public Integer getId() {
 		return id;
 	}
@@ -211,9 +217,33 @@ public class AuthenticationInfoDTO implements Serializable {
 	public void setRegisterTime(Long registerTime) {
 		this.registerTime = registerTime;
 	}
+	
+	public String getSignOffice() {
+		return signOffice;
+	}
+	
+	public void setSignOffice(String signOffice) {
+		this.signOffice = signOffice;
+	}
+	
+	public String getLegalDate() {
+		return legalDate;
+	}
+	
+	public void setLegalDate(String legalDate) {
+		this.legalDate = legalDate;
+	}
+	
+	public String getBirthday() {
+		return birthday;
+	}
+	
+	public void setBirthday(String birthday) {
+		this.birthday = birthday;
+	}
 
 	@Override
 	public String toString() {
-		return "AuthenticationInfoDTO [id=" + id + ", name=" + name + ", avatar=" + avatar + ", sex=" + sex + ", idNumber=" + idNumber + ", nation=" + nation + ", address=" + address + ", type=" + type + ", source=" + source + ", result=" + result + ", organizationId=" + organizationId + ", equipmentId=" + equipmentId + ", groupId=" + groupId + ", groupName=" + groupName + ", idcardImage=" + idcardImage + ", idcardInfo=" + idcardInfo + ", similarDegree=" + similarDegree + ", ctime=" + ctime + ", remark=" + remark + ", registerTime=" + registerTime + "]";
+		return "AuthenticationInfoDTO [id=" + id + ", name=" + name + ", avatar=" + avatar + ", sex=" + sex + ", idNumber=" + idNumber + ", nation=" + nation + ", address=" + address + ", type=" + type + ", source=" + source + ", result=" + result + ", organizationId=" + organizationId + ", equipmentId=" + equipmentId + ", groupId=" + groupId + ", groupName=" + groupName + ", idcardImage=" + idcardImage + ", idcardInfo=" + idcardInfo + ", similarDegree=" + similarDegree + ", ctime=" + ctime + ", remark=" + remark + ", registerTime=" + registerTime + ", signOffice=" + signOffice + ", legalDate=" + legalDate + ", birthday=" + birthday + "]";
 	}
 }

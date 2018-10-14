@@ -85,8 +85,7 @@
   </sql>
   <sql id="Base_Column_List" >
     id, name, avatar, sex, id_number, nation, address, type, source, result, organization_id, 
-    equipment_id, group_id, idcard_image, idcard_info, similar_degree, remark, ctime, sign_office, legal_date, birthday
-    register_time
+    equipment_id, group_id, idcard_image, idcard_info, similar_degree, remark, ctime, register_time, sign_office, legal_date, birthday
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zmsk.face.pojo.FaceAuthenticationInfoExample" >
     select
