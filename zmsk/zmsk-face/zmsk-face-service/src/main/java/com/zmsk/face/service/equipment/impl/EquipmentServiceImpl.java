@@ -103,6 +103,25 @@ public class EquipmentServiceImpl implements EquipmentService {
 
 		return equipmentMapper.updateByPrimaryKey(equipment) > 0;
 	}
+	
+	@Override
+	public boolean inactivateEquipment(int deviceId) {
+		
+		FaceEquipment equipment = equipmentMapper.selectByPrimaryKey(deviceId);
+		
+		equipment.setStatus(EquipmentStatus.DISABLE);
+		
+		equipment.setEndTime(System.currentTimeMillis() / 1000);
+		
+		equipment.setMacId(null);
+		
+		return equipmentMapper.updateByPrimaryKey(equipment) > 0;
+	}
+	
+	@Override
+	public boolean deleteEquipment(int deviceId) {
+		return equipmentMapper.deleteByPrimaryKey(deviceId) > 0;
+	}
 
 	@Override
 	public List<FaceEquipment> checkEquipment(String macId, String equipmentNumber) {

@@ -39,7 +39,25 @@ public interface EquipmentService {
 	 * @return
 	 */
 	boolean activateEquipment(int deviceId);
+	
+	/****
+	 * 停用设备
+	 * 
+	 * @param deviceId
+	 *            设备Id
+	 * @return
+	 */
+	boolean inactivateEquipment(int deviceId);
 
+	/****
+	 * 删除设备
+	 * 
+	 * @param deviceId
+	 *            设备Id
+	 * @return
+	 */
+	boolean deleteEquipment(int deviceId);
+	
 	/****
 	 * 根据设备物理Id获取设备信息
 	 * @param macId
