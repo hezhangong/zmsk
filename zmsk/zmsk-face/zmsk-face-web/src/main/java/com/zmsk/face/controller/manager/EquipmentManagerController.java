@@ -37,36 +37,6 @@ public class EquipmentManagerController {
 	private FaceLibraryService faceLibraryService;
 	
 	/****
-	 * 校验设备有效性
-	 * 
-	 * @param macId
-	 *            设备物理Id
-	 * @param equipmentNumber
-	 *            登入账号
-	 * @return
-	 */
-	@RequestMapping(value = "check", method = RequestMethod.GET)
-	@ResponseBody
-	public ServiceResultDTO checkEquipment(@RequestParam(value = "macId") String macId, @RequestParam(value = "equipmentNumber") String equipmentNumber) {
-		
-		if (StringUtils.isEmpty(macId)) {
-			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid macId");
-		}
-
-		if (StringUtils.isEmpty(equipmentNumber)) {
-			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid equipmentNumber");
-		}
-
-		List<FaceEquipment> result = equipmentService.checkEquipment(macId, equipmentNumber);
-
-		if (result != null && result.size() > 0) {
-			return ServiceResultDTO.success(true);
-		} else {
-			return ServiceResultDTO.success(false);
-		}
-	}
-
-	/****
 	 * 获取组织对应的设备列表
 	 * 
 	 * @param organizationId
