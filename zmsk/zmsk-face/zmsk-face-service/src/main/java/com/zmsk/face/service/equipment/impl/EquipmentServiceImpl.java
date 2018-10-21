@@ -201,7 +201,7 @@ public class EquipmentServiceImpl implements EquipmentService {
 	}
 
 	@Override
-	public int updateEquipmentPassword(int equipmentId, String newPassword, String oldPassword) {
+	public int updateEquipmentPassword(int equipmentId, String newPassword, String oldPassword, Integer organizationId, Integer factoryId) {
 
 		FaceEquipmentExample example = new FaceEquipmentExample();
 
@@ -224,6 +224,14 @@ public class EquipmentServiceImpl implements EquipmentService {
 		equipment.setEquipmentPlainPwd(newPassword);
 
 		equipment.setEquipmentPwd(newPasswordDigest);
+		
+		if (organizationId != null) {
+			equipment.setOrganizationId(organizationId);
+		}
+		
+		if (factoryId != null) {
+			equipment.setFactoryId(factoryId);
+		}
 
 		boolean success = equipmentMapper.updateByPrimaryKey(equipment) > 0;
 

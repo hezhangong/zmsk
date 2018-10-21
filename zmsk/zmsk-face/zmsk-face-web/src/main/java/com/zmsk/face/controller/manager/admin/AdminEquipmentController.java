@@ -21,8 +21,6 @@ import com.zmsk.face.service.user.constants.UserConstants;
 /****
  * 管理员设备操作管理
  * 
- * @author warrior
- *
  */
 @Controller("manager/admin/equipment/")
 @RequestMapping("manager/admin/equipment/")
@@ -168,25 +166,22 @@ public class AdminEquipmentController {
 	 *            新密码
 	 * @param oldPassword
 	 *            旧密码
+	 * @param organizationId
+	 *            组织Id
+	 * @param factoryId
+	 *            工厂Id
 	 * @return
 	 */
 	@RequestMapping(value = "update/password", method = RequestMethod.POST)
 	@ResponseBody
-	public ServiceResultDTO updateEquipmentPassword(@RequestParam(value = "deviceId") int deviceId, @RequestParam(value = "newPassword") String newPassword, @RequestParam(value = "oldPassword") String oldPassword) {
+	public ServiceResultDTO updateEquipmentPassword(@RequestParam(value = "deviceId") int deviceId, @RequestParam(value = "newPassword") String newPassword, @RequestParam(value = "oldPassword") String oldPassword,
+			@RequestParam(value = "organizationId", required = false) Integer organizationId, @RequestParam(value = "factoryId", required = false) Integer factoryId) {
 
 		if (deviceId <= 0) {
 			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid device id");
 		}
-
-		if (StringUtils.isEmpty(newPassword)) {
-			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid new password");
-		}
-
-		if (StringUtils.isEmpty(oldPassword)) {
-			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid old password");
-		}
-
-		int result = equipmentService.updateEquipmentPassword(deviceId, newPassword, oldPassword);
+		
+		int result = equipmentService.updateEquipmentPassword(deviceId, newPassword, oldPassword, organizationId, factoryId);
 
 		// 原始密码错误
 		if (result == UserConstants.OLD_PASSWORD_ERROR) {
