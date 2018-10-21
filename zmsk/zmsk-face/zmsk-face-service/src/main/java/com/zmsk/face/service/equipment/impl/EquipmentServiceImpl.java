@@ -35,7 +35,7 @@ import com.zmsk.face.service.equipment.dto.DeviceLoginResultDTO;
 public class EquipmentServiceImpl implements EquipmentService {
 
 	// 账号前缀
-	private static final String NUMBER_PERFIEX = "zd";
+	private static final String NUMBER_PERFIEX = "zd9";
 
 	@Autowired
 	private FaceEquipmentMapper equipmentMapper;
@@ -65,7 +65,7 @@ public class EquipmentServiceImpl implements EquipmentService {
 
 			int serialNumber = faceSerialNumber.getId();
 
-			equipment.setEquipmentNumber(NUMBER_PERFIEX + serialNumber);
+			equipment.setEquipmentNumber(NUMBER_PERFIEX + type + serialNumber);
 
 			String digestPassword = StringDigestUtils.md5(password);
 
