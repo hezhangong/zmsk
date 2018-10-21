@@ -23,6 +23,8 @@
 		<result column="renewal_time" property="renewalTime" jdbcType="INTEGER" />
 		<result column="remark" property="remark" jdbcType="VARCHAR" />
     	<result column="factory_id" property="factoryId" jdbcType="INTEGER" />
+	    <result column="last_login_time" property="factoryId" jdbcType="INTEGER" />
+	    <result column="version" property="remark" jdbcType="VARCHAR" />
 	</resultMap>
 	<sql id="Example_Where_Clause">
 		<where>
@@ -96,7 +98,7 @@
 		equipment_type, renewal_fee, status,
 		create_time, activation_time, end_time,
 		renewal_time,
-		remark,factory_id
+		remark,factory_id,last_login_time,version
 	</sql>
 
 	<select id="queryEquipmentRemarkByorganizationId" resultType="com.zmsk.face.dto.equipment.EquipmentRemarkDTO">

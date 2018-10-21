@@ -30,6 +30,16 @@ public class FaceEquipment {
 	private String remark;
 
 	private Integer factoryId;
+	
+	private Integer lastLoginTime;
+	
+	private String version;
+	
+	private String organizationName;
+	
+	private String factoryName;
+	
+	private String factoryShortName;
 
 	public Integer getId() {
 		return id;
@@ -149,5 +159,45 @@ public class FaceEquipment {
 
 	public void setFactoryId(Integer factoryId) {
 		this.factoryId = factoryId;
+	}
+
+	public Integer getLastLoginTime() {
+		return lastLoginTime;
+	}
+
+	public void setLastLoginTime(Integer lastLoginTime) {
+		this.lastLoginTime = lastLoginTime;
+	}	
+
+	public String getVersion() {
+		return version;
+	}
+	
+	public void setVersion(String version) {
+		this.version = version == null ? null : version.trim();
+	}
+	
+	public void setOrganizationName(String organizationName) {
+		this.organizationName = organizationName == null ? null : organizationName.trim();
+	}
+	
+	public String getOrganizationName() {
+		return organizationName;
+	}
+	
+	public void setFactoryName(String factoryName) {
+		this.factoryName = factoryName == null ? null : factoryName.trim();
+	}
+	
+	public String getFactoryName() {
+		return factoryName;
+	}
+	
+	public void setFactoryShortName(String factoryShortName) {
+		this.factoryShortName = factoryShortName == null ? null : factoryShortName.trim();
+	}
+	
+	public String getFactoryShortName() {
+		return factoryShortName;
 	}
 }

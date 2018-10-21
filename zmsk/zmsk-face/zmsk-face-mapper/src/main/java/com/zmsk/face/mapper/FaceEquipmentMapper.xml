@@ -17,6 +17,11 @@
     <result column="renewal_time" property="renewalTime" jdbcType="INTEGER" />
     <result column="remark" property="remark" jdbcType="VARCHAR" />
     <result column="factory_id" property="factoryId" jdbcType="INTEGER" />
+    <result column="last_login_time" property="lastLoginTime" jdbcType="INTEGER" />
+    <result column="version" property="version" jdbcType="VARCHAR" />
+    <result column="organizationName" property="organizationName" jdbcType="VARCHAR" />
+    <result column="factoryName" property="factoryName" jdbcType="VARCHAR" />
+    <result column="factoryShortName" property="factoryShortName" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -77,9 +82,10 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, organization_id, mac_id, equipment_number, equipment_pwd, equipment_plain_pwd, 
-    equipment_type, renewal_fee, status, create_time, activation_time, end_time, renewal_time, 
-    remark,factory_id
+    a.id, a.organization_id, a.mac_id, a.equipment_number, a.equipment_pwd, 
+    a.equipment_plain_pwd, a.equipment_type, a.renewal_fee, a.status, a.create_time, 
+    a.activation_time, a.end_time, a.renewal_time, a.remark, a.factory_id, 
+    a.last_login_time, a.version, b.name organizationName, c.name factoryName, c.short_name factoryShortName
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zmsk.face.pojo.FaceEquipmentExample" >
     select
@@ -87,7 +93,8 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from face_equipment
+    from face_equipment a left join face_organization b on a.organization_id=b.organization_id
+    left join face_factory c on a.factory_id=c.id
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -98,15 +105,16 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    from face_equipment
-    where id = #{id,jdbcType=INTEGER}
+    from face_equipment a left join face_organization b on a.organization_id=b.organization_id
+    left join face_factory c on a.factory_id=c.id
+    where a.id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from face_equipment
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <delete id="deleteByExample" parameterType="com.zmsk.face.pojo.FaceEquipmentExample" >
-    delete from face_equipment
+    delete from face_equipment a
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -116,12 +124,13 @@
       equipment_number, equipment_pwd, equipment_plain_pwd, 
       equipment_type, renewal_fee, status, 
       create_time, activation_time, end_time, 
-      renewal_time, remark, factory_id)
+      renewal_time, remark, factory_id, last_login_time, version)
     values (#{id,jdbcType=INTEGER}, #{organizationId,jdbcType=INTEGER}, #{macId,jdbcType=VARCHAR}, 
       #{equipmentNumber,jdbcType=VARCHAR}, #{equipmentPwd,jdbcType=VARCHAR}, #{equipmentPlainPwd,jdbcType=VARCHAR}, 
       #{equipmentType,jdbcType=BIT}, #{renewalFee,jdbcType=INTEGER}, #{status,jdbcType=BIT}, 
       #{createTime,jdbcType=INTEGER}, #{activationTime,jdbcType=INTEGER}, #{endTime,jdbcType=INTEGER}, 
-      #{renewalTime,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, #{factoryId,jdbcType=INTEGER})
+      #{renewalTime,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, #{factoryId,jdbcType=INTEGER},
+      #{lastLoginTime,jdbcType=INTEGER}, #{version,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.zmsk.face.pojo.FaceEquipment" >
     insert into face_equipment
@@ -171,6 +180,12 @@
       <if test="factoryId != null" >
         factory_id,
       </if>
+      <if test="lastLoginTime != null" >
+        last_login_time,
+      </if>
+      <if test="version != null" >
+        version,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -218,61 +233,73 @@
       <if test="factoryId != null" >
         #{factoryId,jdbcType=INTEGER},
       </if>
+      <if test="lastLoginTime != null" >
+        #{lastLoginTime,jdbcType=INTEGER},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.zmsk.face.pojo.FaceEquipmentExample" resultType="java.lang.Integer" >
-    select count(*) from face_equipment
+    select count(*) from face_equipment a
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update face_equipment
+    update face_equipment a
     <set >
       <if test="record.id != null" >
-        id = #{record.id,jdbcType=INTEGER},
+        a.id = #{record.id,jdbcType=INTEGER},
       </if>
       <if test="record.organizationId != null" >
-        organization_id = #{record.organizationId,jdbcType=INTEGER},
+        a.organization_id = #{record.organizationId,jdbcType=INTEGER},
       </if>
       <if test="record.macId != null" >
-        mac_id = #{record.macId,jdbcType=VARCHAR},
+        a.mac_id = #{record.macId,jdbcType=VARCHAR},
       </if>
       <if test="record.equipmentNumber != null" >
-        equipment_number = #{record.equipmentNumber,jdbcType=VARCHAR},
+        a.equipment_number = #{record.equipmentNumber,jdbcType=VARCHAR},
       </if>
       <if test="record.equipmentPwd != null" >
-        equipment_pwd = #{record.equipmentPwd,jdbcType=VARCHAR},
+        a.equipment_pwd = #{record.equipmentPwd,jdbcType=VARCHAR},
       </if>
       <if test="record.equipmentPlainPwd != null" >
-        equipment_plain_pwd = #{record.equipmentPlainPwd,jdbcType=VARCHAR},
+        a.equipment_plain_pwd = #{record.equipmentPlainPwd,jdbcType=VARCHAR},
       </if>
       <if test="record.equipmentType != null" >
-        equipment_type = #{record.equipmentType,jdbcType=BIT},
+        a.equipment_type = #{record.equipmentType,jdbcType=BIT},
       </if>
       <if test="record.renewalFee != null" >
-        renewal_fee = #{record.renewalFee,jdbcType=INTEGER},
+        a.renewal_fee = #{record.renewalFee,jdbcType=INTEGER},
       </if>
       <if test="record.status != null" >
-        status = #{record.status,jdbcType=BIT},
+        a.status = #{record.status,jdbcType=BIT},
       </if>
       <if test="record.createTime != null" >
-        create_time = #{record.createTime,jdbcType=INTEGER},
+        a.create_time = #{record.createTime,jdbcType=INTEGER},
       </if>
       <if test="record.activationTime != null" >
-        activation_time = #{record.activationTime,jdbcType=INTEGER},
+        a.activation_time = #{record.activationTime,jdbcType=INTEGER},
       </if>
       <if test="record.endTime != null" >
-        end_time = #{record.endTime,jdbcType=INTEGER},
+        a.end_time = #{record.endTime,jdbcType=INTEGER},
       </if>
       <if test="record.renewalTime != null" >
-        renewal_time = #{record.renewalTime,jdbcType=INTEGER},
+        a.renewal_time = #{record.renewalTime,jdbcType=INTEGER},
       </if>
       <if test="record.remark != null" >
-        remark = #{record.remark,jdbcType=VARCHAR},
+        a.remark = #{record.remark,jdbcType=VARCHAR},
       </if>
-      <if test="factoryId != null" >
-        factory_id = #{record.factoryId,jdbcType=INTEGER},
+      <if test="record.factoryId != null" >
+        a.factory_id = #{record.factoryId,jdbcType=INTEGER},
+      </if>
+      <if test="record.lastLoginTime != null" >
+        a.last_login_time = #{record.lastLoginTime,jdbcType=INTEGER},
+      </if>
+      <if test="record.version != null" >
+        a.version = #{record.version,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -280,22 +307,24 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update face_equipment
-    set id = #{record.id,jdbcType=INTEGER},
-      organization_id = #{record.organizationId,jdbcType=INTEGER},
-      mac_id = #{record.macId,jdbcType=VARCHAR},
-      equipment_number = #{record.equipmentNumber,jdbcType=VARCHAR},
-      equipment_pwd = #{record.equipmentPwd,jdbcType=VARCHAR},
-      equipment_plain_pwd = #{record.equipmentPlainPwd,jdbcType=VARCHAR},
-      equipment_type = #{record.equipmentType,jdbcType=BIT},
-      renewal_fee = #{record.renewalFee,jdbcType=INTEGER},
-      status = #{record.status,jdbcType=BIT},
-      create_time = #{record.createTime,jdbcType=INTEGER},
-      activation_time = #{record.activationTime,jdbcType=INTEGER},
-      end_time = #{record.endTime,jdbcType=INTEGER},
-      renewal_time = #{record.renewalTime,jdbcType=INTEGER},
-      remark = #{record.remark,jdbcType=VARCHAR}
-      factory_id = #{record.factoryId,jdbcType=INTEGER},
+    update face_equipment a
+    set a.id = #{record.id,jdbcType=INTEGER},
+      a.organization_id = #{record.organizationId,jdbcType=INTEGER},
+      a.mac_id = #{record.macId,jdbcType=VARCHAR},
+      a.equipment_number = #{record.equipmentNumber,jdbcType=VARCHAR},
+      a.equipment_pwd = #{record.equipmentPwd,jdbcType=VARCHAR},
+      a.equipment_plain_pwd = #{record.equipmentPlainPwd,jdbcType=VARCHAR},
+      a.equipment_type = #{record.equipmentType,jdbcType=BIT},
+      a.renewal_fee = #{record.renewalFee,jdbcType=INTEGER},
+      a.status = #{record.status,jdbcType=BIT},
+      a.create_time = #{record.createTime,jdbcType=INTEGER},
+      a.activation_time = #{record.activationTime,jdbcType=INTEGER},
+      a.end_time = #{record.endTime,jdbcType=INTEGER},
+      a.renewal_time = #{record.renewalTime,jdbcType=INTEGER},
+      a.remark = #{record.remark,jdbcType=VARCHAR},
+      a.factory_id = #{record.factoryId,jdbcType=INTEGER},
+      a.last_login_time = #{record.lastLoginTime,jdbcType=INTEGER},
+      a.version = #{record.version,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -345,6 +374,12 @@
       <if test="factoryId != null" >
         factory_id = #{factoryId,jdbcType=INTEGER},
       </if>
+      <if test="lastLoginTime != null" >
+        last_login_time = #{lastLoginTime,jdbcType=INTEGER},
+      </if>
+      <if test="version != null" >
+        version = #{version,jdbcType=VARCHAR}
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -364,6 +399,8 @@
       renewal_time = #{renewalTime,jdbcType=INTEGER},
       remark = #{remark,jdbcType=VARCHAR},
       factory_id = #{factoryId,jdbcType=INTEGER},
+      last_login_time = #{lastLoginTime,jdbcType=INTEGER},
+      version = #{version,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>
