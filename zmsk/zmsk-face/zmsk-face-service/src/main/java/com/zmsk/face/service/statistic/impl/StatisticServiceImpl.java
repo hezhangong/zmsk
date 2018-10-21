@@ -82,7 +82,7 @@ public class StatisticServiceImpl implements StatisticService {
 
 		long endTime = DateUtils.getCurrentNextDaysDateTime(1);
 
-		List<FaceEquipment> equipmentList = equiomentService.queryEquipmentByOrganizationId(organizationId);
+		List<FaceEquipment> equipmentList = equiomentService.queryEquipmentList(organizationId, null);
 
 		if (equipmentList == null || equipmentList.size() == 0) {
 			return Collections.emptyList();

@@ -29,6 +29,8 @@ public class FaceEquipment {
 
 	private String remark;
 
+	private Integer factoryId;
+
 	public Integer getId() {
 		return id;
 	}
@@ -139,5 +141,13 @@ public class FaceEquipment {
 
 	public void setRemark(String remark) {
 		this.remark = remark == null ? null : remark.trim();
+	}
+
+	public Integer getFactoryId() {
+		return factoryId;
+	}
+
+	public void setFactoryId(Integer factoryId) {
+		this.factoryId = factoryId;
 	}
 }

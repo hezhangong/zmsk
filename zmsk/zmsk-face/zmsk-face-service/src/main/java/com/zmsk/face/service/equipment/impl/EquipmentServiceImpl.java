@@ -47,7 +47,7 @@ public class EquipmentServiceImpl implements EquipmentService {
 	private CustomerEquipmentMapper customerEquipmetMapper;
 
 	@Override
-	public boolean createEquipment(int organizationId, int count, String password, int type, int renewalFee) {
+	public boolean createEquipment(int organizationId, int factoryId, int count, String password, int type, int renewalFee) {
 
 		FaceEquipment equipment = null;
 
@@ -56,6 +56,8 @@ public class EquipmentServiceImpl implements EquipmentService {
 			equipment = new FaceEquipment();
 
 			equipment.setOrganizationId(organizationId);
+			
+			equipment.setFactoryId(factoryId);
 
 			FaceSerialNumber faceSerialNumber = new FaceSerialNumber();
 
@@ -138,13 +140,19 @@ public class EquipmentServiceImpl implements EquipmentService {
 	}
 
 	@Override
-	public List<FaceEquipment> queryEquipmentByOrganizationId(int organizationId) {
+	public List<FaceEquipment> queryEquipmentList(Integer organizationId, Integer factoryId) {
 
 		FaceEquipmentExample example = new FaceEquipmentExample();
 
 		Criteria criteria = example.createCriteria();
 
-		criteria.andOrganizationIdEqualTo(organizationId);
+		if (organizationId != null) {
+			criteria.andOrganizationIdEqualTo(organizationId);
+		}
+		
+		if (factoryId != null) {
+			criteria.andFactoryIdEqualTo(factoryId);
+		}
 
 		return equipmentMapper.selectByExample(example);
 	}

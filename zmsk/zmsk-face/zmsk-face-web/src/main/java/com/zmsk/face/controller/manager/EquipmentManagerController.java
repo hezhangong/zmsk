@@ -51,7 +51,7 @@ public class EquipmentManagerController {
 			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid organization id");
 		}
 
-		List<FaceEquipment> result = equipmentService.queryEquipmentByOrganizationId(organizationId);
+		List<FaceEquipment> result = equipmentService.queryEquipmentList(organizationId, null);
 
 		return ServiceResultDTO.success(result);
 	}

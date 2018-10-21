@@ -993,6 +993,66 @@ public class FaceEquipmentExample {
             addCriterion("remark not between", value1, value2, "remark");
             return (Criteria) this;
         }
+
+        public Criteria andFactoryIdIsNull() {
+            addCriterion("factory_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andFactoryIdIsNotNull() {
+            addCriterion("factory_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andFactoryIdEqualTo(Integer value) {
+            addCriterion("factory_id =", value, "factoryId");
+            return (Criteria) this;
+        }
+
+        public Criteria andFactoryIdNotEqualTo(Integer value) {
+            addCriterion("factory_id <>", value, "factoryId");
+            return (Criteria) this;
+        }
+
+        public Criteria andFactoryIdGreaterThan(Integer value) {
+            addCriterion("factory_id >", value, "factoryId");
+            return (Criteria) this;
+        }
+
+        public Criteria andFactoryIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("factory_id >=", value, "factoryId");
+            return (Criteria) this;
+        }
+
+        public Criteria andFactoryIdLessThan(Integer value) {
+            addCriterion("factory_id <", value, "factoryId");
+            return (Criteria) this;
+        }
+
+        public Criteria andFactoryIdLessThanOrEqualTo(Integer value) {
+            addCriterion("factory_id <=", value, "factoryId");
+            return (Criteria) this;
+        }
+
+        public Criteria andFactoryIdIn(List<Integer> values) {
+            addCriterion("factory_id in", values, "factoryId");
+            return (Criteria) this;
+        }
+
+        public Criteria andFactoryIdNotIn(List<Integer> values) {
+            addCriterion("factory_id not in", values, "factoryId");
+            return (Criteria) this;
+        }
+
+        public Criteria andFactoryIdBetween(Integer value1, Integer value2) {
+            addCriterion("factory_id between", value1, value2, "factoryId");
+            return (Criteria) this;
+        }
+
+        public Criteria andFactoryIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("factory_id not between", value1, value2, "factoryId");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

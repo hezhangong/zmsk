@@ -19,6 +19,8 @@ public interface EquipmentService {
 	 * 
 	 * @param organizationId
 	 *            组织Id
+	 * @param factoryId
+	 *            工厂Id
 	 * @param count
 	 *            数量
 	 * @param password
@@ -29,7 +31,7 @@ public interface EquipmentService {
 	 *            续费金额
 	 * @return
 	 */
-	boolean createEquipment(int organizationId, int count, String password, int type, int renewalFee);
+	boolean createEquipment(int organizationId, int factoryId, int count, String password, int type, int renewalFee);
 
 	/****
 	 * 激活设备
@@ -72,9 +74,12 @@ public interface EquipmentService {
 	 * 获取设备列表
 	 * 
 	 * @param organizationId
+	 *            组织Id
+	 * @param factoryId
+	 *            工厂Id
 	 * @return
 	 */
-	List<FaceEquipment> queryEquipmentByOrganizationId(int organizationId);
+	List<FaceEquipment> queryEquipmentList(Integer organizationId, Integer factoryId);
 
 	/****
 	 * 根据设备Id获取设备信息

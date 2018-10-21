@@ -36,6 +36,8 @@ public class AdminEquipmentController {
 	 * 
 	 * @param organizationId
 	 *            组织Id
+	 * @param factoryId
+	 *            工厂Id
 	 * @param count
 	 *            数量
 	 * @param password
@@ -48,25 +50,29 @@ public class AdminEquipmentController {
 	 */
 	@RequestMapping(value = "create", method = RequestMethod.POST)
 	@ResponseBody
-	public ServiceResultDTO createEquipment(@RequestParam(value = "organizationId") int organizationId, @RequestParam(value = "count") int count, @RequestParam(value = "password") String password, @RequestParam(value = "type") int type, @RequestParam(value = "renewalFee") int renewalFee) {
+	public ServiceResultDTO createEquipment(@RequestParam(value = "organizationId") int organizationId, @RequestParam(value = "factoryId") int factoryId, @RequestParam(value = "count") int count, @RequestParam(value = "password") String password, @RequestParam(value = "type") int type, @RequestParam(value = "renewalFee") int renewalFee) {
 
 		if (organizationId <= 0) {
-			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid organization id");
+			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid organizationId");
+		}
+		
+		if (factoryId <= 0) {
+			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid factoryId");
 		}
 
 		if (count <= 0) {
-			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid count ");
+			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid count");
 		}
 
 		if (StringUtils.isEmpty(password)) {
-			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid password ");
+			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid password");
 		}
 
 		if (type <= 0) {
-			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid type ");
+			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid type");
 		}
 
-		boolean success = equipmentService.createEquipment(organizationId, count, password, type, renewalFee);
+		boolean success = equipmentService.createEquipment(organizationId, factoryId, count, password, type, renewalFee);
 
 		if (!success) {
 			return new ServiceResultDTO(BaseResultCode.EQUIPMENT_OPERATION_ERROR, "create equipment error");
@@ -225,23 +231,25 @@ public class AdminEquipmentController {
 	}
 
 	/****
-	 * 获取组织对应的设备列表
+	 * 获取组织或工厂对应的设备列表
 	 * 
 	 * @param organizationId
 	 *            组织Id
+	 * @param factoryId
+	 *            工厂Id
 	 * @return
 	 */
-	@RequestMapping(value = "list/{organizationId}", method = RequestMethod.GET)
+	@RequestMapping(value = "list", method = RequestMethod.GET)
 	@ResponseBody
-	public ServiceResultDTO queryEquipmentByOrganizationId(@PathVariable(value = "organizationId") int organizationId) {
+	public ServiceResultDTO queryEquipmentList(@RequestParam(value = "organizationId", required = false) Integer organizationId, @RequestParam(value = "factoryId", required = false) Integer factoryId) {
 
-		if (organizationId <= 0) {
-			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid organization id");
+		if (organizationId != null || factoryId != null) {
+			List<FaceEquipment> result = equipmentService.queryEquipmentList(organizationId, factoryId);
+			
+			return ServiceResultDTO.success(result);
+		} else {
+			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid organizationId or factoryId");
 		}
-
-		List<FaceEquipment> result = equipmentService.queryEquipmentByOrganizationId(organizationId);
-
-		return ServiceResultDTO.success(result);
 	}
 
 	/****
