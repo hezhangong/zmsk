@@ -126,7 +126,7 @@ public class EquipmentServiceImpl implements EquipmentService {
 	}
 
 	@Override
-	public List<FaceEquipment> checkEquipment(String macId, String equipmentNumber) {
+	public boolean checkEquipment(String macId, String equipmentNumber, String version) {
 		
 		FaceEquipmentExample example = new FaceEquipmentExample();
 
@@ -136,7 +136,21 @@ public class EquipmentServiceImpl implements EquipmentService {
 		
 		criteria.andEquipmentNumberEqualTo(equipmentNumber);
 
-		return equipmentMapper.selectByExample(example);
+		List<FaceEquipment> list = equipmentMapper.selectByExample(example);
+		
+		if (list!=null && list.size()>0) {
+			for (FaceEquipment equipment : list) {
+				
+				equipment.setVersion(version);
+				
+				equipment.setLastLoginTime(System.currentTimeMillis() / 1000);
+				
+				equipmentMapper.updateByPrimaryKey(equipment);
+			}
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	@Override

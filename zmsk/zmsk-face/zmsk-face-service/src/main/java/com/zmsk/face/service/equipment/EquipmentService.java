@@ -66,9 +66,11 @@ public interface EquipmentService {
 	 *            设备物理Id
 	 * @param equipmentNumber 
 	 *            登入账号
+	 * @param version 
+	 *            版本号
 	 * @return
 	 */
-	List<FaceEquipment> checkEquipment(String macId, String equipmentNumber);
+	boolean checkEquipment(String macId, String equipmentNumber, String version);
 
 	/****
 	 * 获取设备列表

@@ -31,7 +31,7 @@ public class FaceEquipment {
 
 	private Integer factoryId;
 	
-	private Integer lastLoginTime;
+	private Long lastLoginTime;
 	
 	private String version;
 	
@@ -161,11 +161,11 @@ public class FaceEquipment {
 		this.factoryId = factoryId;
 	}
 
-	public Integer getLastLoginTime() {
+	public Long getLastLoginTime() {
 		return lastLoginTime;
 	}
 
-	public void setLastLoginTime(Integer lastLoginTime) {
+	public void setLastLoginTime(Long lastLoginTime) {
 		this.lastLoginTime = lastLoginTime;
 	}	
 
