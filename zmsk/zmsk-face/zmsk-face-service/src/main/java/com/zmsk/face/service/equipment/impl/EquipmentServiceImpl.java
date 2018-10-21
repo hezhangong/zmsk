@@ -79,7 +79,7 @@ public class EquipmentServiceImpl implements EquipmentService {
 
 			equipment.setRenewalFee(renewalFee);
 			
-			equipment.setRemark(String.valueOf(serialNumber));
+			equipment.setRemark(String.valueOf(type) + String.valueOf(serialNumber));
 
 			equipment.setCreateTime(System.currentTimeMillis() / 1000);
 
