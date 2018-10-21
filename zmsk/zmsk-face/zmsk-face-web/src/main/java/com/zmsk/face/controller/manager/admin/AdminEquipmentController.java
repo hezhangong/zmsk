@@ -244,6 +244,11 @@ public class AdminEquipmentController {
 	public ServiceResultDTO queryEquipmentList(@RequestParam(value = "organizationId", required = false) Integer organizationId, @RequestParam(value = "factoryId", required = false) Integer factoryId) {
 
 		if (organizationId != null || factoryId != null) {
+			
+			if (organizationId != null && organizationId == 1) {//总部可以查询所有的设备
+				organizationId = null;
+			}
+			
 			List<FaceEquipment> result = equipmentService.queryEquipmentList(organizationId, factoryId);
 			
 			return ServiceResultDTO.success(result);
