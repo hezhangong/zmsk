@@ -18,8 +18,6 @@ import com.zmsk.face.service.factory.FactoryService;
 /****
  * 管理员工厂操作
  * 
- * @author warrior
- *
  */
 @Controller
 @RequestMapping("manager/admin/factory/")
@@ -113,7 +111,7 @@ public class AdminFactoryController {
 	 */
 	@RequestMapping(value = "list", method = RequestMethod.GET)
 	@ResponseBody
-	public ServiceResultDTO queryEquipmentList(@RequestParam(value = "factoryName", required = false) String factoryName) {
+	public ServiceResultDTO queryFactoryList(@RequestParam(value = "factoryName", required = false) String factoryName) {
 		
 		List<FaceFactory> result = factoryService.queryFactoryList(factoryName);
 		
@@ -124,12 +122,12 @@ public class AdminFactoryController {
 	 * 根据工厂Id获取工厂信息
 	 * 
 	 * @param factoryId
-	 *            设备Id
+	 *            组织Id
 	 * @return
 	 */
 	@RequestMapping(value = "{factoryId}", method = RequestMethod.GET)
 	@ResponseBody
-	public ServiceResultDTO queryEquipmentById(@PathVariable(value = "factoryId") int factoryId) {
+	public ServiceResultDTO queryFactoryById(@PathVariable(value = "factoryId") int factoryId) {
 
 		FaceFactory factory = factoryService.queryFactoryById(factoryId);
 

@@ -1,9 +1,9 @@
-package com.zmsk.face.controller.admin;
+package com.zmsk.face.controller.manager.admin;
 
-import org.apache.shiro.authz.annotation.RequiresPermissions;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -12,16 +12,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.zmsk.common.dto.BaseResultCode;
 import com.zmsk.common.dto.ServiceResultDTO;
+import com.zmsk.face.pojo.FaceOrganization;
 import com.zmsk.face.service.organization.OrganizationService;
 
 /****
  * 管理员组织操作
  * 
- * @author warrior
- *
  */
 @Controller
-@RequestMapping("admin/organization")
+@RequestMapping("manager/admin/organization/")
 public class AdminOrganizationController {
 
 	@Autowired
@@ -40,16 +39,7 @@ public class AdminOrganizationController {
 	 */
 	@RequestMapping(value = "create", method = RequestMethod.POST)
 	@ResponseBody
-	@RequiresPermissions("upms:organization:create")
 	public ServiceResultDTO createOrganization(@RequestParam(value = "pid", required = false, defaultValue = "0") int pid, @RequestParam(value = "name") String name, @RequestParam(value = "description") String description) {
-
-		if (StringUtils.isEmpty(name)) {
-			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid name");
-		}
-
-		if (StringUtils.isEmpty(description)) {
-			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid description");
-		}
 
 		boolean success = organizationService.createOrganization(pid, name, description);
 
@@ -66,7 +56,7 @@ public class AdminOrganizationController {
 	 * @param organizationId
 	 *            组织名称
 	 * @param pid
-	 *            产品Id
+	 *            父Id
 	 * @param name
 	 *            名称
 	 * @param description
@@ -75,7 +65,6 @@ public class AdminOrganizationController {
 	 */
 	@RequestMapping(value = "update", method = RequestMethod.POST)
 	@ResponseBody
-	@RequiresPermissions("upms:organization:update")
 	public ServiceResultDTO updateOrganization(@RequestParam(value = "organizationId") int organizationId, @RequestParam(value = "pid", required = false, defaultValue = "0") int pid, @RequestParam(value = "name") String name, @RequestParam(value = "description") String description) {
 
 		if (organizationId <= 0) {
@@ -98,9 +87,8 @@ public class AdminOrganizationController {
 	 *            组织Id
 	 * @return
 	 */
-	@RequestMapping(value = "delete/{organizationId}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "delete/{organizationId}", method = RequestMethod.GET)
 	@ResponseBody
-	@RequiresPermissions("upms:organization:delete")
 	public ServiceResultDTO deleteOrganization(@PathVariable(value = "organizationId") int organizationId) {
 
 		if (organizationId <= 0) {
@@ -114,5 +102,37 @@ public class AdminOrganizationController {
 		}
 
 		return ServiceResultDTO.success();
+	}
+
+	/****
+	 * 获取工厂名称查询工厂列表
+	 * 
+	 * @param organizationName
+	 *            工厂名称
+	 * @return
+	 */
+	@RequestMapping(value = "list", method = RequestMethod.GET)
+	@ResponseBody
+	public ServiceResultDTO queryOrganizationList(@RequestParam(value = "organizationName", required = false) String organizationName) {
+		
+		List<FaceOrganization> result = organizationService.queryOrganizationList(organizationName);
+		
+		return ServiceResultDTO.success(result);
+	}
+
+	/****
+	 * 根据组织Id获取工厂信息
+	 * 
+	 * @param organizationId
+	 *            组织Id
+	 * @return
+	 */
+	@RequestMapping(value = "{organizationId}", method = RequestMethod.GET)
+	@ResponseBody
+	public ServiceResultDTO queryOrganizationById(@PathVariable(value = "organizationId") int organizationId) {
+
+		FaceOrganization organization = organizationService.queryOrganizationById(organizationId);
+
+		return ServiceResultDTO.success(organization);
 	}
 }

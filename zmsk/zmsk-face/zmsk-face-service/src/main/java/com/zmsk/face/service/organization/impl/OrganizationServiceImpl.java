@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import com.zmsk.face.mapper.FaceOrganizationMapper;
 import com.zmsk.face.mapper.custom.organization.CustomerOrganizationMapper;
@@ -83,9 +84,16 @@ public class OrganizationServiceImpl implements OrganizationService {
 
 		FaceOrganizationExample example = new FaceOrganizationExample();
 
-		example.or().andNameLike("%" + search + "%");
+		if (!StringUtils.isEmpty(search)) {
+			example.or().andNameLike("%" + search + "%");
+		}
 
 		return organizationMapper.selectByExample(example);
+	}
+
+	@Override
+	public FaceOrganization queryOrganizationById(int organizationId) {
+		return organizationMapper.selectByPrimaryKey(organizationId);
 	}
 
 	@Override
