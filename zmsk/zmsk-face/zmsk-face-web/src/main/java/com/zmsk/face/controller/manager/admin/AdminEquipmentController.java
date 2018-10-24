@@ -158,10 +158,12 @@ public class AdminEquipmentController {
 	}
 
 	/****
-	 * 修改设备登入密码
+	 * 修改设备信息
 	 * 
 	 * @param deviceId
 	 *            设备Id
+	 * @param flag
+	 *            是否修改密码
 	 * @param newPassword
 	 *            新密码
 	 * @param oldPassword
@@ -174,14 +176,14 @@ public class AdminEquipmentController {
 	 */
 	@RequestMapping(value = "update/password", method = RequestMethod.POST)
 	@ResponseBody
-	public ServiceResultDTO updateEquipmentPassword(@RequestParam(value = "deviceId") int deviceId, @RequestParam(value = "newPassword") String newPassword, @RequestParam(value = "oldPassword") String oldPassword,
+	public ServiceResultDTO updateEquipmentPassword(@RequestParam(value = "deviceId") int deviceId, @RequestParam(value = "flag") boolean flag, @RequestParam(value = "newPassword") String newPassword, @RequestParam(value = "oldPassword") String oldPassword,
 			@RequestParam(value = "organizationId", required = false) Integer organizationId, @RequestParam(value = "factoryId", required = false) Integer factoryId) {
 
 		if (deviceId <= 0) {
 			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid device id");
 		}
 		
-		int result = equipmentService.updateEquipmentPassword(deviceId, newPassword, oldPassword, organizationId, factoryId);
+		int result = equipmentService.updateEquipmentPassword(deviceId, flag, newPassword, oldPassword, organizationId, factoryId);
 
 		// 原始密码错误
 		if (result == UserConstants.OLD_PASSWORD_ERROR) {
@@ -239,10 +241,6 @@ public class AdminEquipmentController {
 	public ServiceResultDTO queryEquipmentList(@RequestParam(value = "organizationId", required = false) Integer organizationId, @RequestParam(value = "factoryId", required = false) Integer factoryId) {
 
 		if (organizationId != null || factoryId != null) {
-			
-			if (organizationId != null && organizationId == 1) {//总部可以查询所有的设备
-				organizationId = null;
-			}
 			
 			List<FaceEquipment> result = equipmentService.queryEquipmentList(organizationId, factoryId);
 			

@@ -121,7 +121,7 @@ public class EquipmentManagerController {
 			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid old password");
 		}
 
-		int result = equipmentService.updateEquipmentPassword(deviceId, newPassword, oldPassword, null, null);
+		int result = equipmentService.updateEquipmentPassword(deviceId, true, newPassword, oldPassword, null, null);
 
 		// 原始密码错误
 		if (result == UserConstants.OLD_PASSWORD_ERROR) {

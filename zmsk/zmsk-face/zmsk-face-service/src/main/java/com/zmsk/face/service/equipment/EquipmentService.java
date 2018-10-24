@@ -115,6 +115,8 @@ public interface EquipmentService {
 	 * 
 	 * @param equipmentId
 	 *            设备Id
+	 * @param flag
+	 *             是否修改密码
 	 * @param newPassword
 	 *            新密码
 	 * @param oldPassword
@@ -125,7 +127,7 @@ public interface EquipmentService {
 	 *            工厂Id
 	 * @return 0 修改失败，1：修改成功，2：原始密码不正确
 	 */
-	int updateEquipmentPassword(int equipmentId, String newPassword, String oldPassword, Integer organizationId, Integer factoryId);
+	int updateEquipmentPassword(int equipmentId, boolean flag, String newPassword, String oldPassword, Integer organizationId, Integer factoryId);
 
 	/****
 	 * 修改设备的备注信息

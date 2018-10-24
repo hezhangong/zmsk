@@ -160,7 +160,7 @@ public class EquipmentServiceImpl implements EquipmentService {
 
 		Criteria criteria = example.createCriteria();
 
-		if (organizationId != null) {
+		if (organizationId != null && organizationId != 1) {//总部可以查询所有记录
 			criteria.andOrganizationIdEqualTo(organizationId);
 		}
 		
@@ -201,7 +201,7 @@ public class EquipmentServiceImpl implements EquipmentService {
 	}
 
 	@Override
-	public int updateEquipmentPassword(int equipmentId, String newPassword, String oldPassword, Integer organizationId, Integer factoryId) {
+	public int updateEquipmentPassword(int equipmentId, boolean flag, String newPassword, String oldPassword, Integer organizationId, Integer factoryId) {
 
 		FaceEquipmentExample example = new FaceEquipmentExample();
 
@@ -209,7 +209,9 @@ public class EquipmentServiceImpl implements EquipmentService {
 
 		criteria.andIdEqualTo(equipmentId);
 
-		criteria.andEquipmentPlainPwdEqualTo(oldPassword);
+		if (flag) {
+			criteria.andEquipmentPlainPwdEqualTo(oldPassword);
+		}
 
 		List<FaceEquipment> list = equipmentMapper.selectByExample(example);
 
@@ -218,12 +220,14 @@ public class EquipmentServiceImpl implements EquipmentService {
 		}
 
 		FaceEquipment equipment = list.get(0);
-
-		String newPasswordDigest = StringDigestUtils.md5(newPassword);
-
-		equipment.setEquipmentPlainPwd(newPassword);
-
-		equipment.setEquipmentPwd(newPasswordDigest);
+		
+		if (flag) {
+			String newPasswordDigest = StringDigestUtils.md5(newPassword);
+			
+			equipment.setEquipmentPlainPwd(newPassword);
+			
+			equipment.setEquipmentPwd(newPasswordDigest);
+		}
 		
 		if (organizationId != null) {
 			equipment.setOrganizationId(organizationId);
