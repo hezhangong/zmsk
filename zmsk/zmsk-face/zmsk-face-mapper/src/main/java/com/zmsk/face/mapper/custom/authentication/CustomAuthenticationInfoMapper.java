@@ -70,7 +70,7 @@ public interface CustomAuthenticationInfoMapper {
 	 *            组织Id
 	 * @return
 	 */
-	List<AuthenticationInfoDTO> queryAuthenticationInfo(@Param("search") String search, @Param("organizationId") int organizationId);
+	List<AuthenticationInfoDTO> queryAuthenticationInfo(@Param("search") String search, @Param("organizationId") Integer organizationId);
 
 	/****
 	 * 查询认证失败认证信息记录
@@ -81,5 +81,5 @@ public interface CustomAuthenticationInfoMapper {
 	 *            组织Id
 	 * @return
 	 */
-	List<AuthenticationInfoDTO> queryWarnAuthenticationInfo(@Param("search") String search, @Param("organizationId") int organizationId);
+	List<AuthenticationInfoDTO> queryWarnAuthenticationInfo(@Param("search") String search, @Param("organizationId") Integer organizationId);
 }

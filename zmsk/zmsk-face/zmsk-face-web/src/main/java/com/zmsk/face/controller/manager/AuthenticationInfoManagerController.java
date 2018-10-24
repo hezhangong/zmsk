@@ -53,11 +53,7 @@ public class AuthenticationInfoManagerController {
 	 */
 	@RequestMapping(value = "list", method = RequestMethod.GET)
 	@ResponseBody
-	public ServiceResultDTO queryAuthenticationInfo(@RequestParam(value = "search", required = false, defaultValue = "") String search, @RequestParam(value = "organizationId") int organizationId, @RequestParam(value = "length", defaultValue = "10", required = false) int length, @RequestParam(value = "start", required = false, defaultValue = "1") int start, @RequestParam(value = "draw") int draw) {
-
-		if (organizationId <= 0) {
-			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid organization id");
-		}
+	public ServiceResultDTO queryAuthenticationInfo(@RequestParam(value = "search", required = false, defaultValue = "") String search, @RequestParam(value = "organizationId") Integer organizationId, @RequestParam(value = "length", defaultValue = "10", required = false) int length, @RequestParam(value = "start", required = false, defaultValue = "1") int start, @RequestParam(value = "draw") int draw) {
 
 		DataTablePageUtil<AuthenticationInfoDTO> list = authenticationInfoService.queryAuthenticationInfo(search, organizationId, start, length, draw);
 
@@ -81,11 +77,7 @@ public class AuthenticationInfoManagerController {
 	 */
 	@RequestMapping(value = "warn/list", method = RequestMethod.GET)
 	@ResponseBody
-	public ServiceResultDTO queryWarnAuthenticationInfo(@RequestParam(value = "search", required = false, defaultValue = "") String search, @RequestParam(value = "organizationId") int organizationId, @RequestParam(value = "length", defaultValue = "10", required = false) int length, @RequestParam(value = "start", required = false, defaultValue = "1") int start, @RequestParam(value = "draw") int draw) {
-
-		if (organizationId <= 0) {
-			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid organization id");
-		}
+	public ServiceResultDTO queryWarnAuthenticationInfo(@RequestParam(value = "search", required = false, defaultValue = "") String search, @RequestParam(value = "organizationId") Integer organizationId, @RequestParam(value = "length", defaultValue = "10", required = false) int length, @RequestParam(value = "start", required = false, defaultValue = "1") int start, @RequestParam(value = "draw") int draw) {
 
 		DataTablePageUtil<AuthenticationInfoDTO> list = authenticationInfoService.queryWarnAuthenticationInfo(search, organizationId, start, length, draw);
 

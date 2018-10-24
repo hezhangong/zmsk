@@ -123,12 +123,16 @@ public class AuthenticationInfoServiceImpl implements AuthenticationInfoService 
 	}
 
 	@Override
-	public DataTablePageUtil<AuthenticationInfoDTO> queryAuthenticationInfo(String search, int organizationId, int start, int length, int draw) {
+	public DataTablePageUtil<AuthenticationInfoDTO> queryAuthenticationInfo(String search, Integer organizationId, int start, int length, int draw) {
 
 		DataTablePageUtil<AuthenticationInfoDTO> dataTable = new DataTablePageUtil<>(start, length, draw);
 
 		// 分页处理
 		PageHelper.startPage(dataTable.getPage_num(), dataTable.getPage_size());
+		
+		if (organizationId != null && organizationId == 1) {//总部可以查询所有记录
+			organizationId = null;
+		}
 
 		List<AuthenticationInfoDTO> list = customAuthenticationInfoMapper.queryAuthenticationInfo(search, organizationId);
 
@@ -146,12 +150,16 @@ public class AuthenticationInfoServiceImpl implements AuthenticationInfoService 
 	}
 
 	@Override
-	public DataTablePageUtil<AuthenticationInfoDTO> queryWarnAuthenticationInfo(String search, int organizationId, int start, int length, int draw) {
+	public DataTablePageUtil<AuthenticationInfoDTO> queryWarnAuthenticationInfo(String search, Integer organizationId, int start, int length, int draw) {
 
 		DataTablePageUtil<AuthenticationInfoDTO> dataTable = new DataTablePageUtil<>(start, length, draw);
 
 		// 分页处理
 		PageHelper.startPage(dataTable.getPage_num(), dataTable.getPage_size());
+		
+		if (organizationId != null && organizationId == 1) {//总部可以查询所有记录
+			organizationId = null;
+		}
 
 		List<AuthenticationInfoDTO> list = customAuthenticationInfoMapper.queryWarnAuthenticationInfo(search, organizationId);
 

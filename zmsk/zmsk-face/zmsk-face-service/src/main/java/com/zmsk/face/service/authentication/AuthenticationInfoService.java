@@ -72,7 +72,7 @@ public interface AuthenticationInfoService {
 	 *            第几次请求
 	 * @return
 	 */
-	DataTablePageUtil<AuthenticationInfoDTO> queryAuthenticationInfo(String search, int organizationId, int start, int length, int draw);
+	DataTablePageUtil<AuthenticationInfoDTO> queryAuthenticationInfo(String search, Integer organizationId, int start, int length, int draw);
 
 	/****
 	 * 获取组织对应警告认证记录
@@ -89,7 +89,7 @@ public interface AuthenticationInfoService {
 	 *            第几次请求
 	 * @return
 	 */
-	DataTablePageUtil<AuthenticationInfoDTO> queryWarnAuthenticationInfo(String search, int organizationId, int start, int length, int draw);
+	DataTablePageUtil<AuthenticationInfoDTO> queryWarnAuthenticationInfo(String search, Integer organizationId, int start, int length, int draw);
 
 	/****
 	 * 根据id获取认证记录信息
