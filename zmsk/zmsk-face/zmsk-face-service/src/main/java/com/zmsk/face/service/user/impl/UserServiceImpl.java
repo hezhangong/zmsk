@@ -112,19 +112,22 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<FaceUser> queryOrganizationUserList(String search, int organizationId) {
-
-		List<Integer> userIds = userOrganizationService.queryUserIdsByOrganizationId(organizationId);
-
-		if (userIds == null || userIds.size() == 0) {
-			return Collections.emptyList();
-		}
-
+	public List<FaceUser> queryOrganizationUserList(String search, Integer organizationId) {
+		
 		FaceUserExample example = new FaceUserExample();
-
+		
 		Criteria criteria = example.createCriteria();
-
-		criteria.andUserIdIn(userIds);
+		
+		if (organizationId != null && organizationId != 1) {//总部可以查询所有记录
+			
+			List<Integer> userIds = userOrganizationService.queryUserIdsByOrganizationId(organizationId);
+			
+			if (userIds == null || userIds.size() == 0) {
+				return Collections.emptyList();
+			}
+			
+			criteria.andUserIdIn(userIds);
+		}
 
 		if (!StringUtils.isEmpty(search)) {
 			criteria.andUsernameLike("%" + search + "%");

@@ -13,6 +13,7 @@
     <result column="sex" property="sex" jdbcType="BIT" />
     <result column="locked" property="locked" jdbcType="BIT" />
     <result column="ctime" property="ctime" jdbcType="INTEGER" />
+    <result column="organizationName" property="organizationName" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -73,7 +74,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    user_id, username, password, salt, realname, avatar, phone, email, sex, locked, ctime
+    a.user_id, a.username, a.password, a.salt, a.realname, a.avatar, a.phone, a.email, a.sex, a.locked, a.ctime, c.name organizationName
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zmsk.face.pojo.FaceUserExample" >
     select
@@ -81,7 +82,8 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from face_user
+    from face_user a inner join face_user_organization b on a.user_id=b.user_id
+    inner join face_organization c on c.organization_id=b.user_organization_id
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -92,15 +94,16 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    from face_user
-    where user_id = #{userId,jdbcType=INTEGER}
+    from face_user a inner join face_user_organization b on a.user_id=b.user_id
+    inner join face_organization c on c.organization_id=b.user_organization_id
+    and a.user_id = #{userId,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from face_user
-    where user_id = #{userId,jdbcType=INTEGER}
+    delete from face_user a
+    where a.user_id = #{userId,jdbcType=INTEGER}
   </delete>
   <delete id="deleteByExample" parameterType="com.zmsk.face.pojo.FaceUserExample" >
-    delete from face_user
+    delete from face_user a
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -189,7 +192,7 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.zmsk.face.pojo.FaceUserExample" resultType="java.lang.Integer" >
-    select count(*) from face_user
+    select count(*) from face_user a
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>

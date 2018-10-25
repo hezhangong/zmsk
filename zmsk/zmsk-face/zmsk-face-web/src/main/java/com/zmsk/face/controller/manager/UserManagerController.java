@@ -2,7 +2,6 @@ package com.zmsk.face.controller.manager;
 
 import java.util.List;
 
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
@@ -56,7 +55,6 @@ public class UserManagerController {
 	 * @return
 	 */
 	@RequestMapping(value = "create", method = RequestMethod.POST)
-	@RequiresPermissions("upms:user:create")
 	@ResponseBody
 	public ServiceResultDTO createUser(@RequestParam(value = "username") String username, @RequestParam(value = "password") String password, @RequestParam(value = "realName") String realName, @RequestParam(value = "phone") String phone, @RequestParam(value = "sex") int sex, @RequestParam(value = "avatar", required = false, defaultValue = "") String avatar, @RequestParam(value = "email", required = false, defaultValue = "") String email, @RequestParam(value = "organizationId") int orgainzationId, @RequestParam(value = "roleId") int roleId) {
 
@@ -107,13 +105,8 @@ public class UserManagerController {
 	 * @return
 	 */
 	@RequestMapping(value = "list", method = RequestMethod.GET)
-	@RequiresPermissions("upms:user:read")
 	@ResponseBody
-	public ServiceResultDTO queryOrganizationUserList(@RequestParam(value = "search", defaultValue = "", required = false) String search, @RequestParam(value = "organizationId") int organizationId) {
-
-		if (organizationId <= 0) {
-			return new ServiceResultDTO(BaseResultCode.INVALID_PARAM, "Invalid organizationId ");
-		}
+	public ServiceResultDTO queryOrganizationUserList(@RequestParam(value = "search", defaultValue = "", required = false) String search, @RequestParam(value = "organizationId") Integer organizationId) {
 
 		List<FaceUser> userList = userService.queryOrganizationUserList(search, organizationId);
 
@@ -128,7 +121,6 @@ public class UserManagerController {
 	 * @return
 	 */
 	@RequestMapping(value = "{userId}", method = RequestMethod.GET)
-	@RequiresPermissions("upms:user:read")
 	@ResponseBody
 	public ServiceResultDTO queryUserById(@PathVariable(value = "userId") int userId) {
 
@@ -147,8 +139,7 @@ public class UserManagerController {
 	 * @param ids
 	 * @return
 	 */
-	@RequestMapping(value = "delete/{ids}", method = RequestMethod.DELETE)
-	@RequiresPermissions("upms:user:delete")
+	@RequestMapping(value = "delete/{ids}", method = RequestMethod.GET)
 	@ResponseBody
 	public ServiceResultDTO deleteUser(@PathVariable("ids") String ids) {
 
@@ -187,7 +178,6 @@ public class UserManagerController {
 	 * @return
 	 */
 	@RequestMapping(value = "update", method = RequestMethod.POST)
-	@RequiresPermissions("upms:user:update")
 	@ResponseBody
 	public ServiceResultDTO updateUser(@RequestParam(value = "userId") int userId, @RequestParam(value = "realName", required = false, defaultValue = "") String realName, @RequestParam(value = "phone", required = false, defaultValue = "") String phone, @RequestParam(value = "sex", required = false, defaultValue = "0") int sex, @RequestParam(value = "avatar", required = false, defaultValue = "") String avatar, @RequestParam(value = "email", required = false, defaultValue = "") String email, @RequestParam(value = "roleId", required = false, defaultValue = "0") int roleId,
 			@RequestParam(value = "organizationId", required = false, defaultValue = "0") int organizationId) {

@@ -57,7 +57,7 @@ public interface UserService {
 	 * 
 	 * @return
 	 */
-	List<FaceUser> queryOrganizationUserList(String search, int organizationId);
+	List<FaceUser> queryOrganizationUserList(String search, Integer organizationId);
 
 	/****
 	 * 根据用户Id获取用户信息

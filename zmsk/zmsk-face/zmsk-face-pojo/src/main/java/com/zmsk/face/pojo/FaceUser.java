@@ -27,6 +27,8 @@ public class FaceUser {
 
 	private Long ctime;
 
+	private String organizationName;
+	
 	public Integer getUserId() {
 		return userId;
 	}
@@ -113,5 +115,13 @@ public class FaceUser {
 
 	public void setCtime(Long ctime) {
 		this.ctime = ctime;
+	}
+	
+	public String getOrganizationName() {
+		return organizationName;
+	}
+	
+	public void setOrganizationName(String organizationName) {
+		this.organizationName = organizationName == null ? null : organizationName.trim();
 	}
 }
